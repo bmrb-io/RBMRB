@@ -1,5 +1,6 @@
 
-
+devtools::use_package("httr")
+devtools::use_package("reshape2")
 #'Downloads the chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format

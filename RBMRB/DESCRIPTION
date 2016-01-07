@@ -6,7 +6,8 @@ Date: 2016-01-07
 Author: Kumaran Baskaran
 Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
 Description: Access BMRB data directly from interent from R envirnment
-Imports:httr,reshape2
 License: GNU GENERAL PUBLIC LICENSE V 2.0
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: httr,
+    reshape2
