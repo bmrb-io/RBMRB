@@ -1,0 +1,11 @@
+Package: RBMRB
+Type: Package
+Title: BMRB data in R environment
+Version: 0.1
+Date: 2016-01-07
+Author: Kumaran Baskaran
+Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
+Description: Access BMRB data directly from interent from R envirnment
+License: GNU GENERAL PUBLIC LICENSE V 2.0
+LazyData: TRUE
+RoxygenNote: 5.0.1
