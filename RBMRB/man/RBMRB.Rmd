@@ -1,0 +1,82 @@
+---
+title: "RBMRB"
+author: "Kumaran Baskaran"
+date: "January 12, 2016"
+output: html_document
+---
+
+#RBMRB
+
+RBMRB is an API written in R  to import chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
+as a data frame in R. This will facilitate easy access to BMRB data for statistical analysis and data visualization. 
+
+##Installation
+
+### Requirements
+
+RBMRB requires the package **httr** to import data from BMRB and **reshape2** to formate the data into a data frame in R. If you already have these packages installed, then you may proceed with the installation of RBMRB package, otherwise please install these packages first and then proceed further.
+
+Here is the instruction to install those palcages. Open your R and use the following command 
+
+```{r eval=F}
+install.packages(c("httr","reshape2"))
+```
+you may also install packages by navigating through menu in RStudio or R.
+
+Once you have installed the necessary pacakages, then you can download and install RBMRB.
+Source package can be downloaded from this [link](https://github.com/uwbmrb/RBMRB/blob/master/RBMRB_0.1.tar.gz?raw=true)
+
+After downloading use the following command to install RBMRB
+```{r eval=F}
+install.packages("~/Downloads/RBMRB_0.1.tar.gz",repos=NULL,type="source")
+```
+
+Note: provide the right path to the downloaded file.
+
+##Usage
+RBMRB can be used in a similar way like any other library in R. 
+
+```{r}
+library(RBMRB)
+```
+
+To fetch chemical shift table of a specific entry
+```{r}
+df<-fetchBMRB('15060')
+```
+Imported data frame contains following columns
+```{r}
+colnames(df)
+```
+
+Its also possible to load multiple entries as a single dataframe
+```{r}
+df<-fetchBMRB('17074,17076,17077')
+```
+
+These data frames can be reformated using the function **N15HSQC** to simulate HSQC spectrum from the dataframe.
+```{r}
+hsqc<-N15HSQC(df)
+```
+Now user can use his own plotting funcation to visualize HSQC spectrum
+for example
+```{r}
+library(ggplot2)
+ggplot(hsqc)+
+  geom_point(aes(H,N,color=as.character(BMRB_ID)))+
+  scale_x_reverse()+scale_y_reverse()
+```
+
+The entire chemical shift table can be imported using the following command. 
+```{r}
+df_all<-fetchallBMRB()
+```
+Note: This will take some time, depends on the internet connection speed  to download ~500MB csv file from the FTP
+server.
+Once it is downloaded, then you have full chemical shift information of all entreis. 
+```{r}
+colnames(df_all)
+```
+
+
+
