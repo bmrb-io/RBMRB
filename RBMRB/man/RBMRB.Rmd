@@ -14,20 +14,20 @@ as a data frame in R. This will facilitate easy access to BMRB data for statisti
 
 ### Requirements
 
-RBMRB requires the package **httr** to import data from BMRB and **reshape2** to formate the data into a data frame in R. If you already have these packages installed, then you may proceed with the installation of RBMRB package, otherwise please install these packages first and then proceed further.
+RBMRB requires the package **httr** to import data from BMRB and **reshape2** to format the data into a data frame in R. If you already have these packages installed, then you may proceed with the installation of RBMRB package, otherwise please install these packages first and then proceed further.
 
-Here is the instruction to install those palcages. Open your R and use the following command 
+Here is the instruction to install those packages. Open your R and use the following command 
 
 ```{r eval=F}
 install.packages(c("httr","reshape2"))
 ```
 you may also install packages by navigating through menu in RStudio or R.
 
-Once you have installed the necessary pacakages, then you can download and install RBMRB.
+Once you have installed the necessary packages, then you can download and install RBMRB.
 Source package can be downloaded from this [link](https://github.com/uwbmrb/RBMRB/blob/master/RBMRB_0.1.tar.gz?raw=true)
 
 After downloading use the following command to install RBMRB
-```{r eval=F}
+```{r}
 install.packages("~/Downloads/RBMRB_0.1.tar.gz",repos=NULL,type="source")
 ```
 
@@ -49,16 +49,16 @@ Imported data frame contains following columns
 colnames(df)
 ```
 
-Its also possible to load multiple entries as a single dataframe
+Its also possible to load multiple entries as a single data frame
 ```{r}
 df<-fetchBMRB('17074,17076,17077')
 ```
 
-These data frames can be reformated using the function **N15HSQC** to simulate HSQC spectrum from the dataframe.
+These data frames can be reformatted using the function **N15HSQC** to simulate HSQC spectrum from the data frame.
 ```{r}
 hsqc<-N15HSQC(df)
 ```
-Now user can use his own plotting funcation to visualize HSQC spectrum
+Now user can use his own plotting function to visualize HSQC spectrum
 for example
 ```{r}
 library(ggplot2)
@@ -73,10 +73,55 @@ df_all<-fetchallBMRB()
 ```
 Note: This will take some time, depends on the internet connection speed  to download ~500MB csv file from the FTP
 server.
-Once it is downloaded, then you have full chemical shift information of all entreis. 
+Once it is downloaded, then you have full chemical shift information of all entries. 
 ```{r}
 colnames(df_all)
 ```
 
+Hint: If you are using ***fetchallBMRB*** very often, then it is a good idea to download the all atom chemical shift
+csv file from [this](http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv) ftp server and specify the file name with correct local path in the function as a parameter
+
+```{r}
+df_all=fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
+```
+
+#Data Visualization
+
+This API is just an interface to fetch the data from BMRB database. This gives the freedom for the user to chose 
+any tool from R to visualize the data. We created some examples in [GitHub](https://github.com/uwbmrb) using this API.
+
+## HSQC Spectra
+
+One of the most popular data visualization in BMRB is the simulation of N15-HSQC spectra. Now this simulation can be done on the user computer using this API
+
+You need to have the following tools installed in your R to use this visualization
+
+Required packages:
+
+* shiny
+* ggplot2
+* ggvis
+* reshape2
+* httr
+you may install these packages using this command
+```{r eval=F}
+install.packages(c('shiny','ggvis','httr','reshape2','ggplot2'))
+```
+
+The visualization can be directly run from Git Hub
+
+```{r eval=F}
+library(shiny)
+runGitHub('ShinySpectra','uwbmrb')
+```
+
+## Chemical shift histograms
+
+Next example is the chemical shift histogram of all atoms in the BMRB data base. 
+This can also be run directly from Git Hub
+```{r eval=F}
+library(shiny)
+runGitHub('ShinyHistogram','uwbmrb')
+```
 
 

@@ -4,10 +4,11 @@
 \alias{fetchallBMRB}
 \title{Reads the full chemical shift csv frile from BMRB ftp site. Not recommended unless you have high speed internet connection}
 \usage{
-fetchallBMRB()
+
+  fetchallBMRB(csvpath = "http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv")
 }
 \arguments{
-\item{No}{parameter is needed}
+\item{Specify}{the csv file downloaded from http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv  with full path;May leave it empty to fetch the file directly from internet}
 }
 \value{
 list of all atom chemical shifts for all BMRB entries as a R data frame
@@ -17,5 +18,6 @@ Reads the full chemical shift csv frile from BMRB ftp site. Not recommended unle
 }
 \examples{
 df<-fetchallBMRB()
+df<-fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
 }
 

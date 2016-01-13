@@ -1,6 +1,5 @@
 
-devtools::use_package("httr")
-devtools::use_package("reshape2")
+
 #'Downloads the chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format
@@ -52,14 +51,14 @@ N15HSQC<-function(csdf){
 
 #'Reads the full chemical shift csv frile from BMRB ftp site. Not recommended unless you have high speed internet connection
 #'
-#'@param No parameter is needed
+#'@param Specify the csv file downloaded from http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv  with full path;May leave it empty to fetch the file directly from internet
 #'@return list of all atom chemical shifts for all BMRB entries as a R data frame
 #'@export fetchallBMRB
 #'@examples
 #'df<-fetchallBMRB()
-
-fetchallBMRB<-function(){
-  outdat<-read.csv('http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv', header = T)
+#'df<-fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
+fetchallBMRB<-function(csvpath='http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv'){
+  outdat<-read.csv(csvpath, header = T)
   return(outdat)
 }
 
