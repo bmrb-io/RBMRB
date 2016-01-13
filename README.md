@@ -1,2 +1,4 @@
 # RBMRB
-R libraries to fetch and visualize BMRB data
+R libraries to fetch data from  BMRB database
+
+More documentation is avalibale in RBMRB/man/

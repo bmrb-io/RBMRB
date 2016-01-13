@@ -78,8 +78,7 @@ Once it is downloaded, then you have full chemical shift information of all entr
 colnames(df_all)
 ```
 
-Hint: If you are using ***fetchallBMRB*** very often, then it is a good idea to download the all atom chemical shift
-csv file from [this](http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv) ftp server and specify the file name with correct local path in the function as a parameter
+Hint: If you are going to use  ***fetchallBMRB*** very often, then it is a good idea to download the all atom chemical shift csv file from [this](http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv) ftp server and specify the file name with correct local path in the function as a parameter
 
 ```{r}
 df_all=fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
