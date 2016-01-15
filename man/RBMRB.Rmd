@@ -2,7 +2,7 @@
 title: "RBMRB"
 author: "Kumaran Baskaran"
 date: "January 12, 2016"
-output: html_document
+output: pdf_document
 ---
 
 #RBMRB
@@ -80,7 +80,7 @@ colnames(df_all)
 
 Hint: If you are going to use  ***fetchallBMRB*** very often, then it is a good idea to download the all atom chemical shift csv file from [this](http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv) ftp server and specify the file name with correct local path in the function as a parameter
 
-```{r}
+```{r eval=F}
 df_all=fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
 ```
 
@@ -102,6 +102,7 @@ Required packages:
 * ggvis
 * reshape2
 * httr
+* plotly
 you may install these packages using this command
 ```{r eval=F}
 install.packages(c('shiny','ggvis','httr','reshape2','ggplot2'))
@@ -114,13 +115,17 @@ library(shiny)
 runGitHub('ShinySpectra','uwbmrb')
 ```
 
+![ShinySpectra](./fig/ShinySpectra1.png)
+![ShinySpectra](./fig/ShinySpectra2.png)
+
+
 ## Chemical shift histograms
 
 Next example is the chemical shift histogram of all atoms in the BMRB data base. 
 This can also be run directly from Git Hub
 ```{r eval=F}
 library(shiny)
-runGitHub('ShinyHistogram','uwbmrb')
+runGitHub('ShinyHistogram2','uwbmrb')
 ```
-
+![ShinyHistogram](./fig/ShinyHistogram.png)
 
