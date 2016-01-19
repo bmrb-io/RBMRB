@@ -31,7 +31,7 @@ After downloading use the following command to install RBMRB
 install.packages("~/Downloads/RBMRB_0.1.tar.gz",repos=NULL,type="source")
 ```
 
-Note: provide the right path to the downloaded file.
+Note: provide the correct path to the downloaded file.
 
 ##Usage
 RBMRB can be used in a similar way like any other library in R. 
@@ -86,12 +86,11 @@ df_all=fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
 
 #Data Visualization
 
-This API is just an interface to fetch the data from BMRB database. This gives the freedom for the user to chose 
-any tool from R to visualize the data. We created some examples in [GitHub](https://github.com/uwbmrb) using this API.
+This API is just an interface to import chemical shift data from BMRB database. This gives the freedom for an user to chose any tool from R to visualize the data. We created some examples in [GitHub](https://github.com/uwbmrb) using this API. 
 
 ## HSQC Spectra
 
-One of the most popular data visualization in BMRB is the simulation of N15-HSQC spectra. Now this simulation can be done on the user computer using this API
+One of the most popular data visualization from BMRB is the simulation of N15-HSQC spectra. Now this simulation can be done on the user computer using this API
 
 You need to have the following tools installed in your R to use this visualization
 
@@ -103,12 +102,13 @@ Required packages:
 * reshape2
 * httr
 * plotly
-you may install these packages using this command
+
+you may install these packages by using the following command or navigating through menu in RStudio
 ```{r eval=F}
-install.packages(c('shiny','ggvis','httr','reshape2','ggplot2'))
+install.packages(c('shiny','ggvis','httr','reshape2','ggplot2','plotly'))
 ```
 
-The visualization can be directly run from Git Hub
+The visualization can be run directly from Git Hub
 
 ```{r eval=F}
 library(shiny)
@@ -123,6 +123,7 @@ runGitHub('ShinySpectra','uwbmrb')
 
 Next example is the chemical shift histogram of all atoms in the BMRB data base. 
 This can also be run directly from Git Hub
+
 ```{r eval=F}
 library(shiny)
 runGitHub('ShinyHistogram2','uwbmrb')
