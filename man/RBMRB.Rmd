@@ -2,13 +2,13 @@
 title: "RBMRB"
 author: "Kumaran Baskaran"
 date: "January 12, 2016"
-output: pdf_document
+output: html_document
 ---
 
 #RBMRB
 
 RBMRB is an API written in R  to import chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
-as a data frame in R. This will facilitate easy access to BMRB data for statistical analysis and data visualization. 
+as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. 
 
 ##Installation
 

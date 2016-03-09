@@ -1,6 +1,6 @@
 
 
-#'Downloads the chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
+#'Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format
 #'@return all available chemical shift data in R data frame
