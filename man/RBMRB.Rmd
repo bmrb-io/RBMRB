@@ -2,7 +2,7 @@
 title: "RBMRB"
 author: "Kumaran Baskaran"
 date: "January 12, 2016"
-output: pdf_document
+output: html_document
 ---
 
 #RBMRB
