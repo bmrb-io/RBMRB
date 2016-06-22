@@ -14,13 +14,17 @@ fetchBMRB<-function(BMRBidlist){
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
   rawdata<-httr::POST(bmrb_api,encode='json',body=query)
   c<-rjson::fromJSON(httr::content(rawdata,'text'))
-  cs_data<-NA
   if (length(c$result)!=0){
   for (x in c$result){
     for (y in x$`_Atom_chem_shift`){
       csdata<-data.table::as.data.table(y$data)
       cstags<-as.data.frame(data.table::as.data.table(y$tags))$V1
-      cs_data<-rbind(cs_data,as.data.frame(as.list(data.table::data.table(t(csdata)))))
+      if (exists('cs_data')){
+        cs_data<-rbind(cs_data,as.data.frame(data.table::data.table(t(csdata))))
+      }else{
+        cs_data<-as.data.frame(data.table::data.table(t(csdata)))
+
+      }
     }
   }
   colnames(cs_data)<-cstags
@@ -55,11 +59,11 @@ fetchBMRB<-function(BMRBidlist){
 
 N15HSQC<-function(csdf){
   shiftH<-subset(csdf,Atom_ID=="H")
-  names(shiftH)[names(shiftH)=="Chemical_shift"]<-"H"
+  names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
-  names(shiftN)[names(shiftN)=="Chemical_shift"]<-"N"
-  shiftHN<-merge(shiftH,shiftN,by=c('BMRB_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
-  outdat<-shiftHN[,c("BMRB_ID","Comp_index_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
+  names(shiftN)[names(shiftN)=="Val"]<-"N"
+  shiftHN<-merge(shiftH,shiftN,by=c('Entry_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
   return(outdat)
