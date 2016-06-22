@@ -1,4 +1,5 @@
 
+bmrb_api<<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
 
 #'Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
@@ -10,21 +11,36 @@
 #'df<-fetchBMRB('15060,15070,8898,99')
 
 fetchBMRB<-function(BMRBidlist){
-  rawdata<-httr::GET('http://manta.bmrb.wisc.edu/api/a/chemshifts.php',
-                     query=list(idlist=BMRBidlist))
-  c<-httr::content(rawdata,'text')
-  if (nchar(c)>5){
-    d<-gsub("\\]","",gsub("\\[","",c))
-    d2<-gsub("\n\"Entry_ID\",\"id\",\"Entity_ID\",\"Comp_index_ID\",\"Comp_ID\",\"Atom_ID\",\"Atom_type\",\"Val\",\"Val_err\",\"Ambiguity_code\",\"Assigned_chem_shift_list_ID\"","",d)
-    t<-read.table(textConnection(d2),sep="\n")
-    outdata<-reshape2::colsplit(t$V1,",",names=c('x','BMRB_ID','Entry_ID','Entity_ID','Comp_index_ID','Comp_ID','Atom_ID','Atom_type','Chemical_shift','err','Ambiguity_code','Assigned_chem_shift_list_ID'))
-    outdata$x<-NULL
+  query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
+  rawdata<-httr::POST(bmrb_api,encode='json',body=query)
+  c<-rjson::fromJSON(httr::content(rawdata,'text'))
+  cs_data<-NA
+  if (length(c$result)!=0){
+  for (x in c$result){
+    for (y in x$`_Atom_chem_shift`){
+      csdata<-data.table::as.data.table(y$data)
+      cstags<-as.data.frame(data.table::as.data.table(y$tags))$V1
+      cs_data<-rbind(cs_data,as.data.frame(as.list(data.table::data.table(t(csdata)))))
+    }
+  }
+  colnames(cs_data)<-cstags
+
   }
   else{
-    cat("Invalid BMRB ID")
-    outdata<-NA
+    warning('Entry not found')
   }
-  return (outdata)
+#   if (nchar(c)>5){
+#     d<-gsub("\\]","",gsub("\\[","",c))
+#     d2<-gsub("\n\"Entry_ID\",\"id\",\"Entity_ID\",\"Comp_index_ID\",\"Comp_ID\",\"Atom_ID\",\"Atom_type\",\"Val\",\"Val_err\",\"Ambiguity_code\",\"Assigned_chem_shift_list_ID\"","",d)
+#     t<-read.table(textConnection(d2),sep="\n")
+#     outdata<-reshape2::colsplit(t$V1,",",names=c('x','BMRB_ID','Entry_ID','Entity_ID','Comp_index_ID','Comp_ID','Atom_ID','Atom_type','Chemical_shift','err','Ambiguity_code','Assigned_chem_shift_list_ID'))
+#     outdata$x<-NULL
+#   }
+#   else{
+#     cat("Invalid BMRB ID")
+#     outdata<-NA
+#   }
+  return (cs_data)
 }
 
 
@@ -61,5 +77,8 @@ fetchallBMRB<-function(csvpath='http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational
   outdat<-read.csv(csvpath, header = T)
   return(outdat)
 }
+
+
+
 
 
