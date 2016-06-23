@@ -1,6 +1,3 @@
-
-bmrb_api<<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
-
 #'Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format
@@ -9,10 +6,10 @@ bmrb_api<<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
 #'@examples
 #'df<-fetchBMRB('15060')
 #'df<-fetchBMRB('15060,15070,8898,99')
-
 fetchBMRB<-function(BMRBidlist){
+  bmrb_apiurl_json<<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
-  rawdata<-httr::POST(bmrb_api,encode='json',body=query)
+  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
   c<-rjson::fromJSON(httr::content(rawdata,'text'))
   if (length(c$result)!=0){
   for (x in c$result){
@@ -28,22 +25,14 @@ fetchBMRB<-function(BMRBidlist){
     }
   }
   colnames(cs_data)<-cstags
+  cs_data$Val<-as.numeric(cs_data$Val)
+  cs_data$Val_err<-as.numeric(cs_data$Val_err)
 
   }
   else{
     warning('Entry not found')
+    cs_data<-NA
   }
-#   if (nchar(c)>5){
-#     d<-gsub("\\]","",gsub("\\[","",c))
-#     d2<-gsub("\n\"Entry_ID\",\"id\",\"Entity_ID\",\"Comp_index_ID\",\"Comp_ID\",\"Atom_ID\",\"Atom_type\",\"Val\",\"Val_err\",\"Ambiguity_code\",\"Assigned_chem_shift_list_ID\"","",d)
-#     t<-read.table(textConnection(d2),sep="\n")
-#     outdata<-reshape2::colsplit(t$V1,",",names=c('x','BMRB_ID','Entry_ID','Entity_ID','Comp_index_ID','Comp_ID','Atom_ID','Atom_type','Chemical_shift','err','Ambiguity_code','Assigned_chem_shift_list_ID'))
-#     outdata$x<-NULL
-#   }
-#   else{
-#     cat("Invalid BMRB ID")
-#     outdata<-NA
-#   }
   return (cs_data)
 }
 
@@ -56,7 +45,6 @@ fetchBMRB<-function(BMRBidlist){
 #'@examples
 #'df<-fetchBMRB('15060')
 #'hsqc<-N15HSQC(df)
-
 N15HSQC<-function(csdf){
   shiftH<-subset(csdf,Atom_ID=="H")
   names(shiftH)[names(shiftH)=="Val"]<-"H"
@@ -71,18 +59,31 @@ N15HSQC<-function(csdf){
 
 #'Reads the full chemical shift csv frile from BMRB ftp site. Not recommended unless you have high speed internet connection
 #'
-#'@param Specify the csv file downloaded from http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv  with full path;May leave it empty to fetch the file directly from internet
+#'@param atom ==> atom name like CA,CB2
+#'@param db ==> macromolecules, metabolomics
 #'@return list of all atom chemical shifts for all BMRB entries as a R data frame
-#'@export fetchallBMRB
+#'@export fetchCSList
 #'@examples
-#'df<-fetchallBMRB()
-#'df<-fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
-fetchallBMRB<-function(csvpath='http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv'){
-  outdat<-read.csv(csvpath, header = T)
-  return(outdat)
+#'df<-fetchCSList('CB2','macromolecules')
+#'df<-fetchCSList('C1','metabolomics')
+fetchCSList<-function(atom,db){
+  bmrb_api<<-"http://webapi.bmrb.wisc.edu/"
+  raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
+  dat<-httr::content(raw_data,'parsed')
+  if (length(dat$data)==0){
+    warning('Atom or db wrong')
+    dat_frame<-NA
+  }else{
+  dat_tab<-data.table::as.data.table(dat$data)
+  dat_frame<-as.data.frame(data.table::data.table(t(dat_tab)))
+  for (name in names(dat_frame)){dat_frame[[name]]<-unlist(as.character(dat_frame[[name]]))}
+  dat_tags<-as.data.frame(data.table::data.table(t(data.table::as.data.table(dat$columns))))
+  for (i in 1:length(dat_tags$V1)){dat_tags$V1[i]<-strsplit(dat_tags$V1[i],"[.]")[[1]][2]}
+  colnames(dat_frame)<-dat_tags$V1
+  dat_frame$Val<-as.numeric(dat_frame$Val)
+  dat_frame$Val_err<-as.numeric(dat_frame$Val_err)
+  }
+  return(dat_frame)
 }
-
-
-
 
 

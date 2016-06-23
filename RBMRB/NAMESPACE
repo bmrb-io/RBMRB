@@ -2,4 +2,4 @@
 
 export(N15HSQC)
 export(fetchBMRB)
-export(fetchallBMRB)
+export(fetchCSList)
