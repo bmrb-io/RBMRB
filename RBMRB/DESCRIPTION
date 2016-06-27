@@ -9,4 +9,6 @@ Description: Access BMRB data directly from interent from R envirnment
 License: GNU GENERAL PUBLIC LICENSE V 2.0
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Imports: data.table,httr,rjson
+Imports: data.table,
+          httr,
+          rjson
