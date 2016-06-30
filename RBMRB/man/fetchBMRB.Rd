@@ -16,7 +16,7 @@ all available chemical shift data in R data frame
 Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 }
 \examples{
-df<-fetchBMRB('15060')
-df<-fetchBMRB('15060,15070,8898,99')
+df<-fetchBMRB(15060)
+df<-fetchBMRB(c(15060,15070,8898,99))
 }
 

@@ -4,10 +4,10 @@
 #'@return all available chemical shift data in R data frame
 #'@export fetchBMRB
 #'@examples
-#'df<-fetchBMRB('15060')
-#'df<-fetchBMRB('15060,15070,8898,99')
+#'df<-fetchBMRB(15060)
+#'df<-fetchBMRB(c(15060,15070,8898,99))
 fetchBMRB<-function(BMRBidlist){
-  bmrb_apiurl_json<<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
+  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
   rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
   c<-rjson::fromJSON(httr::content(rawdata,'text'))
@@ -50,8 +50,8 @@ N15HSQC<-function(csdf){
   names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
   names(shiftN)[names(shiftN)=="Val"]<-"N"
-  shiftHN<-merge(shiftH,shiftN,by=c('Entry_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
-  outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
+  shiftHN<-merge(shiftH,shiftN,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
   return(outdat)
@@ -67,7 +67,7 @@ N15HSQC<-function(csdf){
 #'df<-fetchCSList('CB2','macromolecules')
 #'df<-fetchCSList('C1','metabolomics')
 fetchCSList<-function(atom,db){
-  bmrb_api<<-"http://webapi.bmrb.wisc.edu/"
+  bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
@@ -86,4 +86,27 @@ fetchCSList<-function(atom,db){
   return(dat_frame)
 }
 
+#'Plot 15N-HSQC spectra of a given list of BMRBIDs
+#'
+#'@param idlist ==> list of bmrb ids c(17074,17076,17077)
+#'@return plot object
+#'@export HSQCN15
+#'@examples
+#'plot_hsqc<-HSQCN15(c(17074,17076,17077))
+#'plot_hsqc<-HSQCN15(18857)
+HSQCN15<-function(idlist){
+  cs_data<-fetchBMRB(idlist)
+  hsqc_data<-N15HSQC(cs_data)
+  hsqc_data$key=NA
+  hsqc_data$key=paste(hsqc_data$Entry_ID,hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Assigned_chem_shift_list_ID)
+  plt<-ggplot2::ggplot(hsqc_data)+
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))+
+    ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+  plt2<-plotly::plotly_build(plt)
+  plt2$layout$annotations=F
+  plt2$layout$showlegend=F
+  plt2$layout$xaxis$autorange = "reversed"
+  plt2$layout$yaxis$autorange = "reversed"
+  return(plt2)
+}
 

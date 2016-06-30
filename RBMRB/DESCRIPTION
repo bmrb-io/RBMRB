@@ -11,4 +11,6 @@ LazyData: TRUE
 RoxygenNote: 5.0.1
 Imports: data.table,
           httr,
-          rjson
+          rjson,
+          ggplot2,
+          plotly
