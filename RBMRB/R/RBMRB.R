@@ -2,11 +2,11 @@
 #'
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format
 #'@return all available chemical shift data in R data frame
-#'@export fetchBMRB
+#'@export fetch_entry_chemical_shifts
 #'@examples
-#'df<-fetchBMRB(15060)
-#'df<-fetchBMRB(c(15060,15070,8898,99))
-fetchBMRB<-function(BMRBidlist){
+#'df<-fetch_entry_chemical_shifts(15060)
+#'df<-fetch_entry_chemical_shifts(c(15060,15070,8898,99))
+fetch_entry_chemical_shifts<-function(BMRBidlist){
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
   rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
@@ -37,15 +37,15 @@ fetchBMRB<-function(BMRBidlist){
 }
 
 
-#'Converts chemical shift data frame into H1-N15 HSQC data frame
+#'Converts the output data frame of fetch_entry_chemical_shifts into H1-N15 HSQC data frame
 #'
-#'@param csdf ==> chemical shift data frame from fetchBMRB
+#'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
 #'@return 1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
-#'@export N15HSQC
+#'@export convert_cs_to_n15hsqc
 #'@examples
-#'df<-fetchBMRB('15060')
-#'hsqc<-N15HSQC(df)
-N15HSQC<-function(csdf){
+#'df<-fetch_entry_chemical_shifts(15060)
+#'hsqc<-convert_cs_to_n15hsqc(df)
+convert_cs_to_n15hsqc<-function(csdf){
   shiftH<-subset(csdf,Atom_ID=="H")
   names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
@@ -57,16 +57,15 @@ N15HSQC<-function(csdf){
   return(outdat)
 }
 
-#'Reads the full chemical shift csv frile from BMRB ftp site. Not recommended unless you have high speed internet connection
-#'
+#'Downloads the chemical shift table for a given atom from macromolecule/metabolomics database
 #'@param atom ==> atom name like CA,CB2
 #'@param db ==> macromolecules, metabolomics
 #'@return list of all atom chemical shifts for all BMRB entries as a R data frame
-#'@export fetchCSList
+#'@export fetch_atom_chemical_shift
 #'@examples
-#'df<-fetchCSList('CB2','macromolecules')
-#'df<-fetchCSList('C1','metabolomics')
-fetchCSList<-function(atom,db){
+#'df<-fetch_atom_chemical_shift('CB2','macromolecules')
+#'df<-fetch_atom_chemical_shift('C1','metabolomics')
+fetch_atom_chemical_shift<-function(atom,db){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
   dat<-httr::content(raw_data,'parsed')
@@ -86,22 +85,29 @@ fetchCSList<-function(atom,db){
   return(dat_frame)
 }
 
-#'Plot 15N-HSQC spectra of a given list of BMRBIDs
+#'Plots 15N-HSQC spectrum/spectra of given bmrb id/ list of bmrb ids. Plot type can be set as eight scatter (or) line.
 #'
 #'@param idlist ==> list of bmrb ids c(17074,17076,17077)
+#'@param type ==> scatter/line default=scatter
 #'@return plot object
-#'@export HSQCN15
+#'@export plot_n15hsqc
 #'@examples
-#'plot_hsqc<-HSQCN15(c(17074,17076,17077))
-#'plot_hsqc<-HSQCN15(18857)
-HSQCN15<-function(idlist){
-  cs_data<-fetchBMRB(idlist)
-  hsqc_data<-N15HSQC(cs_data)
+#'plot_hsqc<-plot_n15hsqc(c(17074,17076,17077))
+#'plot_hsqc<-plot_n15hsqc(18857,'line')
+plot_n15hsqc<-function(idlist,type='scatter'){
+  cs_data<-fetch_entry_chemical_shifts(idlist)
+  hsqc_data<-convert_cs_to_n15hsqc(cs_data)
   hsqc_data$key=NA
   hsqc_data$key=paste(hsqc_data$Entry_ID,hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Assigned_chem_shift_list_ID)
-  plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))+
+  if (type=='scatter'){
+    plt<-ggplot2::ggplot(hsqc_data)+
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))#+
+    #ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+  } else {
+    plt<-ggplot2::ggplot(hsqc_data)+
+      ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))+
     ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+  }
   plt2<-plotly::plotly_build(plt)
   plt2$layout$annotations=F
   plt2$layout$showlegend=F
