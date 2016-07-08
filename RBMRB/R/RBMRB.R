@@ -65,7 +65,7 @@ convert_cs_to_n15hsqc<-function(csdf){
 #'@examples
 #'df<-fetch_atom_chemical_shift('CB2','macromolecules')
 #'df<-fetch_atom_chemical_shift('C1','metabolomics')
-fetch_atom_chemical_shift<-function(atom,db){
+fetch_atom_chemical_shift<-function(atom,db='macromolecules'){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
   dat<-httr::content(raw_data,'parsed')
