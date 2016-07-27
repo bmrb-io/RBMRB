@@ -7,7 +7,7 @@
 fetch_entry_chemical_shifts(BMRBidlist)
 }
 \arguments{
-\item{BMRBidlist}{==> sinlge BMRB ID / list of BMRB IDs in csv format}
+\item{BMRBidlist}{==> sinlge BMRB ID / list of BMRB IDs in csv format exampe:c(17074,17076,17077)}
 }
 \value{
 all available chemical shift data in R data frame
@@ -17,6 +17,6 @@ Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entr
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
-df<-fetch_entry_chemical_shifts(c(15060,15070,8898,99))
+df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 }
 

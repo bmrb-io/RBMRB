@@ -1,11 +1,11 @@
 #'Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
 #'
-#'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format
+#'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format exampe:c(17074,17076,17077)
 #'@return all available chemical shift data in R data frame
 #'@export fetch_entry_chemical_shifts
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
-#'df<-fetch_entry_chemical_shifts(c(15060,15070,8898,99))
+#'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 fetch_entry_chemical_shifts<-function(BMRBidlist){
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
@@ -14,21 +14,26 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
   if (length(c$result)!=0){
   for (x in c$result){
     for (y in x$`_Atom_chem_shift`){
-      csdata<-data.table::as.data.table(y$data)
-      cstags<-as.data.frame(data.table::as.data.table(y$tags))$V1
-      if (exists('cs_data')){
-        cs_data<-rbind(cs_data,as.data.frame(data.table::data.table(t(csdata))))
-      }else{
-        cs_data<-as.data.frame(data.table::data.table(t(csdata)))
-
+      if (is.null(y)){
+        warnings('No Chemical shift list found')}
+      else{
+        csdata<-data.table::as.data.table(y$data)
+        cstags<-as.data.frame(data.table::as.data.table(y$tags))$V1
+        if (exists('cs_data')){
+          cs_data<-rbind(cs_data,as.data.frame(data.table::data.table(t(csdata))))}
+        else{
+          cs_data<-as.data.frame(data.table::data.table(t(csdata)))}
+        }
       }
     }
-  }
-  colnames(cs_data)<-cstags
-  cs_data$Val<-as.numeric(cs_data$Val)
-  cs_data$Val_err<-as.numeric(cs_data$Val_err)
-
-  }
+    if (exists('cs_data')){
+      colnames(cs_data)<-cstags
+      cs_data$Val<-as.numeric(cs_data$Val)
+      cs_data$Val_err<-as.numeric(cs_data$Val_err)}
+    else{
+      warning('No data')
+      cs_data<-NA}
+    }
   else{
     warning('Entry not found')
     cs_data<-NA
@@ -46,6 +51,10 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 #'df<-fetch_entry_chemical_shifts(15060)
 #'hsqc<-convert_cs_to_n15hsqc(df)
 convert_cs_to_n15hsqc<-function(csdf){
+  if (all(is.na(csdf))){
+    warning('No data')
+    outdat<-NA
+  }else{
   shiftH<-subset(csdf,Atom_ID=="H")
   names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
@@ -54,18 +63,20 @@ convert_cs_to_n15hsqc<-function(csdf){
   outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
+  }
   return(outdat)
 }
 
 #'Downloads the chemical shift table for a given atom from macromolecule/metabolomics database
+#'
 #'@param atom ==> atom name like CA,CB2
 #'@param db ==> macromolecules, metabolomics
 #'@return list of all atom chemical shifts for all BMRB entries as a R data frame
-#'@export fetch_atom_chemical_shift
+#'@export fetch_atom_chemical_shifts
 #'@examples
-#'df<-fetch_atom_chemical_shift('CB2','macromolecules')
-#'df<-fetch_atom_chemical_shift('C1','metabolomics')
-fetch_atom_chemical_shift<-function(atom,db='macromolecules'){
+#'df<-fetch_atom_chemical_shifts('CB2','macromolecules')
+#'df<-fetch_atom_chemical_shifts('C1','metabolomics')
+fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
   dat<-httr::content(raw_data,'parsed')
@@ -97,22 +108,28 @@ fetch_atom_chemical_shift<-function(atom,db='macromolecules'){
 plot_n15hsqc<-function(idlist,type='scatter'){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
-  hsqc_data$key=NA
-  hsqc_data$key=paste(hsqc_data$Entry_ID,hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Assigned_chem_shift_list_ID)
+  if (all(is.na(hsqc_data))){
+    warning('No data')
+    plt2<-NA}
+  else{
+  hsqc_data$Info=NA
+  hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
   if (type=='scatter'){
     plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))#+
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))#+
     #ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+
   } else {
     plt<-ggplot2::ggplot(hsqc_data)+
-      ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_index_ID,shape=Entry_ID,label=key))+
-    ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+    ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+ #+ theme(legend.position="none")
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
   }
   plt2<-plotly::plotly_build(plt)
   plt2$layout$annotations=F
-  plt2$layout$showlegend=F
+  #plt2$layout$showlegend=F
   plt2$layout$xaxis$autorange = "reversed"
   plt2$layout$yaxis$autorange = "reversed"
+  }
   return(plt2)
 }
 
