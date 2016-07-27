@@ -3,4 +3,4 @@
 export(convert_cs_to_n15hsqc)
 export(fetch_atom_chemical_shifts)
 export(fetch_entry_chemical_shifts)
-export(plot_n15hsqc)
+export(simulate_n15hsqc)

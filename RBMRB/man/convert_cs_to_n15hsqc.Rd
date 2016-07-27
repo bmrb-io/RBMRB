@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{convert_cs_to_n15hsqc}
 \alias{convert_cs_to_n15hsqc}
-\title{Converts the output data frame of fetch_entry_chemical_shifts into H1-N15 HSQC data frame}
+\title{Reformats chemical shift dataframe into H1-N15 HSQC dataframe}
 \usage{
 convert_cs_to_n15hsqc(csdf)
 }
@@ -13,7 +13,7 @@ convert_cs_to_n15hsqc(csdf)
 1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
 }
 \description{
-Converts the output data frame of fetch_entry_chemical_shifts into H1-N15 HSQC data frame
+Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)

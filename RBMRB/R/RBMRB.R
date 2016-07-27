@@ -1,5 +1,6 @@
-#'Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
+#'NMR Chemical shifts data in R data frame
 #'
+#'Downloads NMR chemical shift data from BMRB(www.bmrb.wisc.edu) for a given Entry ID or list of Entry IDs
 #'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format exampe:c(17074,17076,17077)
 #'@return all available chemical shift data in R data frame
 #'@export fetch_entry_chemical_shifts
@@ -42,8 +43,9 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 }
 
 
-#'Converts the output data frame of fetch_entry_chemical_shifts into H1-N15 HSQC data frame
+#'Reformats chemical shift dataframe into H1-N15 HSQC dataframe
 #'
+#'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
 #'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
 #'@return 1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
 #'@export convert_cs_to_n15hsqc
@@ -67,8 +69,9 @@ convert_cs_to_n15hsqc<-function(csdf){
   return(outdat)
 }
 
-#'Downloads the chemical shift table for a given atom from macromolecule/metabolomics database
+#'NMR Chemical shifts list
 #'
+#'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database
 #'@param atom ==> atom name like CA,CB2
 #'@param db ==> macromolecules, metabolomics
 #'@return list of all atom chemical shifts for all BMRB entries as a R data frame
@@ -96,16 +99,17 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   return(dat_frame)
 }
 
-#'Plots 15N-HSQC spectrum/spectra of given bmrb id/ list of bmrb ids. Plot type can be set as eight scatter (or) line.
+#'Simulate H1-N15 HSQC spectra
 #'
+#'Simulates H1-N15 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
 #'@param idlist ==> list of bmrb ids c(17074,17076,17077)
 #'@param type ==> scatter/line default=scatter
 #'@return plot object
-#'@export plot_n15hsqc
+#'@export simulate_n15hsqc
 #'@examples
-#'plot_hsqc<-plot_n15hsqc(c(17074,17076,17077))
-#'plot_hsqc<-plot_n15hsqc(18857,'line')
-plot_n15hsqc<-function(idlist,type='scatter'){
+#'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077))
+#'plot_hsqc<-simulate_n15hsqc(18857,'line')
+simulate_n15hsqc<-function(idlist,type='scatter'){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
   if (all(is.na(hsqc_data))){

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_atom_chemical_shifts}
 \alias{fetch_atom_chemical_shifts}
-\title{Downloads the chemical shift table for a given atom from macromolecule/metabolomics database}
+\title{NMR Chemical shifts list}
 \usage{
 fetch_atom_chemical_shifts(atom, db = "macromolecules")
 }
@@ -15,7 +15,7 @@ fetch_atom_chemical_shifts(atom, db = "macromolecules")
 list of all atom chemical shifts for all BMRB entries as a R data frame
 }
 \description{
-Downloads the chemical shift table for a given atom from macromolecule/metabolomics database
+Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database
 }
 \examples{
 df<-fetch_atom_chemical_shifts('CB2','macromolecules')

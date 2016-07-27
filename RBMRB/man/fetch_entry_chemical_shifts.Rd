@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_entry_chemical_shifts}
 \alias{fetch_entry_chemical_shifts}
-\title{Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries}
+\title{NMR Chemical shifts data in R data frame}
 \usage{
 fetch_entry_chemical_shifts(BMRBidlist)
 }
@@ -13,7 +13,7 @@ fetch_entry_chemical_shifts(BMRBidlist)
 all available chemical shift data in R data frame
 }
 \description{
-Downloads chemical shift data from BMRB for a given BMRB entry/list of BMRB entries
+Downloads NMR chemical shift data from BMRB(www.bmrb.wisc.edu) for a given Entry ID or list of Entry IDs
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
