@@ -8,7 +8,7 @@
 #'df<-fetch_entry_chemical_shifts(15060)
 #'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 fetch_entry_chemical_shifts<-function(BMRBidlist){
-  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v0.4/jsonrpc"
+  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
   rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
   c<-rjson::fromJSON(httr::content(rawdata,'text'))
@@ -81,7 +81,7 @@ convert_cs_to_n15hsqc<-function(csdf){
 #'df<-fetch_atom_chemical_shifts('C1','metabolomics')
 fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
-  raw_data<-httr::GET(bmrb_api,path=paste0("/v0.4/rest/chemical_shifts/",atom,"/",db))
+  raw_data<-httr::GET(bmrb_api,path=paste0("/v1/rest/chemical_shifts/",atom,"/",db))
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')

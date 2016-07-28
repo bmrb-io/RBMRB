@@ -1,8 +1,8 @@
 Package: RBMRB
 Type: Package
 Title: BMRB data in R environment
-Version: 0.4
-Date: 2016-01-07
+Version: 1.0
+Date: 2016-07-28
 Author: Kumaran Baskaran
 Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
 Description: Access BMRB data directly from interent from R envirnment
