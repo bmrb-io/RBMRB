@@ -1,34 +1,39 @@
 ---
 title: "RBMRB"
 author: "Kumaran Baskaran"
-date: "January 12, 2016"
-output: html_document
+date: "July 29, 2016"
+output: word_document
 ---
 
 #RBMRB
 
-RBMRB is an API written in R  to import chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
-as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. 
+RBMRB is a library to fetch chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
+as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. It is using the [BMRB-API](https://github.com/uwbmrb/BMRB-API) in the back end to fetch the data from BMRB database. 
 
 ##Installation
 
 ### Requirements
 
-RBMRB requires the package **httr** to import data from BMRB and **reshape2** to format the data into a data frame in R. If you already have these packages installed, then you may proceed with the installation of RBMRB package, otherwise please install these packages first and then proceed further.
+RBMRB library is  developed and tested in  R version 3.3. It requires the following R packages
+
+
+ **data.table** to import data from BMRB web server
+ **httr** to format the imported data into a data frame in R. 
+ **rjson** to deal with BMRB-API
+ **ggplot2** to simulate spectra
+ **plotly** for interactive graphics in simulated spectra
+ 
+ Users should ensure the proper installtion of above packages, before proceeding to RMBRM insallation.
 
 Here is the instruction to install those packages. Open your R and use the following command 
 
-```{r eval=F}
-install.packages(c("httr","reshape2"))
-```
-you may also install packages by navigating through menu in RStudio or R.
 
-Once you have installed the necessary packages, then you can download and install RBMRB.
-Source package can be downloaded from this [link](https://github.com/uwbmrb/RBMRB/blob/master/RBMRB_0.1.tar.gz?raw=true)
+Once the necessary packages has been installed, the source file can be downloaded from GitHub.
+Source package can be downloaded from this [link](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_1.0.tar.gz)
 
 After downloading use the following command to install RBMRB
-```{r}
-install.packages("~/Downloads/RBMRB_0.1.tar.gz",repos=NULL,type="source")
+```{r eval=F}
+install.packages("~/Downloads/RBMRB_1.0.tar.gz",repos=NULL,type="source")
 ```
 
 Note: provide the correct path to the downloaded file.
@@ -42,7 +47,7 @@ library(RBMRB)
 
 To fetch chemical shift table of a specific entry
 ```{r}
-df<-fetchBMRB('15060')
+df<-fetch_entry_chemical_shifts(15060)
 ```
 Imported data frame contains following columns
 ```{r}
@@ -51,82 +56,58 @@ colnames(df)
 
 Its also possible to load multiple entries as a single data frame
 ```{r}
-df<-fetchBMRB('17074,17076,17077')
+df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 ```
 
-These data frames can be reformatted using the function **N15HSQC** to simulate HSQC spectrum from the data frame.
+These data frames can be reformatted using the function **convert_cs_to_n15hsqc** to simulate HSQC spectrum from the data frame.
 ```{r}
-hsqc<-N15HSQC(df)
+hsqc<-convert_cs_to_n15hsqc(df)
 ```
 Now user can use his own plotting function to visualize HSQC spectrum
 for example
 ```{r}
 library(ggplot2)
 ggplot(hsqc)+
-  geom_point(aes(H,N,color=as.character(BMRB_ID)))+
-  scale_x_reverse()+scale_y_reverse()
+  geom_point(aes(H,N,color=as.character(Entry_ID)))+
+  scale_x_reverse()+scale_y_reverse()+theme(legend.title=element_blank())
 ```
 
-The entire chemical shift table can be imported using the following command. 
+The entire chemical shift for a given atom can be downloaded usign the following command
 ```{r}
-df_all<-fetchallBMRB()
+df_cb2<-fetch_atom_chemical_shifts('CB2')
 ```
-Note: This will take some time, depends on the internet connection speed  to download ~500MB csv file from the FTP
-server.
-Once it is downloaded, then you have full chemical shift information of all entries. 
+
+Once it is downloaded, then you have full chemical shift list of a given atom from  all entries from the macromolecules databse. 
 ```{r}
-colnames(df_all)
+colnames(df_cb2)
 ```
 
-Hint: If you are going to use  ***fetchallBMRB*** very often, then it is a good idea to download the all atom chemical shift csv file from [this](http://www.bmrb.wisc.edu/ftp/pub/bmrb/relational_tables/nmr-star3.1/Atom_chem_shift.csv) ftp server and specify the file name with correct local path in the function as a parameter
+Similarly chemical shift list from metabolites database can also be fetched usign the same command
 
-```{r eval=F}
-df_all=fetchallBMRB('~/Downloads/Atom_chem_shift.csv')
+```{r}
+df_c1<-fetch_atom_chemical_shifts('C1',db="metabolomics")
 ```
 
 #Data Visualization
+RBMRB library has a function to simulate 1H-15N HSQC spectrum directly from BMRB database.
 
-This API is just an interface to import chemical shift data from BMRB database. This gives the freedom for an user to chose any tool from R to visualize the data. We created some examples in [GitHub](https://github.com/uwbmrb) using this API. 
 
 ## HSQC Spectra
-
-One of the most popular data visualization from BMRB is the simulation of N15-HSQC spectra. Now this simulation can be done on the user computer using this API
-
-You need to have the following tools installed in your R to use this visualization
-
-Required packages:
-
-* shiny
-* ggplot2
-* ggvis
-* reshape2
-* httr
-* plotly
-
-you may install these packages by using the following command or navigating through menu in RStudio
-```{r eval=F}
-install.packages(c('shiny','ggvis','httr','reshape2','ggplot2','plotly'))
+```{r}
+spec1<-simulate_n15hsqc(c(17074,17076,17077))
+spec1
 ```
 
-The visualization can be run directly from Git Hub
-
-```{r eval=F}
-library(shiny)
-runGitHub('ShinySpectra','uwbmrb')
+```{r}
+spec2<-simulate_n15hsqc(c(17074,17076,17077),type='line')
+spec2
 ```
 
-![ShinySpectra](./fig/ShinySpectra1.png)
-![ShinySpectra](./fig/ShinySpectra2.png)
+An interactive plot can also be created if the package **plotly** has been installed properly.
 
-
-## Chemical shift histograms
-
-Next example is the chemical shift histogram of all atoms in the BMRB data base. 
-This can also be run directly from Git Hub
-
-```{r eval=F}
-library(shiny)
-runGitHub('ShinyHistogram2','uwbmrb')
+```{r}
+spec3<-simulate_n15hsqc(c(17074,17076,17077),type='line',interactive = T)
+spec3
 ```
-![ShinyHistogram](./fig/ShinyHistogram.png)
 
+Tool tip will show the dtails about the peak when you mouse over and can also be zoomed using mouse. 
