@@ -11,7 +11,7 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
   rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
-  c<-rjson::fromJSON(httr::content(rawdata,'text'))
+  c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
   if (length(c$result)!=0){
   for (x in c$result){
     for (y in x$`_Atom_chem_shift`){
@@ -29,8 +29,8 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
     }
     if (exists('cs_data')){
       colnames(cs_data)<-cstags
-      cs_data$Val<-as.numeric(cs_data$Val)
-      cs_data$Val_err<-as.numeric(cs_data$Val_err)}
+      cs_data$Val<-suppressWarnings(as.numeric(cs_data$Val))
+      cs_data$Val_err<-suppressWarnings(as.numeric(cs_data$Val_err))}
     else{
       warning('No data')
       cs_data<-NA}
@@ -93,8 +93,8 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   dat_tags<-as.data.frame(data.table::data.table(t(data.table::as.data.table(dat$columns))))
   for (i in 1:length(dat_tags$V1)){dat_tags$V1[i]<-strsplit(dat_tags$V1[i],"[.]")[[1]][2]}
   colnames(dat_frame)<-dat_tags$V1
-  dat_frame$Val<-as.numeric(dat_frame$Val)
-  dat_frame$Val_err<-as.numeric(dat_frame$Val_err)
+  dat_frame$Val<-suppressWarnings(as.numeric(dat_frame$Val))
+  dat_frame$Val_err<-suppressWarnings(as.numeric(dat_frame$Val_err))
   }
   return(dat_frame)
 }
@@ -109,7 +109,7 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'@examples
 #'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077))
 #'plot_hsqc<-simulate_n15hsqc(18857,'line')
-simulate_n15hsqc<-function(idlist,type='scatter'){
+simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
   if (all(is.na(hsqc_data))){
@@ -128,11 +128,15 @@ simulate_n15hsqc<-function(idlist,type='scatter'){
     ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+ #+ theme(legend.position="none")
     ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
   }
-  plt2<-plotly::plotly_build(plt)
-  plt2$layout$annotations=F
-  #plt2$layout$showlegend=F
-  plt2$layout$xaxis$autorange = "reversed"
-  plt2$layout$yaxis$autorange = "reversed"
+  if (interactive){
+    plt2<-plotly::plotly_build(plt)
+    plt2$layout$annotations=F
+    #plt2$layout$showlegend=F
+    plt2$layout$xaxis$autorange = "reversed"
+    plt2$layout$yaxis$autorange = "reversed"}
+  else{
+    plt2<-plt
+  }
   }
   return(plt2)
 }
