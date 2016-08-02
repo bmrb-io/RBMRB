@@ -17,11 +17,11 @@ as a data frame in R. This facilitates access to BMRB data for statistical analy
 RBMRB library is  developed and tested in  R version 3.3. It requires the following R packages
 
 
- **data.table** to import data from BMRB web server
- **httr** to format the imported data into a data frame in R. 
- **rjson** to deal with BMRB-API
- **ggplot2** to simulate spectra
- **plotly** for interactive graphics in simulated spectra
+ + **httr** to import data from BMRB web server
+ + **data.table** to format the imported data into a data frame in R. 
+ + **rjson** to deal with BMRB-API
+ + **ggplot2** to simulate spectra
+ + **plotly** for interactive graphics in simulated spectra
  
  Users should ensure the proper installtion of above packages, before proceeding to RMBRM insallation.
 

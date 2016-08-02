@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{convert_cs_to_n15hsqc}
 \alias{convert_cs_to_n15hsqc}
-\title{Reformats chemical shift dataframe into H1-N15 HSQC dataframe}
+\title{Reformats chemical shift dataframe for easy plotting}
 \usage{
 convert_cs_to_n15hsqc(csdf)
 }
