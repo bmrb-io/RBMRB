@@ -43,7 +43,7 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 }
 
 
-#'Reformats chemical shift dataframe into H1-N15 HSQC dataframe
+#'Reformats chemical shift dataframe for easy plotting
 #'
 #'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
 #'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
@@ -104,11 +104,13 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'Simulates H1-N15 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
 #'@param idlist ==> list of bmrb ids c(17074,17076,17077)
 #'@param type ==> scatter/line default=scatter
+#'@param interactive ==> TRUE/FALSE default=FALSE
 #'@return plot object
 #'@export simulate_n15hsqc
 #'@examples
 #'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077))
 #'plot_hsqc<-simulate_n15hsqc(18857,'line')
+#'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077),interactive=TRUE)
 simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
@@ -120,18 +122,16 @@ simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
   hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
   if (type=='scatter'){
     plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))#+
-    #ggplot2::geom_line(ggplot2::aes(x=H,y=N,color=Comp_index_ID,label=key)) #+ theme(legend.position="none")
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
 
   } else {
     plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+ #+ theme(legend.position="none")
+    ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+
     ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
   }
   if (interactive){
     plt2<-plotly::plotly_build(plt)
     plt2$layout$annotations=F
-    #plt2$layout$showlegend=F
     plt2$layout$xaxis$autorange = "reversed"
     plt2$layout$yaxis$autorange = "reversed"}
   else{
