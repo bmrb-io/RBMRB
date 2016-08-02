@@ -4,7 +4,7 @@
 \alias{simulate_n15hsqc}
 \title{Simulate H1-N15 HSQC spectra}
 \usage{
-simulate_n15hsqc(idlist, type = "scatter")
+simulate_n15hsqc(idlist, type = "scatter", interactive = FALSE)
 }
 \arguments{
 \item{idlist}{==> list of bmrb ids c(17074,17076,17077)}
