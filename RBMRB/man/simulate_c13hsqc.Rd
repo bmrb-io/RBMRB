@@ -17,10 +17,11 @@ simulate_c13hsqc(idlist, type = "scatter", interactive = FALSE)
 plot object
 }
 \description{
-Simulates H1-N15 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+Simulates H1-C13 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
 }
 \examples{
 plot_hsqc<-simulate_c13hsqc(c(17074,17076,17077))
+plot_hsqc<-simulate_c13hsqc(18857,'line')
 plot_hsqc<-simulate_c13hsqc(c(17074,17076,17077),interactive=TRUE)
 }
 
