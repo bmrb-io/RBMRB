@@ -292,12 +292,12 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'@param type ==> scatter/line default=scatter
 #'@param interactive ==> TRUE/FALSE default=FALSE
 #'@return plot object
-#'@export simulate_n15hsqc
+#'@export HSQC_15N
 #'@examples
-#'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077))
-#'plot_hsqc<-simulate_n15hsqc(18857,'line')
-#'plot_hsqc<-simulate_n15hsqc(c(17074,17076,17077),interactive=TRUE)
-simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
+#'plot_hsqc<-HSQC_15N(c(17074,17076,17077))
+#'plot_hsqc<-HSQC_15N(18857,'line')
+#'plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=TRUE)
+HSQC_15N<-function(idlist,type='scatter',interactive=FALSE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
   if (all(is.na(hsqc_data))){
@@ -307,9 +307,15 @@ simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
   hsqc_data$Info=NA
   hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
   if (type=='scatter'){
+    if (length(idlist)>1){
     plt<-ggplot2::ggplot(hsqc_data)+
     ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+
       ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+    }else{
+      plt<-ggplot2::ggplot(hsqc_data)+
+        ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+
+        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+    }
 
   } else {
     plt<-ggplot2::ggplot(hsqc_data)+
@@ -333,15 +339,13 @@ simulate_n15hsqc<-function(idlist,type='scatter',interactive=FALSE){
 #'
 #'Simulates H1-C13 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
 #'@param idlist ==> list of bmrb ids c(17074,17076,17077)
-#'@param type ==> scatter/line default=scatter
 #'@param interactive ==> TRUE/FALSE default=FALSE
 #'@return plot object
-#'@export simulate_c13hsqc
+#'@export HSQC_13C
 #'@examples
-#'plot_hsqc<-simulate_c13hsqc(c(17074,17076,17077))
-#'plot_hsqc<-simulate_c13hsqc(18857,'line')
-#'plot_hsqc<-simulate_c13hsqc(c(17074,17076,17077),interactive=TRUE)
-simulate_c13hsqc<-function(idlist,type='scatter',interactive=FALSE){
+#'plot_hsqc<-HSQC_13C(c(17074,17076,17077))
+#'plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=TRUE)
+HSQC_13C<-function(idlist,interactive=FALSE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_c13hsqc(cs_data)
   if (all(is.na(hsqc_data))){
@@ -350,17 +354,16 @@ simulate_c13hsqc<-function(idlist,type='scatter',interactive=FALSE){
   else{
     hsqc_data$Info=NA
     hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Atom_ID_H,hsqc_data$Atom_ID_C,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
-    if (type=='scatter'){
-      plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
-        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
 
-    } else {
+      if (length(idlist)>1){
       plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_line(ggplot2::aes(x=H,y=C,group=Comp_index_ID,label=Info))+
         ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
-    }
+      }else{
+        plt<-ggplot2::ggplot(hsqc_data)+
+          ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+      }
     if (interactive){
       plt2<-plotly::plotly_build(plt)
       plt2$layout$annotations=F}
@@ -404,7 +407,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA){
   names(cs)[names(cs)=="Val.y"]<-atom2
   cs$Info=paste(cs$Comp_index_ID,cs$Entity_ID,cs$Atom_ID_1,cs$Atom_ID_2,cs$Assigned_chem_shift_list_ID,sep=",")
   plt<-ggplot2::ggplot(cs)+
-    ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
+    ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
     ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
     ggplot2::xlab(atom1)+
     ggplot2::ylab(atom2)
@@ -445,4 +448,49 @@ filter_residue<-function(df){
   return(out_dat)
 }
 
+
+
+#'Simulate TOCSY spectra
+#'
+#'Simulates TOCSY spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+#'@param idlist ==> list of bmrb ids c(17074,17076,17077)
+#'@param interactive ==> TRUE/FALSE default=FALSE
+#'@return plot object
+#'@export TOCSY
+#'@examples
+#'plot_tocsy<-TOCSY(c(17074,17076,17077))
+#'plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=TRUE)
+TOCSY<-function(idlist,interactive=FALSE){
+  cs<-fetch_entry_chemical_shifts(idlist)
+  cs_h<-subset(cs,Atom_type=="H")
+  tocsy_data<-merge(cs_h,cs_h,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (all(is.na(tocsy_data))){
+    warning('No data')
+    plt2<-NA}
+  else{
+    tocsy_data$Info=NA
+    tocsy_data$Info=paste(tocsy_data$Comp_index_ID,tocsy_data$Entity_ID,tocsy_data$Comp_ID.x,tocsy_data$Atom_ID.x,tocsy_data$Atom_ID.y,tocsy_data$Assigned_chem_shift_list_ID,sep=",")
+    if (length(idlist)>1){
+      plt<-ggplot2::ggplot(tocsy_data)+
+        ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Entry_ID,label=Info))+
+        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
+        ggplot2::xlab("H")+ggplot2::ylab("H")
+    }else{
+      plt<-ggplot2::ggplot(tocsy_data)+
+        ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID.x,label=Info))+
+        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
+        ggplot2::xlab("H")+ggplot2::ylab("H")
+    }
+    if (interactive){
+      plt2<-plotly::plotly_build(plt)
+      plt2$layout$annotations=F}
+    #plt2$layout$xaxis$autorange = "reversed"
+    #plt2$layout$yaxis$autorange = "reversed"}
+    else{
+      plt2<-plt
+    }
+  }
+  return(plt2)
+
+}
 
