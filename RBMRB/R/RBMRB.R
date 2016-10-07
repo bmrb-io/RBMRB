@@ -373,3 +373,44 @@ simulate_c13hsqc<-function(idlist,type='scatter',interactive=FALSE){
   return(plt2)
 }
 
+
+#'NMR 2D peak statistics
+#'
+#'Plots the correlated chemical shift distribution of any two atoms from BMRB database
+#'@param atom1 ==> atom name like CA,CB2
+#'@param atom2 ==> atom name like HA,HB2
+#'@param res  ==> residue name like ALA,GLY
+#'@return plot object
+#'@export chemical_shift_corr
+#'@examples
+#'plt<-chemical_shift_corr('CG','HG2','MET')
+chemical_shift_corr<-function(atom1,atom2,res=NA){
+  at1_cs<-fetch_atom_chemical_shifts(atom1)
+  at2_cs<-fetch_atom_chemical_shifts(atom2)
+  if (is.na(res)){
+    cs1<-at1_cs
+    cs2<-at2_cs
+  }
+  else{
+    cs1<-subset(at1_cs,Comp_ID==res)
+    cs2<-subset(at2_cs,Comp_ID==res)
+  }
+  cs<-merge(cs1,cs2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","Atom_ID.x","Atom_ID.y","Val.x","Val.y")]
+  names(cs)[names(cs)=="Comp_ID.x"]<-"Comp_ID_1"
+  names(cs)[names(cs)=="Comp_ID.y"]<-"Comp_ID_2"
+  names(cs)[names(cs)=="Atom_ID.x"]<-"Atom_ID_1"
+  names(cs)[names(cs)=="Atom_ID.y"]<-"Atom_ID_2"
+  names(cs)[names(cs)=="Val.x"]<-atom1
+  names(cs)[names(cs)=="Val.y"]<-atom2
+  cs$Info=paste(cs$Comp_index_ID,cs$Entity_ID,cs$Atom_ID_1,cs$Atom_ID_2,cs$Assigned_chem_shift_list_ID,sep=",")
+  plt<-ggplot2::ggplot(cs)+
+    ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
+    ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
+    ggplot2::xlab(atom1)+
+    ggplot2::ylab(atom2)
+  plt2<-plotly::plotly_build(plt)
+  plt2$layout$annotations=F
+  return(plt2)
+}
+
+
