@@ -388,8 +388,8 @@ chemical_shift_corr<-function(atom1,atom2,res=NA){
   at1_cs<-fetch_atom_chemical_shifts(atom1)
   at2_cs<-fetch_atom_chemical_shifts(atom2)
   if (is.na(res)){
-    cs1<-at1_cs
-    cs2<-at2_cs
+    cs1<-filter_residue(at1_cs)
+    cs2<-filter_residue(at2_cs)
   }
   else{
     cs1<-subset(at1_cs,Comp_ID==res)
@@ -411,6 +411,38 @@ chemical_shift_corr<-function(atom1,atom2,res=NA){
   plt2<-plotly::plotly_build(plt)
   plt2$layout$annotations=F
   return(plt2)
+}
+
+#'Filter for standard 20 amino acids
+#'
+#'Filters 20 standard amino acids using Comp_ID
+#'@param df ==> data frame with Comp_ID column
+#'@return filtered data frame
+#'@export filter_residue
+#'@examples
+#'df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
+filter_residue<-function(df){
+  out_dat<-subset(df,Comp_ID=="ALA" |
+                    Comp_ID=="ARG" |
+                    Comp_ID=="ASP" |
+                    Comp_ID=="ASN" |
+                    Comp_ID=="CYS" |
+                    Comp_ID=="GLU" |
+                    Comp_ID=="GLN" |
+                    Comp_ID=="GLY" |
+                    Comp_ID=="HIS" |
+                    Comp_ID=="ILE" |
+                    Comp_ID=="LEU" |
+                    Comp_ID=="LYS" |
+                    Comp_ID=="MET" |
+                    Comp_ID=="PHE" |
+                    Comp_ID=="PRO" |
+                    Comp_ID=="SER" |
+                    Comp_ID=="THR" |
+                    Comp_ID=="TRP" |
+                    Comp_ID=="TYR" |
+                    Comp_ID=="VAL")
+  return(out_dat)
 }
 
 
