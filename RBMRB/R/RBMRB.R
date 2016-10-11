@@ -450,7 +450,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   plt<-ggplot2::ggplot(cs)+
     #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
     #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
-    ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=500)+
+    ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
     #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
     ggplot2::xlab(atom1)+
     ggplot2::ylab(atom2)
@@ -458,7 +458,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
       plt<-ggplot2::ggplot(cs)+
         #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
         #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
-        ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=500)+
+        ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
         ggplot2::xlab(atom1)+
         ggplot2::ylab(atom2)
