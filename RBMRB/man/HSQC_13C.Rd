@@ -4,12 +4,12 @@
 \alias{HSQC_13C}
 \title{Simulate H1-C13 HSQC spectra}
 \usage{
-HSQC_13C(idlist, interactive = FALSE)
+HSQC_13C(idlist, interactive = TRUE)
 }
 \arguments{
 \item{idlist}{==> list of bmrb ids c(17074,17076,17077)}
 
-\item{interactive}{==> TRUE/FALSE default=FALSE}
+\item{interactive}{==> TRUE/FALSE default=TRUE}
 }
 \value{
 plot object
@@ -19,6 +19,6 @@ Simulates H1-C13 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. De
 }
 \examples{
 plot_hsqc<-HSQC_13C(c(17074,17076,17077))
-plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=TRUE)
+plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
 }
 

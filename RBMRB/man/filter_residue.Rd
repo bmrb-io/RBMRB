@@ -10,7 +10,7 @@ filter_residue(df)
 \item{df}{==> data frame with Comp_ID column}
 }
 \value{
-filtered data frame
+output data frame which contains information from only standard 20 amino acids.
 }
 \description{
 Filters 20 standard amino acids using Comp_ID

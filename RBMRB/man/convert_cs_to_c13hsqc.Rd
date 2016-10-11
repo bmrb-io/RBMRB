@@ -10,7 +10,7 @@ convert_cs_to_c13hsqc(csdf)
 \item{csdf}{==> chemical shift data frame from fetch_entry_chemical_shift}
 }
 \value{
-1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
+1H-C13 chemical shift list on the same row combined using comp index ID and bmrb ID
 }
 \description{
 Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and C13 chemical shifts, which could be used to simulate H1-C15 HSQC spectra

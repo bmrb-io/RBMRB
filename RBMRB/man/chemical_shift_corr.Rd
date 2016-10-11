@@ -2,9 +2,10 @@
 % Please edit documentation in R/RBMRB.R
 \name{chemical_shift_corr}
 \alias{chemical_shift_corr}
-\title{NMR 2D peak statistics}
+\title{Chemical shift correlation between two atoms from the same residue}
 \usage{
-chemical_shift_corr(atom1, atom2, res = NA)
+chemical_shift_corr(atom1, atom2, res = NA, type = "c",
+  interactive = TRUE)
 }
 \arguments{
 \item{atom1}{==> atom name like CA,CB2}
@@ -12,14 +13,19 @@ chemical_shift_corr(atom1, atom2, res = NA)
 \item{atom2}{==> atom name like HA,HB2}
 
 \item{res}{==> residue name like ALA,GLY}
+
+\item{type}{==> plot type 'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set}
+
+\item{interactive}{==> TRUE/FALSE default=RUE}
 }
 \value{
 plot object
 }
 \description{
-Plots the correlated chemical shift distribution of any two atoms from BMRB database
+Plots the correlated chemical shift distribution of any two atoms in a residue from BMRB database
 }
 \examples{
 plt<-chemical_shift_corr('CG','HG2','MET')
+plt<-chemical_shift_corr('CG','HG2','MET',interactive=FALSE)
 }
 

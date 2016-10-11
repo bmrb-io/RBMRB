@@ -4,12 +4,12 @@
 \alias{TOCSY}
 \title{Simulate TOCSY spectra}
 \usage{
-TOCSY(idlist, interactive = FALSE)
+TOCSY(idlist, interactive = TRUE)
 }
 \arguments{
 \item{idlist}{==> list of bmrb ids c(17074,17076,17077)}
 
-\item{interactive}{==> TRUE/FALSE default=FALSE}
+\item{interactive}{==> TRUE/FALSE default=TRUE}
 }
 \value{
 plot object
@@ -19,6 +19,6 @@ Simulates TOCSY spectra directly from BMRB(www.bmrb.wisc.edu) database. Default 
 }
 \examples{
 plot_tocsy<-TOCSY(c(17074,17076,17077))
-plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=TRUE)
+plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=FALSE)
 }
 

@@ -4,14 +4,14 @@
 \alias{HSQC_15N}
 \title{Simulate H1-N15 HSQC spectra}
 \usage{
-HSQC_15N(idlist, type = "scatter", interactive = FALSE)
+HSQC_15N(idlist, type = "scatter", interactive = TRUE)
 }
 \arguments{
 \item{idlist}{==> list of bmrb ids c(17074,17076,17077)}
 
 \item{type}{==> scatter/line default=scatter}
 
-\item{interactive}{==> TRUE/FALSE default=FALSE}
+\item{interactive}{==> TRUE/FALSE default=TRUE}
 }
 \value{
 plot object
@@ -22,6 +22,6 @@ Simulates H1-N15 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. De
 \examples{
 plot_hsqc<-HSQC_15N(c(17074,17076,17077))
 plot_hsqc<-HSQC_15N(18857,'line')
-plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=TRUE)
+plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
 }
 
