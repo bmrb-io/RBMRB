@@ -345,8 +345,8 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   if (interactive){
     plt2<-plotly::plotly_build(plt)
     plt2$layout$annotations=F
-    plt2$layout$xaxis$autorange = "reversed"
-    plt2$layout$yaxis$autorange = "reversed"}
+    plt2$x$layout$xaxis$autorange = "reversed"
+    plt2$x$layout$yaxis$autorange = "reversed"}
   else{
     plt2<-plt
   }
@@ -398,8 +398,8 @@ HSQC_13C<-function(idlist,interactive=TRUE){
     if (interactive){
       plt2<-plotly::plotly_build(plt)
       plt2$layout$annotations=F
-      plt2$layout$xaxis$autorange = "reversed"
-      plt2$layout$yaxis$autorange = "reversed"}
+      plt2$x$layout$xaxis$autorange = "reversed"
+      plt2$x$layout$yaxis$autorange = "reversed"}
     else{
       plt2<-plt
     }
@@ -482,8 +482,8 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   if (interactive){
     plt2<-plotly::plotly_build(plt)
     plt2$layout$annotations=F
-    plt2$layout$xaxis$autorange = "reversed"
-    plt2$layout$yaxis$autorange = "reversed"}
+    plt2$x$layout$xaxis$autorange = "reversed"
+    plt2$x$layout$yaxis$autorange = "reversed"}
   else{
     plt2<-plt
   }
@@ -572,8 +572,8 @@ TOCSY<-function(idlist,interactive=TRUE){
     if (interactive){
       plt2<-plotly::plotly_build(plt)
       plt2$layout$annotations=F
-      plt2$layout$xaxis$autorange = "reversed"
-      plt2$layout$yaxis$autorange = "reversed"}
+      plt2$x$layout$xaxis$autorange = "reversed"
+      plt2$x$layout$yaxis$autorange = "reversed"}
     else{
       plt2<-plt
     }
