@@ -1,37 +1,39 @@
 ---
 title: "RBMRB"
 author: "Kumaran Baskaran"
-date: "July 29, 2016"
-output: word_document
+date: "November 08, 2016"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 #RBMRB
+BMRB collects, annotates, archives, and disseminates (worldwide in the public domain) the important spectral and quantitative data derived from NMR spectroscopic investigations of biological macromolecules and metabolites. The goal is to empower scientists in their analysis of the structure, dynamics, and chemistry of biological systems and to support further development of the field of biomolecular NMR spectroscopy
 
-RBMRB is a library to fetch chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
-as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. It is using the [BMRB-API](https://github.com/uwbmrb/BMRB-API) in the back end to fetch the data from BMRB database. 
+RBMRB is a library to fetch NMR chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
+as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. It is using the [BMRB-API](https://github.com/uwbmrb/BMRB-API)  to fetch the data from BMRB database. 
 
 ##Installation
-
-### Requirements
-
-RBMRB library is  developed and tested in  R version 3.3. It requires the following R packages
+RBMRB library has been developed and tested in  R version 3.3.x.  It requires the following R packages preinstalled
 
 
- + **httr** to import data from BMRB web server
- + **data.table** to format the imported data into a data frame in R. 
- + **rjson** to deal with BMRB-API
- + **ggplot2** to simulate spectra
- + **plotly** for interactive graphics in simulated spectra
+ + **httr** to import data from BMRB web server(version 1.2.1 or later)
+ + **data.table** to format the imported data into a data frame in R (version 1.9.6 or later)
+ + **rjson** to deal with BMRB-API (version 0.2.15 or later)
+ + **ggplot2** to simulate spectra (version 2.1.0 or later)
+ + **plotly** for interactive graphics in simulated spectra (version 4.5.2 or later)
  
- Users should ensure the proper installtion of above packages, before proceeding to RMBRM insallation.
+Users should make sure that the above packages have beed installed correctly with the required versions, before proceeding to RMBRM insallation.
 
 Here is the instruction to install those packages. Open your R and use the following command 
+```{r eval=FALSE}
+installed.packages(c("httr","data.table","rjson","ggplot2","plotly"))
+```
 
+Once the necessary packages have been installed, proceed with RMRBM installation. The source file can be downloaded from [GitHub](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_1.0.tar.gz)
 
-Once the necessary packages has been installed, the source file can be downloaded from GitHub.
-Source package can be downloaded from this [link](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_1.0.tar.gz)
-
-After downloading use the following command to install RBMRB
+After downloading the source file, use the following command to install RBMRB library
 ```{r eval=F}
 install.packages("~/Downloads/RBMRB_1.0.tar.gz",repos=NULL,type="source")
 ```
@@ -45,69 +47,143 @@ RBMRB can be used in a similar way like any other library in R.
 library(RBMRB)
 ```
 
-To fetch chemical shift table of a specific entry
+##Data access
+BMRB data can be imported in two ways
+
++ **Entry method** Chemical shift data from single or multiple entries
++ **Atom method** Chemical shift data from all entries for a given atom
+
+###Entry method
+####fetch_entry_chemical_shifts:
+This function will fetch the 'Atom_chem_shift' loop from a NMR-STAR file for a given entry or a list of entries in CSV format. This function works on both macromolecules and metabolites data base. For metabilites entry ids should have right prefix (example 'bmse000034')
+
+######Examples:
 ```{r}
-df<-fetch_entry_chemical_shifts(15060)
-```
-Imported data frame contains following columns
-```{r}
-colnames(df)
+df1<-fetch_entry_chemical_shifts(15060)
+df2<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+df2<-fetch_entry_chemical_shifts(c('17074','17076','17077'))
+df3<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
 ```
 
-Its also possible to load multiple entries as a single data frame
+These data frames have the following columns
 ```{r}
-df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+colnames(df1)
 ```
 
-These data frames can be reformatted using the function **convert_cs_to_n15hsqc** to simulate HSQC spectrum from the data frame.
+###Atom method
+####fetch_atom_chemical_shifts:
+This function will fetch the chemical shift data from all the entries for a given atom. The atom name should be in NMR-STAR atom nomenclature.
+
+######Examples:
 ```{r}
-hsqc<-convert_cs_to_n15hsqc(df)
+df4<-fetch_atom_chemical_shifts('CG2')
+df5<-fetch_atom_chemical_shifts('C9')
 ```
-Now user can use his own plotting function to visualize HSQC spectrum
-for example
+
+These data frames have the following columns
 ```{r}
+colnames(df4)
+```
+
+##Data manipulation
+There are few data manipulation functions are availbale to facilitate plotting. 
+####convert_cs_to_n15hsqc:
+This function will reformat the chemical shift data frame into a data frame which is easy to plot the N15-HSQC spectrum from the data. 
+
+####Examples
+```{r}
+n15hsqc1<-convert_cs_to_n15hsqc(df1)
+n15hsqc2<-convert_cs_to_n15hsqc(df2)
 library(ggplot2)
-ggplot(hsqc)+
-  geom_point(aes(H,N,color=as.character(Entry_ID)))+
-  scale_x_reverse()+scale_y_reverse()+theme(legend.title=element_blank())
+plt1<-ggplot(n15hsqc1)+geom_point(aes(x=H,y=N))
+plt1
+plt2<-ggplot(n15hsqc2)+geom_point(aes(x=H,y=N,color=Entry_ID))
+plt2
+plt3<-ggplot(n15hsqc2)+geom_point(aes(x=H,y=N,color=Entry_ID))+geom_line(aes(x=H,y=N,group=Comp_index_ID))
+plt3
 ```
 
-The entire chemical shift for a given atom can be downloaded usign the following command
+####convert_cs_to_c13hsqc:
+This function will reformat the chemical shift data frame into a data frame which is easy to plot the C13-HSQC spectrum from the data. 
+
+####Examples
 ```{r}
-df_cb2<-fetch_atom_chemical_shifts('CB2')
+c13hsqc1<-convert_cs_to_c13hsqc(df1)
+c13hsqc2<-convert_cs_to_c13hsqc(df2)
+library(ggplot2)
+plt1<-ggplot(c13hsqc1)+geom_point(aes(x=H,y=C))
+plt1
+plt2<-ggplot(c13hsqc2)+geom_point(aes(x=H,y=C,color=Entry_ID))
+plt2
 ```
 
-Once it is downloaded, then you have full chemical shift list of a given atom from  all entries from the macromolecules databse. 
+####convert_cs_to_tocsy:
+This function will reformat the chemical shift data frame into a data frame which is easy to plot the TOCSY spectrum from the data. Note : Since both dimensions have protein chemical shifts, the columns are named as Val.x and Val.y
+
+####Examples
 ```{r}
-colnames(df_cb2)
+tocsy1<-convert_cs_to_tocsy(df1)
+tocsy2<-convert_cs_to_tocsy(df2)
+library(ggplot2)
+plt1<-ggplot(tocsy1)+geom_point(aes(x=Val.x,y=Val.y))
+plt1
+plt2<-ggplot(tocsy2)+geom_point(aes(x=Val.x,y=Val.y,color=Entry_ID))
+plt2
 ```
 
-Similarly chemical shift list from metabolites database can also be fetched usign the same command
-
+####filter_residue:
+This function will filter the data frame and remove all non standard amino acids. The data frame should contain the amino acid information in the Comp_ID column. 
+####Examples
 ```{r}
-df_c1<-fetch_atom_chemical_shifts('C1',db="metabolomics")
+df6<-fetch_atom_chemical_shifts('CG2')
+df7<-filter_residue(df6)
 ```
 
-#Data Visualization
-RBMRB library has a function to simulate 1H-15N HSQC spectrum directly from BMRB database.
+##Data visualization
 
+RBMRB library contains few functions to generate interactive visualization of BMRB data with out any data manipulation. The interactive visualizations use **plotly** library. If user has problem with plotly, then he may disable it by providing an argument 'interactive=FALSE' for these functions. 
 
-## HSQC Spectra
+####HSQC_15N
+This function will simulae N15-HSQC spectrum for a given entry or list of entries. 
+
+#####Examples
+
+These interactive visualization can be exported as single stand alone html file
 ```{r}
-spec1<-simulate_n15hsqc(c(17074,17076,17077))
+spec1<-HSQC_15N(15060)
 spec1
-```
-
-```{r}
-spec2<-simulate_n15hsqc(c(17074,17076,17077),type='line')
+spec2<-HSQC_15N(c(17074,17076,17077),type='line')
 spec2
-```
-
-An interactive plot can also be created if the package **plotly** has been installed properly.
-
-```{r}
-spec3<-simulate_n15hsqc(c(17074,17076,17077),type='line',interactive = T)
+spec3<-HSQC_15N(c(17074,17076,17077),type='line',interactive = F)
 spec3
 ```
 
-Tool tip will show the dtails about the peak when you mouse over and can also be zoomed using mouse. 
+####HSQC_13C
+This function will simulae C13-HSQC spectrum for a given entry or list of entries. 
+
+#####Examples
+
+These interactive visualization can be exported as single stand alone html file
+```{r}
+spec1<-HSQC_13C(15060)
+spec1
+spec2<-HSQC_13C(c(17074,17076,17077))
+spec2
+spec3<-HSQC_13C(c(17074,17076,17077),interactive = F)
+spec3
+```
+
+####TOCSY
+This function will simulae TOCSY spectrum for a given entry or list of entries. 
+
+#####Examples
+
+These interactive visualization can be exported as single stand alone html file
+```{r}
+spec1<-TOCSY(15060)
+spec1
+spec2<-TOCSY(c(17074,17076,17077))
+spec2
+spec3<-TOCSY(c(17074,17076,17077),interactive = F)
+spec3
+```

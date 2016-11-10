@@ -1,7 +1,7 @@
 #'NMR Chemical shifts data in R data frame
 #'
 #'Downloads NMR chemical shift data from BMRB(www.bmrb.wisc.edu) for a given Entry ID or list of Entry IDs
-#'@param BMRBidlist ==> sinlge BMRB ID / list of BMRB IDs in csv format exampe:c(17074,17076,17077)
+#'@param BMRBidlist ==> sinlge BMRB ID (or) list of BMRB IDs in csv format exampe: c(17074,17076,17077). To fetch from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036'))
 #'@return all available chemical shift data in R data frame
 #'@export fetch_entry_chemical_shifts
 #'@examples
@@ -65,6 +65,26 @@ convert_cs_to_n15hsqc<-function(csdf){
   outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
+  }
+  return(outdat)
+}
+
+#'Reformats chemical shift dataframe for easy plotting
+#'
+#'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
+#'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
+#'@return Tow 1H chemical shift lists on the same row combined using comp index ID and bmrb ID
+#'@export convert_cs_to_tocsy
+#'@examples
+#'df<-fetch_entry_chemical_shifts(15060)
+#'tocsy<-convert_cs_to_tocsy(df)
+convert_cs_to_tocsy<-function(csdf){
+  if (all(is.na(csdf))){
+    warning('No data')
+    outdat<-NA
+  }else{
+    cs_h<-subset(csdf,Atom_type=="H")
+    outdat<-merge(cs_h,cs_h,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   }
   return(outdat)
 }

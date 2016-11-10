@@ -7,7 +7,7 @@
 fetch_entry_chemical_shifts(BMRBidlist)
 }
 \arguments{
-\item{BMRBidlist}{==> sinlge BMRB ID / list of BMRB IDs in csv format exampe:c(17074,17076,17077)}
+\item{BMRBidlist}{==> sinlge BMRB ID (or) list of BMRB IDs in csv format exampe: c(17074,17076,17077). To fetch from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036'))}
 }
 \value{
 all available chemical shift data in R data frame
