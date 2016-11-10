@@ -2,21 +2,29 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_entry_chemical_shifts}
 \alias{fetch_entry_chemical_shifts}
-\title{NMR Chemical shifts data in R data frame}
+\title{NMR Chemical Shift data from BMRB in R data frame}
 \usage{
 fetch_entry_chemical_shifts(BMRBidlist)
 }
 \arguments{
-\item{BMRBidlist}{==> sinlge BMRB ID (or) list of BMRB IDs in csv format exampe: c(17074,17076,17077). To fetch from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036'))}
+\item{BMRBidlist}{sinlge BMRB ID (or) list of BMRB IDs in csv format
+To fetch data from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')}
 }
 \value{
-all available chemical shift data in R data frame
+R data frame that contains revelant BMRB chemical shift data
 }
 \description{
-Downloads NMR chemical shift data from BMRB(www.bmrb.wisc.edu) for a given Entry ID or list of Entry IDs
+Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
+# Downloads NMR chemical shifts of a single entry from BMRB
 df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+# Downloads NMR chemical shifts of multiple entries from BMRB
+df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+# Downloads data from BMRB metabolomics database
+}
+\seealso{
+\code{\link{fetch_atom_chemical_shifts}}
 }
 

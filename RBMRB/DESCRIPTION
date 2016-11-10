@@ -1,16 +1,17 @@
 Package: RBMRB
 Type: Package
 Title: BMRB data in R environment
-Version: 1.0
-Date: 2016-07-28
+Version: 2.0
+Date: 2016-11-08
 Author: Kumaran Baskaran
 Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
-Description: Access BMRB data directly from interent from R envirnment
+Description: Access NMR chemical shift data of macromolecules and metabolites from [BMRB](http://bmrb.wisc.edu/) database in R envirnment
+Depends:R(>= 3.3.0)
 License: GNU GENERAL PUBLIC LICENSE V 2.0
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Imports: data.table,
-          httr,
-          rjson,
-          ggplot2,
-          plotly
+Imports: data.table(>= 1.9.6),
+          httr(>= 1.2.1),
+          rjson(>= 0.2.15),
+          ggplot2(>= 2.1.0),
+          plotly(>= 4.5.2)

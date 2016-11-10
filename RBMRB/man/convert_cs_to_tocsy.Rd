@@ -7,16 +7,21 @@
 convert_cs_to_tocsy(csdf)
 }
 \arguments{
-\item{csdf}{==> chemical shift data frame from fetch_entry_chemical_shift}
+\item{csdf}{chemical shift data frame from \link{fetch_entry_chemical_shifts}}
 }
 \value{
-Tow 1H chemical shift lists on the same row combined using comp index ID and bmrb ID
+All possible combinations of proton chemical shifts in two columns as a R data frame
 }
 \description{
-Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
+Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
-hsqc<-convert_cs_to_tocsy(df)
+# Downloads data from BMRB
+tocsy<-convert_cs_to_tocsy(df)
+# Reformats for easy plotting
+}
+\seealso{
+\code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_n15hsqc}}
 }
 

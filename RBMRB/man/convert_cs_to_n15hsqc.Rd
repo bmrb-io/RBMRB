@@ -7,16 +7,21 @@
 convert_cs_to_n15hsqc(csdf)
 }
 \arguments{
-\item{csdf}{==> chemical shift data frame from fetch_entry_chemical_shift}
+\item{csdf}{Chemical shift data frame from \link{fetch_entry_chemical_shifts}}
 }
 \value{
-1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
+R data frame that contains proton and nitrogen chemical shifts in two columns for each residue
 }
 \description{
-Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
+Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
+#Downloads the chemical shift data from BMRB
 hsqc<-convert_cs_to_n15hsqc(df)
+#Reformats for easy plotting
+}
+\seealso{
+\code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_tocsy}}
 }
 

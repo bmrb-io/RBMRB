@@ -1,12 +1,18 @@
-#'NMR Chemical shifts data in R data frame
+#'NMR Chemical Shift data from BMRB in R data frame
 #'
-#'Downloads NMR chemical shift data from BMRB(www.bmrb.wisc.edu) for a given Entry ID or list of Entry IDs
-#'@param BMRBidlist ==> sinlge BMRB ID (or) list of BMRB IDs in csv format exampe: c(17074,17076,17077). To fetch from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036'))
-#'@return all available chemical shift data in R data frame
+#'Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
+#'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
+#'To fetch data from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
+#'@return R data frame that contains revelant BMRB chemical shift data
 #'@export fetch_entry_chemical_shifts
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
+#'# Downloads NMR chemical shifts of a single entry from BMRB
 #'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+#'# Downloads NMR chemical shifts of multiple entries from BMRB
+#'df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+#'# Downloads data from BMRB metabolomics database
+#'@seealso \code{\link{fetch_atom_chemical_shifts}}
 fetch_entry_chemical_shifts<-function(BMRBidlist){
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
   query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
@@ -45,13 +51,16 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
-#'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
-#'@return 1H-N15 chemical shift list on the same row combined using comp index ID and bmrb ID
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
+#'@param csdf Chemical shift data frame from \link{fetch_entry_chemical_shifts}
+#'@return R data frame that contains proton and nitrogen chemical shifts in two columns for each residue
 #'@export convert_cs_to_n15hsqc
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
+#'#Downloads the chemical shift data from BMRB
 #'hsqc<-convert_cs_to_n15hsqc(df)
+#'#Reformats for easy plotting
+#'@seealso \code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_n15hsqc<-function(csdf){
   if (all(is.na(csdf))){
     warning('No data')
@@ -71,13 +80,16 @@ convert_cs_to_n15hsqc<-function(csdf){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
-#'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
-#'@return Tow 1H chemical shift lists on the same row combined using comp index ID and bmrb ID
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
+#'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
+#'@return All possible combinations of proton chemical shifts in two columns as a R data frame
 #'@export convert_cs_to_tocsy
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
+#'# Downloads data from BMRB
 #'tocsy<-convert_cs_to_tocsy(df)
+#'# Reformats for easy plotting
+#'@seealso \code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_n15hsqc}}
 convert_cs_to_tocsy<-function(csdf){
   if (all(is.na(csdf))){
     warning('No data')
@@ -91,13 +103,16 @@ convert_cs_to_tocsy<-function(csdf){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from fetch_entry_chemical_shifts() into a simple dataframe contains only H1 and C13 chemical shifts, which could be used to simulate H1-C15 HSQC spectra
-#'@param csdf ==> chemical shift data frame from fetch_entry_chemical_shift
-#'@return 1H-C13 chemical shift list on the same row combined using comp index ID and bmrb ID
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and C13 chemical shifts, which could be used to simulate H1-C15 HSQC spectra
+#'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
+#'@return R data frame that contains proton and carbon chemical shifts in two columns for each residue
 #'@export convert_cs_to_c13hsqc
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
+#'# Downloads data from BMRB
 #'hsqc<-convert_cs_to_c13hsqc(df)
+#'# Reformats for easy plotting
+#'@seealso \code{\link{convert_cs_to_n15hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_c13hsqc<-function(csdf){
   if (all(is.na(csdf))){
     warning('No data')
@@ -275,16 +290,19 @@ convert_cs_to_c13hsqc<-function(csdf){
   return(outdat)
 }
 
-#'NMR Chemical shifts list
+#'NMR Chemical shifts list for a given atom from BMRB
 #'
-#'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database
-#'@param atom ==> atom name like CA,CB2
-#'@param db ==> macromolecules, metabolomics
-#'@return list of all atom chemical shifts for all BMRB entries as a R data frame
+#'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database for a given atom
+#'@param atom atom name like CA,CB2
+#'@param db macromolecules, metabolomics
+#'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_atom_chemical_shifts
 #'@examples
 #'df<-fetch_atom_chemical_shifts('CB2','macromolecules')
+#'# Downloads CB2 chemical shifts from macromolecules database at BMRB
 #'df<-fetch_atom_chemical_shifts('C1','metabolomics')
+#'# Downloads C1 chemical shifts from metabolomics database at BMRB
+#'@seealso \code{\link{fetch_entry_chemical_shifts}}
 fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v1/rest/chemical_shifts/",atom,"/",db))
@@ -428,7 +446,7 @@ HSQC_13C<-function(idlist,interactive=TRUE){
 }
 
 
-#'Chemical shift correlation between two atoms from the same residue
+#'Chemical shift correlation between two atoms from 20 standard amino acids
 #'
 #'Plots the correlated chemical shift distribution of any two atoms in a residue from BMRB database
 #'@param atom1 ==> atom name like CA,CB2

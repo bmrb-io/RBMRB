@@ -187,3 +187,12 @@ spec2
 spec3<-TOCSY(c(17074,17076,17077),interactive = F)
 spec3
 ```
+
+####chemical_shift_corr
+This function will plot the distribution of checmial shift correlation between any two atoms from the 20 standard amino acids. The distribution of a particular residue may turn on and off by clicking the residue name in the legand.
+```{r}
+corr_plot1<-chemical_shift_corr('CB','N')
+corr_plot1
+corr_plot2<-chemical_shift_corr('CA','HA*')
+corr_plot2
+```
