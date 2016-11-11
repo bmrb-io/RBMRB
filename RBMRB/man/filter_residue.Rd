@@ -7,15 +7,19 @@
 filter_residue(df)
 }
 \arguments{
-\item{df}{==> data frame with Comp_ID column}
+\item{df}{data frame with amino acid information in Comp_ID column}
 }
 \value{
-output data frame which contains information from only standard 20 amino acids.
+R data frame that contains information from only standard 20 amino acids.
 }
 \description{
-Filters 20 standard amino acids using Comp_ID
+Filters out non standard amino acids using Comp_ID
 }
 \examples{
 df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
+#Downloads all CG2 chemical shifts and removes non standard amino acids
+}
+\seealso{
+\code{\link{fetch_atom_chemical_shifts}}
 }
 

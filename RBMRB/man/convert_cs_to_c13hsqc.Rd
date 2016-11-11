@@ -13,7 +13,7 @@ convert_cs_to_c13hsqc(csdf)
 R data frame that contains proton and carbon chemical shifts in two columns for each residue
 }
 \description{
-Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and C13 chemical shifts, which could be used to simulate H1-C15 HSQC spectra
+Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains proton and carbon chemical shifts in tow columns.
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)

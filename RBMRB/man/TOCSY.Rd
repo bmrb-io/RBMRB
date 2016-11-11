@@ -2,23 +2,28 @@
 % Please edit documentation in R/RBMRB.R
 \name{TOCSY}
 \alias{TOCSY}
-\title{Simulate TOCSY spectra}
+\title{Simulate TOCSY spectra for a given entry or a list of entries from BMRB}
 \usage{
 TOCSY(idlist, interactive = TRUE)
 }
 \arguments{
-\item{idlist}{==> list of bmrb ids c(17074,17076,17077)}
+\item{idlist}{list of bmrb ids c(17074,17076,17077)}
 
-\item{interactive}{==> TRUE/FALSE default=TRUE}
+\item{interactive}{TRUE/FALSE default=TRUE}
 }
 \value{
 plot object
 }
 \description{
-Simulates TOCSY spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database.
 }
 \examples{
 plot_tocsy<-TOCSY(c(17074,17076,17077))
+#Simulates TOCSY spectra for the given 3 entries
 plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=FALSE)
+# Example to disable interactive plot feature
+}
+\seealso{
+\code{\link{HSQC_15N}} and \code{\link{HSQC_13C}}
 }
 

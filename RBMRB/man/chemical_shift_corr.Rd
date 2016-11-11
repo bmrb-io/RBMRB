@@ -2,30 +2,35 @@
 % Please edit documentation in R/RBMRB.R
 \name{chemical_shift_corr}
 \alias{chemical_shift_corr}
-\title{Chemical shift correlation between two atoms from the same residue}
+\title{Chemical shift correlation between any two atoms from a single residue}
 \usage{
 chemical_shift_corr(atom1, atom2, res = NA, type = "c",
   interactive = TRUE)
 }
 \arguments{
-\item{atom1}{==> atom name like CA,CB2}
+\item{atom1}{atom name in NMR-STAR nomenclature like CA,CB2}
 
-\item{atom2}{==> atom name like HA,HB2}
+\item{atom2}{atom name in NMR_STAR nomenclature like HA,HB2}
 
-\item{res}{==> residue name like ALA,GLY}
+\item{res}{residue name like ALA,GLY (optional by default includes all possible amino acids)}
 
-\item{type}{==> plot type 'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set}
+\item{type}{'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set}
 
-\item{interactive}{==> TRUE/FALSE default=RUE}
+\item{interactive}{TRUE/FALSE default=TRUE}
 }
 \value{
 plot object
 }
 \description{
-Plots the correlated chemical shift distribution of any two atoms in a residue from BMRB database
+Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database
 }
 \examples{
 plt<-chemical_shift_corr('CG','HG2','MET')
-plt<-chemical_shift_corr('CG','HG2','MET',interactive=FALSE)
+#plots the correlated chemical shift distribution between CG and HG2 from Methionine
+plt<-chemical_shift_corr('CG','HG2')
+#plots the correlated chemical shift distribution between CG and HG2 from all possible amino acids
+}
+\seealso{
+\code{\link{fetch_atom_chemical_shifts}}
 }
 

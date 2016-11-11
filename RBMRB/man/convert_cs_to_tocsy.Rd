@@ -10,10 +10,10 @@ convert_cs_to_tocsy(csdf)
 \item{csdf}{chemical shift data frame from \link{fetch_entry_chemical_shifts}}
 }
 \value{
-All possible combinations of proton chemical shifts in two columns as a R data frame
+R data frame that contains all possible combinations of proton chemical shifts in two columns
 }
 \description{
-Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
+Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton shifts in two columns.
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)

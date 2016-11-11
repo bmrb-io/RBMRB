@@ -7,9 +7,9 @@
 fetch_atom_chemical_shifts(atom, db = "macromolecules")
 }
 \arguments{
-\item{atom}{atom name like CA,CB2}
+\item{atom}{atom name in NMR-STAR atom nomenclature like CA,CB2}
 
-\item{db}{macromolecules, metabolomics}
+\item{db}{macromolecules, metabolomics (optional, by default will fetch from macromolecules database)}
 }
 \value{
 R data frame that contains full chemical shift list for a given atom
@@ -24,6 +24,6 @@ df<-fetch_atom_chemical_shifts('C1','metabolomics')
 # Downloads C1 chemical shifts from metabolomics database at BMRB
 }
 \seealso{
-\code{\link{fetch_entry_chemical_shifts}}
+\code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 }
 

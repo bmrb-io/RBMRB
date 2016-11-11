@@ -51,7 +51,7 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and N15 chemical shifts, which could be used to simulate H1-N15 HSQC spectra
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton and nitrogen chemical shifts in two columns
 #'@param csdf Chemical shift data frame from \link{fetch_entry_chemical_shifts}
 #'@return R data frame that contains proton and nitrogen chemical shifts in two columns for each residue
 #'@export convert_cs_to_n15hsqc
@@ -80,9 +80,9 @@ convert_cs_to_n15hsqc<-function(csdf){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only proton shifts, which could be used to simulate TOCSY spectra
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton shifts in two columns.
 #'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
-#'@return All possible combinations of proton chemical shifts in two columns as a R data frame
+#'@return R data frame that contains all possible combinations of proton chemical shifts in two columns
 #'@export convert_cs_to_tocsy
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
@@ -103,7 +103,7 @@ convert_cs_to_tocsy<-function(csdf){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe contains only H1 and C13 chemical shifts, which could be used to simulate H1-C15 HSQC spectra
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains proton and carbon chemical shifts in tow columns.
 #'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
 #'@return R data frame that contains proton and carbon chemical shifts in two columns for each residue
 #'@export convert_cs_to_c13hsqc
@@ -293,8 +293,8 @@ convert_cs_to_c13hsqc<-function(csdf){
 #'NMR Chemical shifts list for a given atom from BMRB
 #'
 #'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database for a given atom
-#'@param atom atom name like CA,CB2
-#'@param db macromolecules, metabolomics
+#'@param atom atom name in NMR-STAR atom nomenclature like CA,CB2
+#'@param db macromolecules, metabolomics (optional, by default will fetch from macromolecules database)
 #'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_atom_chemical_shifts
 #'@examples
@@ -302,7 +302,7 @@ convert_cs_to_c13hsqc<-function(csdf){
 #'# Downloads CB2 chemical shifts from macromolecules database at BMRB
 #'df<-fetch_atom_chemical_shifts('C1','metabolomics')
 #'# Downloads C1 chemical shifts from metabolomics database at BMRB
-#'@seealso \code{\link{fetch_entry_chemical_shifts}}
+#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   bmrb_api<-"http://webapi.bmrb.wisc.edu/"
   raw_data<-httr::GET(bmrb_api,path=paste0("/v1/rest/chemical_shifts/",atom,"/",db))
@@ -323,18 +323,22 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   return(dat_frame)
 }
 
-#'Simulate H1-N15 HSQC spectra
+#'Simulate H1-N15 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-N15 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
-#'@param idlist ==> list of bmrb ids c(17074,17076,17077)
-#'@param type ==> scatter/line default=scatter
-#'@param interactive ==> TRUE/FALSE default=TRUE
-#'@return plot object
+#'Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+#'@param idlist list of bmrb ids c(17074,17076,17077)
+#'@param type scatter/line default=scatter
+#'@param interactive TRUE/FALSE default=TRUE
+#'@return R plot object
 #'@export HSQC_15N
 #'@examples
 #'plot_hsqc<-HSQC_15N(c(17074,17076,17077))
+#'#simulates N15-HSQC spectra for the given 3 entreis
 #'plot_hsqc<-HSQC_15N(18857,'line')
+#'#simulates the N15-HSQC spectra from many chemical shift lists from a single entry
 #'plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
+#'#example for non interactive plots
+#'@seealso \code{\link{HSQC_13C}} and \code{\link{TOCSY}}
 HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
@@ -392,16 +396,19 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   return(plt2)
 }
 
-#'Simulate H1-C13 HSQC spectra
+#'Simulate H1-C13 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-C13 HSQC spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
-#'@param idlist ==> list of bmrb ids c(17074,17076,17077)
-#'@param interactive ==> TRUE/FALSE default=TRUE
-#'@return plot object
+#'Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database
+#'@param idlist list of bmrb ids c(17074,17076,17077)
+#'@param interactive TRUE/FALSE default=TRUE
+#'@return R plot object
 #'@export HSQC_13C
 #'@examples
 #'plot_hsqc<-HSQC_13C(c(17074,17076,17077))
+#'#Simulates C13-HSQC spectra form the given list of entries
 #'plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
+#'#Example for non interactive plot
+#'@seealso \code{\link{HSQC_15N}} and \code{\link{TOCSY}}
 HSQC_13C<-function(idlist,interactive=TRUE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   hsqc_data<-convert_cs_to_c13hsqc(cs_data)
@@ -446,19 +453,22 @@ HSQC_13C<-function(idlist,interactive=TRUE){
 }
 
 
-#'Chemical shift correlation between two atoms from 20 standard amino acids
+#'Chemical shift correlation between any two atoms from a single residue
 #'
-#'Plots the correlated chemical shift distribution of any two atoms in a residue from BMRB database
-#'@param atom1 ==> atom name like CA,CB2
-#'@param atom2 ==> atom name like HA,HB2
-#'@param res  ==> residue name like ALA,GLY
-#'@param type ==> plot type 'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set
-#'@param interactive ==> TRUE/FALSE default=RUE
+#'Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database
+#'@param atom1 atom name in NMR-STAR nomenclature like CA,CB2
+#'@param atom2 atom name in NMR_STAR nomenclature like HA,HB2
+#'@param res residue name like ALA,GLY (optional by default includes all possible amino acids)
+#'@param type 'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set
+#'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object
 #'@export chemical_shift_corr
 #'@examples
 #'plt<-chemical_shift_corr('CG','HG2','MET')
-#'plt<-chemical_shift_corr('CG','HG2','MET',interactive=FALSE)
+#'#plots the correlated chemical shift distribution between CG and HG2 from Methionine
+#'plt<-chemical_shift_corr('CG','HG2')
+#'#plots the correlated chemical shift distribution between CG and HG2 from all possible amino acids
+#'@seealso \code{\link{fetch_atom_chemical_shifts}}
 chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   at1_cs<-fetch_atom_chemical_shifts(atom1)
   at2_cs<-fetch_atom_chemical_shifts(atom2)
@@ -530,12 +540,14 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
 
 #'Filter for standard 20 amino acids
 #'
-#'Filters 20 standard amino acids using Comp_ID
-#'@param df ==> data frame with Comp_ID column
-#'@return output data frame which contains information from only standard 20 amino acids.
+#'Filters out non standard amino acids using Comp_ID
+#'@param df data frame with amino acid information in Comp_ID column
+#'@return R data frame that contains information from only standard 20 amino acids.
 #'@export filter_residue
 #'@examples
 #'df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
+#'#Downloads all CG2 chemical shifts and removes non standard amino acids
+#'@seealso \code{\link{fetch_atom_chemical_shifts}}
 filter_residue<-function(df){
   out_dat<-subset(df,Comp_ID=="ALA" |
                     Comp_ID=="ARG" |
@@ -562,16 +574,19 @@ filter_residue<-function(df){
 
 
 
-#'Simulate TOCSY spectra
+#'Simulate TOCSY spectra for a given entry or a list of entries from BMRB
 #'
-#'Simulates TOCSY spectra directly from BMRB(www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
-#'@param idlist ==> list of bmrb ids c(17074,17076,17077)
-#'@param interactive ==> TRUE/FALSE default=TRUE
+#'Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database.
+#'@param idlist list of bmrb ids c(17074,17076,17077)
+#'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object
 #'@export TOCSY
 #'@examples
 #'plot_tocsy<-TOCSY(c(17074,17076,17077))
+#'#Simulates TOCSY spectra for the given 3 entries
 #'plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=FALSE)
+#'# Example to disable interactive plot feature
+#'@seealso \code{\link{HSQC_15N}} and \code{\link{HSQC_13C}}
 TOCSY<-function(idlist,interactive=TRUE){
   cs<-fetch_entry_chemical_shifts(idlist)
   cs_h<-subset(cs,Atom_type=="H")
