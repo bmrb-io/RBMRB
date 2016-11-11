@@ -352,22 +352,22 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
     if (length(idlist)>1){
       if (interactive){
     plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color="")
       #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
       }else{
         plt<-ggplot2::ggplot(hsqc_data)+
           ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+
-          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
       }
     }else{
       if (interactive){
       plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))
+        ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
       }else{
         plt<-ggplot2::ggplot(hsqc_data)+
           ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+
-          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
       }
     }
 
@@ -375,18 +375,17 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
     if (interactive){
     plt<-ggplot2::ggplot(hsqc_data)+
     ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color="")
      # ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
     }else{
       plt<-ggplot2::ggplot(hsqc_data)+
         ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+
         ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+
-        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
     }
   }
   if (interactive){
     plt2<-plotly::plotly_build(plt)
-    plt2$layout$annotations=F
     plt2$x$layout$xaxis$autorange = "reversed"
     plt2$x$layout$yaxis$autorange = "reversed"}
   else{
@@ -422,27 +421,26 @@ HSQC_13C<-function(idlist,interactive=TRUE){
       if (length(idlist)>1){
         if (interactive){
       plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))
+        ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
         }else{
           plt<-ggplot2::ggplot(hsqc_data)+
             ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
-            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
         }
       }else{
         if (interactive){
         plt<-ggplot2::ggplot(hsqc_data)+
-          ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))
+          ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
           #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
         }else{
           plt<-ggplot2::ggplot(hsqc_data)+
             ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+
-            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
         }
       }
     if (interactive){
       plt2<-plotly::plotly_build(plt)
-      plt2$layout$annotations=F
       plt2$x$layout$xaxis$autorange = "reversed"
       plt2$x$layout$yaxis$autorange = "reversed"}
     else{
@@ -501,7 +499,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
     ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
     #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
     ggplot2::xlab(atom1)+
-    ggplot2::ylab(atom2)
+    ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }else{
       plt<-ggplot2::ggplot(cs)+
         #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
@@ -509,7 +507,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
         ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
         ggplot2::xlab(atom1)+
-        ggplot2::ylab(atom2)
+        ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }
   }
   else{
@@ -518,18 +516,17 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
       ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
       #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
       ggplot2::xlab(atom1)+
-      ggplot2::ylab(atom2)
+      ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }else{
       plt<-ggplot2::ggplot(cs)+
         ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
         ggplot2::xlab(atom1)+
-        ggplot2::ylab(atom2)
+        ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }
   }
   if (interactive){
     plt2<-plotly::plotly_build(plt)
-    plt2$layout$annotations=F
     plt2$x$layout$xaxis$autorange = "reversed"
     plt2$x$layout$yaxis$autorange = "reversed"}
   else{
@@ -602,29 +599,28 @@ TOCSY<-function(idlist,interactive=TRUE){
       plt<-ggplot2::ggplot(tocsy_data)+
         ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Entry_ID,label=Info))+
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-        ggplot2::xlab("H")+ggplot2::ylab("H")
+        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
       }else{
         plt<-ggplot2::ggplot(tocsy_data)+
           ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Entry_ID,label=Info))+
           ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-          ggplot2::xlab("H")+ggplot2::ylab("H")
+          ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
       }
     }else{
       if (interactive){
       plt<-ggplot2::ggplot(tocsy_data)+
         ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID.x,label=Info))+
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-        ggplot2::xlab("H")+ggplot2::ylab("H")
+        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
       }else{
         plt<-ggplot2::ggplot(tocsy_data)+
           ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID.x,label=Info))+
-          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")+
           ggplot2::xlab("H")+ggplot2::ylab("H")
       }
     }
     if (interactive){
       plt2<-plotly::plotly_build(plt)
-      plt2$layout$annotations=F
       plt2$x$layout$xaxis$autorange = "reversed"
       plt2$x$layout$yaxis$autorange = "reversed"}
     else{
