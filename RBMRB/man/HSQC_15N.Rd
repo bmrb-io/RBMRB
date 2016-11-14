@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{HSQC_15N}
 \alias{HSQC_15N}
-\title{Simulate H1-N15 HSQC spectra for a given entry or list of entries from BMRB}
+\title{Simulates H1-N15 HSQC spectra for a given entry or list of entries from BMRB}
 \usage{
 HSQC_15N(idlist, type = "scatter", interactive = TRUE)
 }
@@ -17,7 +17,8 @@ HSQC_15N(idlist, type = "scatter", interactive = TRUE)
 R plot object
 }
 \description{
-Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
+By default it will generate interactive graphics using plotly library
 }
 \examples{
 plot_hsqc<-HSQC_15N(c(17074,17076,17077))

@@ -7,7 +7,7 @@
 fetch_atom_chemical_shifts(atom, db = "macromolecules")
 }
 \arguments{
-\item{atom}{atom name in NMR-STAR atom nomenclature like CA,CB2}
+\item{atom}{atom name in NMR-STAR atom nomenclature ; Example: CA,CB2}
 
 \item{db}{macromolecules, metabolomics (optional, by default will fetch from macromolecules database)}
 }

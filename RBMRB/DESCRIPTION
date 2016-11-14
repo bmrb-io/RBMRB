@@ -5,9 +5,9 @@ Version: 2.0
 Date: 2016-11-08
 Author: Kumaran Baskaran
 Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
-Description: Access NMR chemical shift data of macromolecules and metabolites from [BMRB](http://bmrb.wisc.edu/) database in R envirnment
+Description: Access NMR chemical shift data of macromolecules and metabolites from BMRB database in R envirnment. See http://bmrb.wisc.edu/ for more information about BMRB
 Depends:R(>= 3.3.0)
-License: GNU GENERAL PUBLIC LICENSE V 2.0
+License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1
 Imports: data.table(>= 1.9.6),

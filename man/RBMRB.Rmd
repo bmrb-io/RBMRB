@@ -1,5 +1,5 @@
 ---
-title: "RBMRB"
+title: 'RBMRB : A package to download and visualize BMRB data in R'
 author: "Kumaran Baskaran"
 date: "November 08, 2016"
 output:
@@ -9,9 +9,9 @@ output:
 ---
 
 #RBMRB
-BMRB collects, annotates, archives, and disseminates (worldwide in the public domain) the important spectral and quantitative data derived from NMR spectroscopic investigations of biological macromolecules and metabolites. The goal is to empower scientists in their analysis of the structure, dynamics, and chemistry of biological systems and to support further development of the field of biomolecular NMR spectroscopy
+[BMRB](http://www.bmrb.wisc.edu/) collects, annotates, archives, and disseminates (worldwide in the public domain) the important spectral and quantitative data derived from NMR spectroscopic investigations of biological macromolecules and metabolites. The goal is to empower scientists in their analysis of the structure, dynamics, and chemistry of biological systems and to support further development of the field of biomolecular NMR spectroscopy
 
-RBMRB is a library to fetch NMR chemical shift data directly from [BMRB](http://bmrb.wisc.edu/) into R environment 
+[RBMRB](https://github.com/uwbmrb/RBMRB) is a library to fetch NMR chemical shift data directly from [BMRB](http://www.bmrb.wisc.edu/) into R environment 
 as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. It is using the [BMRB-API](https://github.com/uwbmrb/BMRB-API)  to fetch the data from BMRB database. 
 
 ##Installation
@@ -31,15 +31,22 @@ Here is the instruction to install those packages. Open your R and use the follo
 installed.packages(c("httr","data.table","rjson","ggplot2","plotly"))
 ```
 
-Once the necessary packages have been installed, proceed with RMRBM installation. The source file can be downloaded from [GitHub](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_1.0.tar.gz)
+####Method 1
+Once the necessary packages have been installed, proceed with RMRBM installation. The source file can be downloaded from [GitHub](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_2.0.tar.gz)
 
 After downloading the source file, use the following command to install RBMRB library
 ```{r eval=F}
-install.packages("~/Downloads/RBMRB_1.0.tar.gz",repos=NULL,type="source")
+install.packages("~/Downloads/RBMRB_2.0.tar.gz",repos=NULL,type="source")
 ```
 
 Note: provide the correct path to the downloaded file.
 
+####Method 2
+If you have devtools library in your R, then you can install directly from GitHub.
+```{r eval=F}
+library(devtools)
+install_github("uwbmrb/RBMRB/RBMRB")
+```
 ##Usage
 RBMRB can be used in a similar way like any other library in R. 
 
@@ -69,7 +76,10 @@ These data frames have the following columns
 ```{r}
 colnames(df1)
 ```
-
+Sample data output
+```{r}
+head(df1)
+```
 ###Atom method
 ####fetch_atom_chemical_shifts:
 This function will fetch the chemical shift data from all the entries for a given atom. The atom name should be in NMR-STAR atom nomenclature.
@@ -84,9 +94,14 @@ These data frames have the following columns
 ```{r}
 colnames(df4)
 ```
+Sample data output
+```{r}
+head(df4)
+```
 
 ##Data manipulation
 There are few data manipulation functions are availbale to facilitate plotting. 
+
 ####convert_cs_to_n15hsqc:
 This function will reformat the chemical shift data frame into a data frame which is easy to plot the N15-HSQC spectrum from the data. 
 
@@ -94,6 +109,14 @@ This function will reformat the chemical shift data frame into a data frame whic
 ```{r}
 n15hsqc1<-convert_cs_to_n15hsqc(df1)
 n15hsqc2<-convert_cs_to_n15hsqc(df2)
+```
+The output data frame will look like
+```{r}
+head(n15hsqc1)
+```
+
+This data frame is easy to plot using any plotting library
+```{r}
 library(ggplot2)
 plt1<-ggplot(n15hsqc1)+geom_point(aes(x=H,y=N))
 plt1
@@ -110,6 +133,14 @@ This function will reformat the chemical shift data frame into a data frame whic
 ```{r}
 c13hsqc1<-convert_cs_to_c13hsqc(df1)
 c13hsqc2<-convert_cs_to_c13hsqc(df2)
+```
+
+The output data frame will look like
+```{r}
+head(c13hsqc1)
+```
+and the user may generate a spectrum using the following script
+```{r}
 library(ggplot2)
 plt1<-ggplot(c13hsqc1)+geom_point(aes(x=H,y=C))
 plt1
@@ -124,6 +155,13 @@ This function will reformat the chemical shift data frame into a data frame whic
 ```{r}
 tocsy1<-convert_cs_to_tocsy(df1)
 tocsy2<-convert_cs_to_tocsy(df2)
+```
+after conversion the data will look like
+```{r}
+head(tocsy1)
+```
+Plotting TOCSY spectrum
+```{r}
 library(ggplot2)
 plt1<-ggplot(tocsy1)+geom_point(aes(x=Val.x,y=Val.y))
 plt1
@@ -141,7 +179,7 @@ df7<-filter_residue(df6)
 
 ##Data visualization
 
-RBMRB library contains few functions to generate interactive visualization of BMRB data with out any data manipulation. The interactive visualizations use **plotly** library. If user has problem with plotly, then he may disable it by providing an argument 'interactive=FALSE' for these functions. 
+RBMRB library contains few functions to generate interactive visualization of BMRB data with out any data manipulation. The interactive visualizations use **plotly** library. If user has problem with plotly, then this feature may be diabled by providing an argument 'interactive=FALSE' for these functions. These interactive plots can be zoomed in and out using a mouse and will show tooltip information when you mouse over. These visualizations can be exported as a stand alone html file
 
 ####HSQC_15N
 This function will simulae N15-HSQC spectrum for a given entry or list of entries. 
@@ -154,6 +192,8 @@ spec1<-HSQC_15N(15060)
 spec1
 spec2<-HSQC_15N(c(17074,17076,17077),type='line')
 spec2
+```
+```{r}
 spec3<-HSQC_15N(c(17074,17076,17077),type='line',interactive = F)
 spec3
 ```
@@ -169,6 +209,9 @@ spec1<-HSQC_13C(15060)
 spec1
 spec2<-HSQC_13C(c(17074,17076,17077))
 spec2
+```
+Non interactive plot
+```{r}
 spec3<-HSQC_13C(c(17074,17076,17077),interactive = F)
 spec3
 ```
@@ -184,15 +227,26 @@ spec1<-TOCSY(15060)
 spec1
 spec2<-TOCSY(c(17074,17076,17077))
 spec2
+```
+Non interactive plot
+```{r}
 spec3<-TOCSY(c(17074,17076,17077),interactive = F)
 spec3
 ```
 
 ####chemical_shift_corr
 This function will plot the distribution of checmial shift correlation between any two atoms from the 20 standard amino acids. The distribution of a particular residue may turn on and off by clicking the residue name in the legand.
+
 ```{r}
 corr_plot1<-chemical_shift_corr('CB','N')
 corr_plot1
 corr_plot2<-chemical_shift_corr('CA','HA*')
+corr_plot2
+```
+Non interactive plot
+```{r}
+corr_plot1<-chemical_shift_corr('CB','N',interactive = F)
+corr_plot1
+corr_plot2<-chemical_shift_corr('CA','HA*',interactive = F)
 corr_plot2
 ```

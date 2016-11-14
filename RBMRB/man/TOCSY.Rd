@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{TOCSY}
 \alias{TOCSY}
-\title{Simulate TOCSY spectra for a given entry or a list of entries from BMRB}
+\title{Simulates TOCSY spectra for a given entry or a list of entries from BMRB}
 \usage{
 TOCSY(idlist, interactive = TRUE)
 }
@@ -15,7 +15,7 @@ TOCSY(idlist, interactive = TRUE)
 plot object
 }
 \description{
-Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database.
+Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 }
 \examples{
 plot_tocsy<-TOCSY(c(17074,17076,17077))
