@@ -1,9 +1,9 @@
-#'NMR Chemical Shift data from BMRB in R data frame
+#'Imports NMR Chemical Shift data from BMRB into R data frame
 #'
 #'Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
 #'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
-#'To fetch data from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
-#'@return R data frame that contains revelant BMRB chemical shift data
+#'For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
+#'@return R data frame that contains revelant NMR chemical shifts from BMRB database
 #'@export fetch_entry_chemical_shifts
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
@@ -293,7 +293,7 @@ convert_cs_to_c13hsqc<-function(csdf){
 #'NMR Chemical shifts list for a given atom from BMRB
 #'
 #'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database for a given atom
-#'@param atom atom name in NMR-STAR atom nomenclature like CA,CB2
+#'@param atom atom name in NMR-STAR atom nomenclature ; Example: CA,CB2
 #'@param db macromolecules, metabolomics (optional, by default will fetch from macromolecules database)
 #'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_atom_chemical_shifts
@@ -323,9 +323,10 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   return(dat_frame)
 }
 
-#'Simulate H1-N15 HSQC spectra for a given entry or list of entries from BMRB
+#'Simulates H1-N15 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'
+#'Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
+#'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param type scatter/line default=scatter
 #'@param interactive TRUE/FALSE default=TRUE
@@ -395,9 +396,9 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   return(plt2)
 }
 
-#'Simulate H1-C13 HSQC spectra for a given entry or list of entries from BMRB
+#'Simulates H1-C13 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database
+#'Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return R plot object
@@ -453,7 +454,8 @@ HSQC_13C<-function(idlist,interactive=TRUE){
 
 #'Chemical shift correlation between any two atoms from a single residue
 #'
-#'Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database
+#'Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database.
+#''By default it will generate interactive graphics using plotly library
 #'@param atom1 atom name in NMR-STAR nomenclature like CA,CB2
 #'@param atom2 atom name in NMR_STAR nomenclature like HA,HB2
 #'@param res residue name like ALA,GLY (optional by default includes all possible amino acids)
@@ -571,9 +573,9 @@ filter_residue<-function(df){
 
 
 
-#'Simulate TOCSY spectra for a given entry or a list of entries from BMRB
+#'Simulates TOCSY spectra for a given entry or a list of entries from BMRB
 #'
-#'Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database.
+#'Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object

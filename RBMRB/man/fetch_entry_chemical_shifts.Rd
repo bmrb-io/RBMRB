@@ -2,16 +2,16 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_entry_chemical_shifts}
 \alias{fetch_entry_chemical_shifts}
-\title{NMR Chemical Shift data from BMRB in R data frame}
+\title{Imports NMR Chemical Shift data from BMRB into R data frame}
 \usage{
 fetch_entry_chemical_shifts(BMRBidlist)
 }
 \arguments{
 \item{BMRBidlist}{sinlge BMRB ID (or) list of BMRB IDs in csv format
-To fetch data from metabolomics databse entries should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')}
+For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')}
 }
 \value{
-R data frame that contains revelant BMRB chemical shift data
+R data frame that contains revelant NMR chemical shifts from BMRB database
 }
 \description{
 Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs

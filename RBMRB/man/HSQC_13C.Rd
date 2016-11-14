@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{HSQC_13C}
 \alias{HSQC_13C}
-\title{Simulate H1-C13 HSQC spectra for a given entry or list of entries from BMRB}
+\title{Simulates H1-C13 HSQC spectra for a given entry or list of entries from BMRB}
 \usage{
 HSQC_13C(idlist, interactive = TRUE)
 }
@@ -15,7 +15,7 @@ HSQC_13C(idlist, interactive = TRUE)
 R plot object
 }
 \description{
-Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database
+Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 }
 \examples{
 plot_hsqc<-HSQC_13C(c(17074,17076,17077))

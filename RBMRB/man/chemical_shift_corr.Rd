@@ -22,7 +22,8 @@ chemical_shift_corr(atom1, atom2, res = NA, type = "c",
 plot object
 }
 \description{
-Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database
+Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database.
+'By default it will generate interactive graphics using plotly library
 }
 \examples{
 plt<-chemical_shift_corr('CG','HG2','MET')
