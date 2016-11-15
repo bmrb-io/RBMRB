@@ -11,7 +11,7 @@ fetch_entry_chemical_shifts(BMRBidlist)
 For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')}
 }
 \value{
-R data frame that contains revelant NMR chemical shifts from BMRB database
+R data frame that contains relevant NMR chemical shifts from BMRB database
 }
 \description{
 Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs

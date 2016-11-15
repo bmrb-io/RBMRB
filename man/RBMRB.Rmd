@@ -24,7 +24,7 @@ RBMRB library has been developed and tested in  R version 3.3.x.  It requires th
  + **ggplot2** to simulate spectra (version 2.1.0 or later)
  + **plotly** for interactive graphics in simulated spectra (version 4.5.2 or later)
  
-Users should make sure that the above packages have beed installed correctly with the required versions, before proceeding to RMBRM insallation.
+Users should make sure that the above packages have been installed correctly with the required versions, before proceeding to RBMRB installation.
 
 Here is the instruction to install those packages. Open your R and use the following command 
 ```{r eval=FALSE}
@@ -62,7 +62,7 @@ BMRB data can be imported in two ways
 
 ###Entry method
 ####fetch_entry_chemical_shifts:
-This function will fetch the 'Atom_chem_shift' loop from a NMR-STAR file for a given entry or a list of entries in CSV format. This function works on both macromolecules and metabolites data base. For metabilites entry ids should have right prefix (example 'bmse000034')
+This function will fetch the 'Atom_chem_shift' loop from a NMR-STAR file for a given entry or a list of entries in CSV format. This function works on both macromolecules and metabolites data base. For metabolites entry ids should have right prefix (example 'bmse000034')
 
 ######Examples:
 ```{r}
@@ -100,7 +100,7 @@ head(df4)
 ```
 
 ##Data manipulation
-There are few data manipulation functions are availbale to facilitate plotting. 
+There are few data manipulation functions are available to facilitate plotting. 
 
 ####convert_cs_to_n15hsqc:
 This function will reformat the chemical shift data frame into a data frame which is easy to plot the N15-HSQC spectrum from the data. 
@@ -149,7 +149,7 @@ plt2
 ```
 
 ####convert_cs_to_tocsy:
-This function will reformat the chemical shift data frame into a data frame which is easy to plot the TOCSY spectrum from the data. Note : Since both dimensions have protein chemical shifts, the columns are named as Val.x and Val.y
+This function will reformat the chemical shift data frame into a data frame which is easy to plot the TOCSY spectrum from the data. Note : Since both dimensions have proton chemical shifts, the columns are named as Val.x and Val.y
 
 ####Examples
 ```{r}
@@ -179,10 +179,10 @@ df7<-filter_residue(df6)
 
 ##Data visualization
 
-RBMRB library contains few functions to generate interactive visualization of BMRB data with out any data manipulation. The interactive visualizations use **plotly** library. If user has problem with plotly, then this feature may be diabled by providing an argument 'interactive=FALSE' for these functions. These interactive plots can be zoomed in and out using a mouse and will show tooltip information when you mouse over. These visualizations can be exported as a stand alone html file
+RBMRB library contains few functions to generate interactive visualization of BMRB data with out any data manipulation. The interactive visualizations use **plotly** library. If user has problem with plotly, then this feature may be disabled by providing an argument 'interactive=FALSE' for these functions. These interactive plots can be zoomed in and out using a mouse and will show tooltip information when you mouse over. These visualizations can be exported as a stand alone html file
 
 ####HSQC_15N
-This function will simulae N15-HSQC spectrum for a given entry or list of entries. 
+This function will simulate N15-HSQC spectrum for a given entry or list of entries. 
 
 #####Examples
 
@@ -199,7 +199,7 @@ spec3
 ```
 
 ####HSQC_13C
-This function will simulae C13-HSQC spectrum for a given entry or list of entries. 
+This function will simulate C13-HSQC spectrum for a given entry or list of entries. 
 
 #####Examples
 
@@ -217,7 +217,7 @@ spec3
 ```
 
 ####TOCSY
-This function will simulae TOCSY spectrum for a given entry or list of entries. 
+This function will simulate TOCSY spectrum for a given entry or list of entries. 
 
 #####Examples
 
@@ -235,7 +235,7 @@ spec3
 ```
 
 ####chemical_shift_corr
-This function will plot the distribution of checmial shift correlation between any two atoms from the 20 standard amino acids. The distribution of a particular residue may turn on and off by clicking the residue name in the legand.
+This function will plot the distribution of chemical shift correlation between any two atoms from the 20 standard amino acids. The distribution of a particular residue may turn on and off by clicking the residue name in the legend.
 
 ```{r}
 corr_plot1<-chemical_shift_corr('CB','N')
@@ -250,3 +250,6 @@ corr_plot1
 corr_plot2<-chemical_shift_corr('CA','HA*',interactive = F)
 corr_plot2
 ```
+
+##Bug Report
+Please report the bugs to the [RBMRB GitHub repository](https://github.com/uwbmrb/RBMRB). Any new features can also be requested through the GitHub repository. 

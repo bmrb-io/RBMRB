@@ -26,10 +26,8 @@ Plots the correlated chemical shift distribution of any two atoms in a single re
 'By default it will generate interactive graphics using plotly library
 }
 \examples{
-plt<-chemical_shift_corr('CG','HG2','MET')
-#plots the correlated chemical shift distribution between CG and HG2 from Methionine
-plt<-chemical_shift_corr('CG','HG2')
-#plots the correlated chemical shift distribution between CG and HG2 from all possible amino acids
+plt<-chemical_shift_corr('HE21','HE22')
+#plots the correlated chemical shift distribution between HE21 and HE22 from all possible amino acids
 }
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}}
