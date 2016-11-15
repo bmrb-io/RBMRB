@@ -18,7 +18,7 @@ R data frame that contains full chemical shift list for a given atom
 Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database for a given atom
 }
 \examples{
-df<-fetch_atom_chemical_shifts('CB2','macromolecules')
+df<-fetch_atom_chemical_shifts('CG2','macromolecules')
 # Downloads CB2 chemical shifts from macromolecules database at BMRB
 df<-fetch_atom_chemical_shifts('C1','metabolomics')
 # Downloads C1 chemical shifts from metabolomics database at BMRB

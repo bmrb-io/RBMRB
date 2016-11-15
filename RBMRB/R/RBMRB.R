@@ -3,7 +3,7 @@
 #'Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
 #'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
 #'For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
-#'@return R data frame that contains revelant NMR chemical shifts from BMRB database
+#'@return R data frame that contains relevant NMR chemical shifts from BMRB database
 #'@export fetch_entry_chemical_shifts
 #'@examples
 #'df<-fetch_entry_chemical_shifts(15060)
@@ -51,7 +51,8 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
-#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton and nitrogen chemical shifts in two columns
+#'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton and nitrogen chemical shifts in two columns.
+#'This will be helpful to plot 1H-15N HSQC(Hetronuclear Single Quantum Coherence) spectrum.
 #'@param csdf Chemical shift data frame from \link{fetch_entry_chemical_shifts}
 #'@return R data frame that contains proton and nitrogen chemical shifts in two columns for each residue
 #'@export convert_cs_to_n15hsqc
@@ -62,6 +63,7 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
 #'#Reformats for easy plotting
 #'@seealso \code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_n15hsqc<-function(csdf){
+  with(csdf,{
   if (all(is.na(csdf))){
     warning('No data')
     outdat<-NA
@@ -76,11 +78,13 @@ convert_cs_to_n15hsqc<-function(csdf){
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
   }
   return(outdat)
+  })
 }
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
 #'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton shifts in two columns.
+#'This will be helpful to plot TOCSY(TOtal Correlation SpectroscpY) spectrum
 #'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
 #'@return R data frame that contains all possible combinations of proton chemical shifts in two columns
 #'@export convert_cs_to_tocsy
@@ -91,6 +95,7 @@ convert_cs_to_n15hsqc<-function(csdf){
 #'# Reformats for easy plotting
 #'@seealso \code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_n15hsqc}}
 convert_cs_to_tocsy<-function(csdf){
+  with(csdf,{
   if (all(is.na(csdf))){
     warning('No data')
     outdat<-NA
@@ -99,11 +104,13 @@ convert_cs_to_tocsy<-function(csdf){
     outdat<-merge(cs_h,cs_h,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   }
   return(outdat)
+  })
 }
 
 #'Reformats chemical shift dataframe for easy plotting
 #'
 #'Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains proton and carbon chemical shifts in tow columns.
+#'This will be helpful to plot 1H-13C HSQC(Hetronuclear Single Quantum Coherence) spectrum
 #'@param csdf chemical shift data frame from \link{fetch_entry_chemical_shifts}
 #'@return R data frame that contains proton and carbon chemical shifts in two columns for each residue
 #'@export convert_cs_to_c13hsqc
@@ -114,6 +121,7 @@ convert_cs_to_tocsy<-function(csdf){
 #'# Reformats for easy plotting
 #'@seealso \code{\link{convert_cs_to_n15hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_c13hsqc<-function(csdf){
+  with(csdf,{
   if (all(is.na(csdf))){
     warning('No data')
     outdat<-NA
@@ -288,6 +296,7 @@ convert_cs_to_c13hsqc<-function(csdf){
     names(outdat)[names(outdat)=="Val.y"]<-"H"
   }
   return(outdat)
+  })
 }
 
 #'NMR Chemical shifts list for a given atom from BMRB
@@ -298,7 +307,7 @@ convert_cs_to_c13hsqc<-function(csdf){
 #'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_atom_chemical_shifts
 #'@examples
-#'df<-fetch_atom_chemical_shifts('CB2','macromolecules')
+#'df<-fetch_atom_chemical_shifts('CG2','macromolecules')
 #'# Downloads CB2 chemical shifts from macromolecules database at BMRB
 #'df<-fetch_atom_chemical_shifts('C1','metabolomics')
 #'# Downloads C1 chemical shifts from metabolomics database at BMRB
@@ -325,7 +334,7 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 
 #'Simulates H1-N15 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-N15 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
+#'Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
 #'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param type scatter/line default=scatter
@@ -342,7 +351,11 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'@seealso \code{\link{HSQC_13C}} and \code{\link{TOCSY}}
 HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
+  if (all(is.na(cs_data))){
+    return(NA)
+  }else{
   hsqc_data<-convert_cs_to_n15hsqc(cs_data)
+  with(hsqc_data,{
   if (all(is.na(hsqc_data))){
     warning('No data')
     plt2<-NA}
@@ -393,12 +406,12 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
     plt2<-plt
   }
   }
-  return(plt2)
+  return(plt2)})}
 }
 
 #'Simulates H1-C13 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
+#'Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return R plot object
@@ -411,7 +424,11 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
 #'@seealso \code{\link{HSQC_15N}} and \code{\link{TOCSY}}
 HSQC_13C<-function(idlist,interactive=TRUE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
+  if (all(is.na(cs_data))){
+    return(NA)
+  }else{
   hsqc_data<-convert_cs_to_c13hsqc(cs_data)
+  with(hsqc_data,{
   if (all(is.na(hsqc_data))){
     warning('No data')
     plt2<-NA}
@@ -449,6 +466,8 @@ HSQC_13C<-function(idlist,interactive=TRUE){
     }
   }
   return(plt2)
+  })
+  }
 }
 
 
@@ -464,14 +483,19 @@ HSQC_13C<-function(idlist,interactive=TRUE){
 #'@return plot object
 #'@export chemical_shift_corr
 #'@examples
-#'plt<-chemical_shift_corr('CG','HG2','MET')
-#'#plots the correlated chemical shift distribution between CG and HG2 from Methionine
-#'plt<-chemical_shift_corr('CG','HG2')
-#'#plots the correlated chemical shift distribution between CG and HG2 from all possible amino acids
+#'plt<-chemical_shift_corr('HE21','HE22')
+#'#plots the correlated chemical shift distribution between HE21 and HE22 from all possible amino acids
 #'@seealso \code{\link{fetch_atom_chemical_shifts}}
 chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   at1_cs<-fetch_atom_chemical_shifts(atom1)
   at2_cs<-fetch_atom_chemical_shifts(atom2)
+  if (all(is.na(at1_cs)) | all(is.na(at2_cs))){
+    warning('No data or not a valid atom name')
+    plt2<-NA
+    return(plt2)}
+  else{
+  with(at1_cs,{
+    with(at2_cs, {
   if (is.na(res)){
     cs1<-filter_residue(at1_cs)
     cs2<-filter_residue(at2_cs)
@@ -535,11 +559,13 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
     plt2<-plt
   }
   return(plt2)
+  })})
+  }
 }
 
 #'Filter for standard 20 amino acids
 #'
-#'Filters out non standard amino acids using Comp_ID
+#'Filters out non standard amino acids using Comp_ID. The data frame should contain three letter anio acid code in COMP_ID column.
 #'@param df data frame with amino acid information in Comp_ID column
 #'@return R data frame that contains information from only standard 20 amino acids.
 #'@export filter_residue
@@ -548,6 +574,9 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
 #'#Downloads all CG2 chemical shifts and removes non standard amino acids
 #'@seealso \code{\link{fetch_atom_chemical_shifts}}
 filter_residue<-function(df){
+  if (is.data.frame(df)){
+  with(df,{
+    if ("Comp_ID" %in% colnames(df)){
   out_dat<-subset(df,Comp_ID=="ALA" |
                     Comp_ID=="ARG" |
                     Comp_ID=="ASP" |
@@ -569,13 +598,26 @@ filter_residue<-function(df){
                     Comp_ID=="TYR" |
                     Comp_ID=="VAL")
   return(out_dat)
+    }
+  else{
+    warning("Comp_ID column not found")
+    out_dat<-NA
+    return(out_dat)
+  }
+  })
+  }
+  else{
+    warning("Argument is not a valid data frame")
+    out_dat<-NA
+    return(out_dat)
+  }
 }
 
 
 
 #'Simulates TOCSY spectra for a given entry or a list of entries from BMRB
 #'
-#'Simulates TOCSY spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
+#'Simulates TOCSY(TOtal Correlation SpectroscopY) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object
@@ -588,8 +630,9 @@ filter_residue<-function(df){
 #'@seealso \code{\link{HSQC_15N}} and \code{\link{HSQC_13C}}
 TOCSY<-function(idlist,interactive=TRUE){
   cs<-fetch_entry_chemical_shifts(idlist)
-  cs_h<-subset(cs,Atom_type=="H")
+  with(cs,{cs_h<-subset(cs,Atom_type=="H")
   tocsy_data<-merge(cs_h,cs_h,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  with(tocsy_data,{
   if (all(is.na(tocsy_data))){
     warning('No data')
     plt2<-NA}
@@ -630,6 +673,6 @@ TOCSY<-function(idlist,interactive=TRUE){
     }
   }
   return(plt2)
-
+})})
 }
 

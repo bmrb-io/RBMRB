@@ -14,6 +14,7 @@ R data frame that contains proton and carbon chemical shifts in two columns for 
 }
 \description{
 Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains proton and carbon chemical shifts in tow columns.
+This will be helpful to plot 1H-13C HSQC(Hetronuclear Single Quantum Coherence) spectrum
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)

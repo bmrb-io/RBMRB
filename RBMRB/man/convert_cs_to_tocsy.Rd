@@ -14,6 +14,7 @@ R data frame that contains all possible combinations of proton chemical shifts i
 }
 \description{
 Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a simple dataframe that contains algorithmically combined proton shifts in two columns.
+This will be helpful to plot TOCSY(TOtal Correlation SpectroscpY) spectrum
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)

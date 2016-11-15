@@ -15,7 +15,7 @@ HSQC_13C(idlist, interactive = TRUE)
 R plot object
 }
 \description{
-Simulates H1-C13 HSQC spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
+Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
 }
 \examples{
 plot_hsqc<-HSQC_13C(c(17074,17076,17077))
