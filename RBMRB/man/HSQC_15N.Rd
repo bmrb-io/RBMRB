@@ -7,7 +7,7 @@
 HSQC_15N(idlist, type = "scatter", interactive = TRUE)
 }
 \arguments{
-\item{idlist}{list of bmrb ids c(17074,17076,17077)}
+\item{idlist}{list of bmrb ids in csv}
 
 \item{type}{scatter/line default=scatter}
 
@@ -17,7 +17,7 @@ HSQC_15N(idlist, type = "scatter", interactive = TRUE)
 R plot object
 }
 \description{
-Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
+Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from BMRB database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
 By default it will generate interactive graphics using plotly library
 }
 \examples{

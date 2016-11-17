@@ -28,7 +28,7 @@ Users should make sure that the above packages have been installed correctly wit
 
 Here is the instruction to install those packages. Open your R and use the following command 
 ```{r eval=FALSE}
-installed.packages(c("httr","data.table","rjson","ggplot2","plotly"))
+install.packages(c("httr","data.table","rjson","ggplot2","plotly"))
 ```
 
 ####Method 1

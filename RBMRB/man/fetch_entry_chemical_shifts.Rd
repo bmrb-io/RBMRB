@@ -14,7 +14,7 @@ For metabolomics entries entry id should have 'bmse' prefix example: c('bmse0000
 R data frame that contains relevant NMR chemical shifts from BMRB database
 }
 \description{
-Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
+Downloads NMR chemical shift data from BMRB database for a given Entry ID or list of Entry IDs
 }
 \examples{
 df<-fetch_entry_chemical_shifts(15060)
