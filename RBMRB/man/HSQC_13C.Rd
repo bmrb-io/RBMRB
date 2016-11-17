@@ -4,10 +4,12 @@
 \alias{HSQC_13C}
 \title{Simulates H1-C13 HSQC spectra for a given entry or list of entries from BMRB}
 \usage{
-HSQC_13C(idlist, interactive = TRUE)
+HSQC_13C(idlist, type = "scatter", interactive = TRUE)
 }
 \arguments{
-\item{idlist}{list of bmrb ids c(17074,17076,17077)}
+\item{idlist}{list of bmrb ids in csv}
+
+\item{type}{scatter/line default=scatter}
 
 \item{interactive}{TRUE/FALSE default=TRUE}
 }
@@ -15,11 +17,13 @@ HSQC_13C(idlist, interactive = TRUE)
 R plot object
 }
 \description{
-Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
+Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from BMRB database. By default it will generate interactive graphics using plotly library
 }
 \examples{
 plot_hsqc<-HSQC_13C(c(17074,17076,17077))
 #Simulates C13-HSQC spectra form the given list of entries
+plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
+#Simulates C13-HSQC and connects the peaks with same sequence number
 plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
 #Example for non interactive plot
 }

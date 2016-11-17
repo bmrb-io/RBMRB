@@ -5,7 +5,7 @@ Version: 2.0
 Date: 2016-11-08
 Author: Kumaran Baskaran
 Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
-Description: BMRB <http://www.bmrb.wisc.edu/> collects, annotates, archives, and disseminates (worldwide in the public domain) the important spectral and quantitative data derived from NMR(Nuclear Magnetic Resonance) spectroscopic investigations of biological macromolecules and metabolites. This package provides an interface to BMRB database for easy data access and a minimal set of data visualizations. 
+Description: The Biological Magnetic Resonance Data Bank (BMRB,<http://www.bmrb.wisc.edu/>) collects, annotates, archives, and disseminates (worldwide in the public domain) the important spectral and quantitative data derived from NMR(Nuclear Magnetic Resonance) spectroscopic investigations of biological macromolecules and metabolites. This package provides an interface to BMRB database for easy data access and includes a minimal set of data visualization functions. Users are encouraged to make their own data visualizations using BMRB data. 
 Depends:R(>= 3.3.0)
 License: GPL-2
 URL: https://github.com/uwbmrb/RBMRB, https://github.com/kumar-physics/RBMRB

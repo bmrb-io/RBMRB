@@ -1,6 +1,6 @@
 #'Imports NMR Chemical Shift data from BMRB into R data frame
 #'
-#'Downloads NMR chemical shift data from [BMRB](http://bmrb.wisc.edu/) for a given Entry ID or list of Entry IDs
+#'Downloads NMR chemical shift data from BMRB database for a given Entry ID or list of Entry IDs
 #'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
 #'For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
 #'@return R data frame that contains relevant NMR chemical shifts from BMRB database
@@ -72,7 +72,40 @@ convert_cs_to_n15hsqc<-function(csdf){
   names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
   names(shiftN)[names(shiftN)=="Val"]<-"N"
-  shiftHN<-merge(shiftH,shiftN,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  shiftHE21<-subset(csdf,Atom_ID=="HE21")
+  names(shiftHE21)[names(shiftHE21)=="Val"]<-"H"
+  shiftHE22<-subset(csdf,Atom_ID=="HE22")
+  names(shiftHE22)[names(shiftHE22)=="Val"]<-"H"
+  shiftHD21<-subset(csdf,Atom_ID=="HD21")
+  names(shiftHD21)[names(shiftHD21)=="Val"]<-"H"
+  shiftHD22<-subset(csdf,Atom_ID=="HD22")
+  names(shiftHD22)[names(shiftHD22)=="Val"]<-"H"
+  shiftHD1<-subset(csdf,Atom_ID=="HD1")
+  names(shiftHD1)[names(shiftHD1)=="Val"]<-"H"
+  shiftHE2<-subset(csdf,Atom_ID=="HE2")
+  names(shiftHE2)[names(shiftHE2)=="Val"]<-"H"
+  shiftND<-subset(csdf,Atom_ID=="ND2")
+  names(shiftND)[names(shiftND)=="Val"]<-"N"
+  shiftNE<-subset(csdf,Atom_ID=="NE2")
+  names(shiftNE)[names(shiftNE)=="Val"]<-"N"
+  shiftND1<-subset(csdf,Atom_ID=="ND1")
+  names(shiftND1)[names(shiftND1)=="Val"]<-"N"
+  shiftNE2<-subset(csdf,Atom_ID=="NE2")
+  names(shiftNE2)[names(shiftNE2)=="Val"]<-"N"
+  shiftNEHE21=merge(shiftHE21,shiftNE,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNEHE21)))){shiftNEHE21$Comp_index_ID=paste(shiftNEHE21$Comp_index_ID,"HE21")}
+  shiftNEHE22=merge(shiftHE22,shiftNE,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNEHE22)))){shiftNEHE22$Comp_index_ID=paste(shiftNEHE22$Comp_index_ID,"HE22")}
+  shiftNDHD21=merge(shiftHD21,shiftND,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNDHD21)))){shiftNDHD21$Comp_index_ID=paste(shiftNDHD21$Comp_index_ID,"HD21")}
+  shiftNDHD22=merge(shiftHD22,shiftND,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNDHD22)))){shiftNDHD22$Comp_index_ID=paste(shiftNDHD22$Comp_index_ID,"ND22")}
+  shiftND1HD1=merge(shiftHD1,shiftND1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftND1HD1)))){shiftND1HD1$Comp_index_ID=paste(shiftND1HD1$Comp_index_ID,"HD1")}
+  shiftNE2HE2=merge(shiftHE2,shiftNE2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNE2HE2)))){shiftNE2HE2$Comp_index_ID=paste(shiftNE2HE2$Comp_index_ID,"HE2")}
+  shiftHNt<-merge(shiftH,shiftN,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  shiftHN<-rbind(rbind(rbind(rbind(rbind(rbind(shiftNEHE21,shiftNEHE22),shiftNDHD21),shiftNDHD22),shiftHNt),shiftND1HD1),shiftNE2HE2)
   outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
@@ -235,54 +268,88 @@ convert_cs_to_c13hsqc<-function(csdf){
     #names(shiftCZ3)[names(shiftCZ3)=="Val"]<-"CZ3"
 
     shiftCAHA<-merge(shiftCA,shiftHA,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCAHA)))){shiftCAHA$Comp_index_ID=paste(shiftCAHA$Comp_index_ID,"HA")}
     shiftCAHA2<-merge(shiftCA,shiftHA2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCAHA2)))){shiftCAHA2$Comp_index_ID=paste(shiftCAHA2$Comp_index_ID,"HA2")}
     shiftCAHA3<-merge(shiftCA,shiftHA3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCAHA3)))){shiftCAHA3$Comp_index_ID=paste(shiftCAHA3$Comp_index_ID,"HA3")}
     shiftCAH<-rbind(rbind(shiftCAHA,shiftCAHA2),shiftCAHA3)
     #shiftCAH$type="CA"
 
     shiftCBHB<-merge(shiftCB,shiftHB,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCBHB)))){shiftCBHB$Comp_index_ID=paste(shiftCBHB$Comp_index_ID,"HB")}
     shiftCBHB1<-merge(shiftCB,shiftHB1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCBHB1)))){shiftCBHB1$Comp_index_ID=paste(shiftCBHB1$Comp_index_ID,"HB1")}
     shiftCBHB2<-merge(shiftCB,shiftHB2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCBHB2)))){shiftCBHB2$Comp_index_ID=paste(shiftCBHB2$Comp_index_ID,"HB2")}
     shiftCBHB3<-merge(shiftCB,shiftHB3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCBHB3)))){shiftCBHB3$Comp_index_ID=paste(shiftCBHB3$Comp_index_ID,"HB3")}
     shiftCBH<-rbind(rbind(rbind(shiftCBHB,shiftCBHB1),shiftCBHB2),shiftCBHB3)
     #shiftCBH$type="CB"
 
     shiftCGHG<-merge(shiftCG,shiftHG,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCGHG)))){shiftCGHG$Comp_index_ID=paste(shiftCGHG$Comp_index_ID,"HG")}
     shiftCGHG2<-merge(shiftCG,shiftHG2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCGHG2)))){shiftCGHG2$Comp_index_ID=paste(shiftCGHG2$Comp_index_ID,"HG2")}
     shiftCGHG3<-merge(shiftCG,shiftHG3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCGHG3)))){shiftCGHG3$Comp_index_ID=paste(shiftCGHG3$Comp_index_ID,"HG3")}
     shiftCG1HG11<-merge(shiftCG1,shiftHG11,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG1HG11)))){shiftCG1HG11$Comp_index_ID=paste(shiftCG1HG11$Comp_index_ID,"HG11")}
     shiftCG1HG12<-merge(shiftCG1,shiftHG12,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG1HG12)))){shiftCG1HG12$Comp_index_ID=paste(shiftCG1HG12$Comp_index_ID,"HG12")}
     shiftCG1HG13<-merge(shiftCG1,shiftHG13,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG1HG13)))){shiftCG1HG13$Comp_index_ID=paste(shiftCG1HG13$Comp_index_ID,"HG13")}
     shiftCG2HG21<-merge(shiftCG2,shiftHG21,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG2HG21)))){shiftCG2HG21$Comp_index_ID=paste(shiftCG2HG21$Comp_index_ID,"HG21")}
     shiftCG2HG22<-merge(shiftCG2,shiftHG22,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG2HG22)))){shiftCG2HG22$Comp_index_ID=paste(shiftCG2HG22$Comp_index_ID,"HG22")}
     shiftCG2HG23<-merge(shiftCG2,shiftHG23,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCG2HG23)))){shiftCG2HG23$Comp_index_ID=paste(shiftCG2HG23$Comp_index_ID,"HG23")}
     shiftCGH<-rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(shiftCGHG,shiftCGHG2),shiftCGHG3),shiftCG1HG11),shiftCG1HG12),shiftCG1HG13),shiftCG2HG21),shiftCG2HG22),shiftCG2HG23)
     #shiftCGH$type="CG"
 
     shiftCDHD2<-merge(shiftCD,shiftHD2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCDHD2)))){shiftCDHD2$Comp_index_ID=paste(shiftCDHD2$Comp_index_ID,"HD2")}
     shiftCDHD3<-merge(shiftCD,shiftHD3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCDHD3)))){shiftCDHD3$Comp_index_ID=paste(shiftCDHD3$Comp_index_ID,"HD3")}
     shiftCD1HD1<-merge(shiftCD1,shiftHD1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD1HD1)))){shiftCD1HD1$Comp_index_ID=paste(shiftCD1HD1$Comp_index_ID,"HD1")}
     shiftCD2HD2<-merge(shiftCD2,shiftHD2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD2HD2)))){shiftCD2HD2$Comp_index_ID=paste(shiftCD2HD2$Comp_index_ID,"HD2")}
     shiftCD1HD11<-merge(shiftCD1,shiftHD11,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD1HD11)))){shiftCD1HD11$Comp_index_ID=paste(shiftCD1HD11$Comp_index_ID,"HD11")}
     shiftCD1HD12<-merge(shiftCD1,shiftHD12,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD1HD12)))){shiftCD1HD12$Comp_index_ID=paste(shiftCD1HD12$Comp_index_ID,"HD12")}
     shiftCD1HD13<-merge(shiftCD1,shiftHD13,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD1HD13)))){shiftCD1HD13$Comp_index_ID=paste(shiftCD1HD13$Comp_index_ID,"HD13")}
     shiftCD2HD21<-merge(shiftCD2,shiftHD21,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD2HD21)))){shiftCD2HD21$Comp_index_ID=paste(shiftCD2HD21$Comp_index_ID,"HD21")}
     shiftCD2HD22<-merge(shiftCD2,shiftHD22,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD2HD22)))){shiftCD2HD22$Comp_index_ID=paste(shiftCD2HD22$Comp_index_ID,"HD22")}
     shiftCD2HD23<-merge(shiftCD2,shiftHD23,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCD2HD23)))){shiftCD2HD23$Comp_index_ID=paste(shiftCD2HD23$Comp_index_ID,"HD23")}
     shiftCDH<-rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(shiftCDHD2,shiftCDHD3),shiftCD1HD1),shiftCD2HD2),shiftCD1HD11),shiftCD1HD12),shiftCD1HD13),shiftCD2HD21),shiftCD2HD22),shiftCD2HD23)
     #shiftCDH$type="CD"
 
     shiftCEHE2<-merge(shiftCE,shiftHE2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCEHE2)))){shiftCEHE2$Comp_index_ID=paste(shiftCEHE2$Comp_index_ID,"HE2")}
     shiftCEHE3<-merge(shiftCE,shiftHE3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCEHE3)))){shiftCEHE3$Comp_index_ID=paste(shiftCEHE3$Comp_index_ID,"HE3")}
     shiftCE1HE1<-merge(shiftCE1,shiftHE1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCE1HE1)))){ shiftCE1HE1$Comp_index_ID=paste(shiftCE1HE1$Comp_index_ID,"HE1")}
     shiftCE2HE2<-merge(shiftCE2,shiftHE2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCE2HE2)))){shiftCE2HE2$Comp_index_ID=paste(shiftCE2HE2$Comp_index_ID,"HE2")}
     shiftCE3HE3<-merge(shiftCE3,shiftHE3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCE3HE3)))){shiftCE3HE3$Comp_index_ID=paste(shiftCE3HE3$Comp_index_ID,"HE3")}
     shiftCEH<-rbind(rbind(rbind(rbind(shiftCEHE2,shiftCEHE3),shiftCE1HE1),shiftCE2HE2),shiftCE3HE3)
     #shiftCEH$type="CE"
 
     shiftCZHZ<-merge(shiftCZ,shiftHZ,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCZHZ)))){shiftCZHZ$Comp_index_ID=paste(shiftCZHZ$Comp_index_ID,"HZ")}
     shiftCZ2HZ2<-merge(shiftCZ2,shiftHZ2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCZ2HZ2)))){shiftCZ2HZ2$Comp_index_ID=paste(shiftCZ2HZ2$Comp_index_ID,"HZ2")}
     shiftCZ3HZ3<-merge(shiftCZ3,shiftHZ3,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+    if (!(all(is.na(shiftCZ3HZ3)))){shiftCZ3HZ3$Comp_index_ID=paste(shiftCZ3HZ3$Comp_index_ID,"HZ3")}
     shiftCZH<-rbind(rbind(shiftCZHZ,shiftCZ2HZ2),shiftCZ3HZ3)
     #shiftCZH$type="CZ"
 
@@ -301,7 +368,7 @@ convert_cs_to_c13hsqc<-function(csdf){
 
 #'NMR Chemical shifts list for a given atom from BMRB
 #'
-#'Downloads the full list of chemical shifts from BMRB(www.bmrb.wisc.edu) macromolecular/metabolomics database for a given atom
+#'Downloads the full list of chemical shifts from BMRB macromolecular/metabolomics database for a given atom
 #'@param atom atom name in NMR-STAR atom nomenclature ; Example: CA,CB2
 #'@param db macromolecules, metabolomics (optional, by default will fetch from macromolecules database)
 #'@return R data frame that contains full chemical shift list for a given atom
@@ -334,9 +401,9 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 
 #'Simulates H1-N15 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
+#'Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from BMRB database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
 #'By default it will generate interactive graphics using plotly library
-#'@param idlist list of bmrb ids c(17074,17076,17077)
+#'@param idlist list of bmrb ids in csv
 #'@param type scatter/line default=scatter
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return R plot object
@@ -411,70 +478,87 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
 
 #'Simulates H1-C13 HSQC spectra for a given entry or list of entries from BMRB
 #'
-#'Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
-#'@param idlist list of bmrb ids c(17074,17076,17077)
+#'Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from BMRB database. By default it will generate interactive graphics using plotly library
+#'@param idlist list of bmrb ids in csv
+#'@param type scatter/line default=scatter
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return R plot object
 #'@export HSQC_13C
 #'@examples
 #'plot_hsqc<-HSQC_13C(c(17074,17076,17077))
 #'#Simulates C13-HSQC spectra form the given list of entries
+#'plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
+#'#Simulates C13-HSQC and connects the peaks with same sequence number
 #'plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
 #'#Example for non interactive plot
 #'@seealso \code{\link{HSQC_15N}} and \code{\link{TOCSY}}
-HSQC_13C<-function(idlist,interactive=TRUE){
+#'
+#'
+HSQC_13C<-function(idlist,type='scatter',interactive=TRUE){
   cs_data<-fetch_entry_chemical_shifts(idlist)
   if (all(is.na(cs_data))){
     return(NA)
   }else{
-  hsqc_data<-convert_cs_to_c13hsqc(cs_data)
-  with(hsqc_data,{
-  if (all(is.na(hsqc_data))){
-    warning('No data')
-    plt2<-NA}
-  else{
-    hsqc_data$Info=NA
-    hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Atom_ID_H,hsqc_data$Atom_ID_C,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
+    hsqc_data<-convert_cs_to_c13hsqc(cs_data)
+    with(hsqc_data,{
+      if (all(is.na(hsqc_data))){
+        warning('No data')
+        plt2<-NA}
+      else{
+        hsqc_data$Info=NA
+        hsqc_data$Info=paste(hsqc_data$Comp_index_ID,hsqc_data$Entity_ID,hsqc_data$Comp_ID_H,hsqc_data$Assigned_chem_shift_list_ID,sep=",")
+        if (type=='scatter'){
+          if (length(idlist)>1){
+            if (interactive){
+              plt<-ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+              #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+            }else{
+              plt<-ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
+                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+            }
+          }else{
+            if (interactive){
+              plt<-ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
+              #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+            }else{
+              plt<-ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+
+                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+            }
+          }
 
-      if (length(idlist)>1){
-        if (interactive){
-      plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
-        #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
-        }else{
-          plt<-ggplot2::ggplot(hsqc_data)+
-            ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
-            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+        } else {
+          if (interactive){
+            plt<-ggplot2::ggplot(hsqc_data)+
+              ggplot2::geom_line(ggplot2::aes(x=H,y=C,group=Comp_index_ID,label=Info))+
+              ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+            # ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
+          }else{
+            plt<-ggplot2::ggplot(hsqc_data)+
+              ggplot2::geom_line(ggplot2::aes(x=H,y=C,group=Comp_index_ID,label=Info))+
+              ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
+              ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+          }
         }
-      }else{
         if (interactive){
-        plt<-ggplot2::ggplot(hsqc_data)+
-          ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
-          #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
-        }else{
-          plt<-ggplot2::ggplot(hsqc_data)+
-            ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+
-            ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+          plt2<-plotly::plotly_build(plt)
+          plt2$x$layout$xaxis$autorange = "reversed"
+          plt2$x$layout$yaxis$autorange = "reversed"}
+        else{
+          plt2<-plt
         }
       }
-    if (interactive){
-      plt2<-plotly::plotly_build(plt)
-      plt2$x$layout$xaxis$autorange = "reversed"
-      plt2$x$layout$yaxis$autorange = "reversed"}
-    else{
-      plt2<-plt
-    }
-  }
-  return(plt2)
-  })
-  }
+      return(plt2)})}
 }
 
 
 #'Chemical shift correlation between any two atoms from a single residue
 #'
 #'Plots the correlated chemical shift distribution of any two atoms in a single residue for the 20 standard amino acids from BMRB database.
-#''By default it will generate interactive graphics using plotly library
+#'By default it will generate interactive graphics using plotly library
 #'@param atom1 atom name in NMR-STAR nomenclature like CA,CB2
 #'@param atom2 atom name in NMR_STAR nomenclature like HA,HB2
 #'@param res residue name like ALA,GLY (optional by default includes all possible amino acids)
@@ -484,7 +568,7 @@ HSQC_13C<-function(idlist,interactive=TRUE){
 #'@export chemical_shift_corr
 #'@examples
 #'plt<-chemical_shift_corr('HE21','HE22')
-#'#plots the correlated chemical shift distribution between HE21 and HE22 from all possible amino acids
+#'#plots the chemical shift distribution between HE21 and HE22
 #'@seealso \code{\link{fetch_atom_chemical_shifts}}
 chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   at1_cs<-fetch_atom_chemical_shifts(atom1)
@@ -617,7 +701,7 @@ filter_residue<-function(df){
 
 #'Simulates TOCSY spectra for a given entry or a list of entries from BMRB
 #'
-#'Simulates TOCSY(TOtal Correlation SpectroscopY) spectra directly from [BMRB](www.bmrb.wisc.edu) database. 'By default it will generate interactive graphics using plotly library
+#'Simulates TOCSY(TOtal Correlation SpectroscopY) spectra directly from BMRB database. By default it will generate interactive graphics using plotly library
 #'@param idlist list of bmrb ids c(17074,17076,17077)
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object
