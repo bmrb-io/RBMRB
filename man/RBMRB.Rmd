@@ -31,6 +31,7 @@ Here is the instruction to install those packages. Open your R and use the follo
 install.packages(c("httr","data.table","rjson","ggplot2","plotly"))
 ```
 
+
 ####Method 1
 Once the necessary packages have been installed, proceed with RMRBM installation. The source file can be downloaded from [GitHub](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_2.0.tar.gz)
 
@@ -47,6 +48,14 @@ If you have devtools library in your R, then you can install directly from GitHu
 library(devtools)
 install_github("uwbmrb/RBMRB/RBMRB")
 ```
+
+####Method 3 (Easy method)
+Now RBMRB version 2.0 is available in CRAN archive and it can be installed using the following command.
+```{R eval=F}
+install.packages("RBMRB")
+```
+This will automatically install all the dependencies. Please make sure all the dependicies installed corretly otherwise, it will complain during runtime. 
+
 ##Usage
 RBMRB can be used in a similar way like any other library in R. 
 

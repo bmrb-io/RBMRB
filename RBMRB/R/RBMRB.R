@@ -68,44 +68,111 @@ convert_cs_to_n15hsqc<-function(csdf){
     warning('No data')
     outdat<-NA
   }else{
+
+  #all amide proton nitrogen
   shiftH<-subset(csdf,Atom_ID=="H")
   names(shiftH)[names(shiftH)=="Val"]<-"H"
   shiftN<-subset(csdf,Atom_ID=="N")
   names(shiftN)[names(shiftN)=="Val"]<-"N"
+  shiftHNt<-merge(shiftH,shiftN,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+
+  #ARG side chain
+  shiftHH11<-subset(csdf,Atom_ID=="HH11")
+  names(shiftHH11)[names(shiftHH11)=="Val"]<-"H"
+  shiftHH12<-subset(csdf,Atom_ID=="HH12")
+  names(shiftHH12)[names(shiftHH12)=="Val"]<-"H"
+  shiftHH21<-subset(csdf,Atom_ID=="HH21")
+  names(shiftHH21)[names(shiftHH21)=="Val"]<-"H"
+  shiftHH22<-subset(csdf,Atom_ID=="HH22")
+  names(shiftHH22)[names(shiftHH22)=="Val"]<-"H"
+  shiftHE<-subset(csdf,Atom_ID=="HE")
+  names(shiftHE)[names(shiftHE)=="Val"]<-"H"
+  shiftNE<-subset(csdf,Atom_ID=="NE")
+  names(shiftNE)[names(shiftNE)=="Val"]<-"N"
+  shiftNH1<-subset(csdf,Atom_ID=="NH1")
+  names(shiftNH1)[names(shiftNH1)=="Val"]<-"N"
+  shiftNH2<-subset(csdf,Atom_ID=="NH2")
+  names(shiftNH2)[names(shiftNH2)=="Val"]<-"N"
+  shiftNEHE=merge(shiftHE,shiftNE,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNEHE)))){shiftNEHE$Comp_index_ID=paste(shiftNEHE$Comp_index_ID,"HE")}
+  shiftNHH11=merge(shiftHH11,shiftNH1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHH11)))){shiftNHH11$Comp_index_ID=paste(shiftNHH11$Comp_index_ID,"HH11")}
+  shiftNHH12=merge(shiftHH12,shiftNH1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHH12)))){shiftNHH12$Comp_index_ID=paste(shiftNHH12$Comp_index_ID,"HH12")}
+  shiftNHH21=merge(shiftHH21,shiftNH2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHH21)))){shiftNHH21$Comp_index_ID=paste(shiftNHH21$Comp_index_ID,"HH21")}
+  shiftNHH22=merge(shiftHH22,shiftNH2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHH22)))){shiftNHH22$Comp_index_ID=paste(shiftNHH22$Comp_index_ID,"HH22")}
+
+
+  #GLN sidechain
   shiftHE21<-subset(csdf,Atom_ID=="HE21")
   names(shiftHE21)[names(shiftHE21)=="Val"]<-"H"
   shiftHE22<-subset(csdf,Atom_ID=="HE22")
   names(shiftHE22)[names(shiftHE22)=="Val"]<-"H"
-  shiftHD21<-subset(csdf,Atom_ID=="HD21")
-  names(shiftHD21)[names(shiftHD21)=="Val"]<-"H"
-  shiftHD22<-subset(csdf,Atom_ID=="HD22")
-  names(shiftHD22)[names(shiftHD22)=="Val"]<-"H"
-  shiftHD1<-subset(csdf,Atom_ID=="HD1")
-  names(shiftHD1)[names(shiftHD1)=="Val"]<-"H"
-  shiftHE2<-subset(csdf,Atom_ID=="HE2")
-  names(shiftHE2)[names(shiftHE2)=="Val"]<-"H"
-  shiftND<-subset(csdf,Atom_ID=="ND2")
-  names(shiftND)[names(shiftND)=="Val"]<-"N"
   shiftNE<-subset(csdf,Atom_ID=="NE2")
   names(shiftNE)[names(shiftNE)=="Val"]<-"N"
-  shiftND1<-subset(csdf,Atom_ID=="ND1")
-  names(shiftND1)[names(shiftND1)=="Val"]<-"N"
-  shiftNE2<-subset(csdf,Atom_ID=="NE2")
-  names(shiftNE2)[names(shiftNE2)=="Val"]<-"N"
   shiftNEHE21=merge(shiftHE21,shiftNE,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   if (!(all(is.na(shiftNEHE21)))){shiftNEHE21$Comp_index_ID=paste(shiftNEHE21$Comp_index_ID,"HE21")}
   shiftNEHE22=merge(shiftHE22,shiftNE,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   if (!(all(is.na(shiftNEHE22)))){shiftNEHE22$Comp_index_ID=paste(shiftNEHE22$Comp_index_ID,"HE22")}
+
+  #ASN sidechain
+  shiftHD21<-subset(csdf,Atom_ID=="HD21")
+  names(shiftHD21)[names(shiftHD21)=="Val"]<-"H"
+  shiftHD22<-subset(csdf,Atom_ID=="HD22")
+  names(shiftHD22)[names(shiftHD22)=="Val"]<-"H"
+  shiftND<-subset(csdf,Atom_ID=="ND2")
+  names(shiftND)[names(shiftND)=="Val"]<-"N"
   shiftNDHD21=merge(shiftHD21,shiftND,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   if (!(all(is.na(shiftNDHD21)))){shiftNDHD21$Comp_index_ID=paste(shiftNDHD21$Comp_index_ID,"HD21")}
   shiftNDHD22=merge(shiftHD22,shiftND,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
-  if (!(all(is.na(shiftNDHD22)))){shiftNDHD22$Comp_index_ID=paste(shiftNDHD22$Comp_index_ID,"ND22")}
+  if (!(all(is.na(shiftNDHD22)))){shiftNDHD22$Comp_index_ID=paste(shiftNDHD22$Comp_index_ID,"HD22")}
+
+  #HIS sidechain
+  shiftHD1<-subset(csdf,Atom_ID=="HD1")
+  names(shiftHD1)[names(shiftHD1)=="Val"]<-"H"
+  shiftND1<-subset(csdf,Atom_ID=="ND1")
+  names(shiftND1)[names(shiftND1)=="Val"]<-"N"
   shiftND1HD1=merge(shiftHD1,shiftND1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   if (!(all(is.na(shiftND1HD1)))){shiftND1HD1$Comp_index_ID=paste(shiftND1HD1$Comp_index_ID,"HD1")}
+  shiftHE2<-subset(csdf,Atom_ID=="HE2")
+  names(shiftHE2)[names(shiftHE2)=="Val"]<-"H"
+  shiftNE2<-subset(csdf,Atom_ID=="NE2")
+  names(shiftNE2)[names(shiftNE2)=="Val"]<-"N"
   shiftNE2HE2=merge(shiftHE2,shiftNE2,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
   if (!(all(is.na(shiftNE2HE2)))){shiftNE2HE2$Comp_index_ID=paste(shiftNE2HE2$Comp_index_ID,"HE2")}
-  shiftHNt<-merge(shiftH,shiftN,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
-  shiftHN<-rbind(rbind(rbind(rbind(rbind(rbind(shiftNEHE21,shiftNEHE22),shiftNDHD21),shiftNDHD22),shiftHNt),shiftND1HD1),shiftNE2HE2)
+
+  #TRP sidechain
+  shiftHE1<-subset(csdf,Atom_ID=="HE1")
+  names(shiftHE1)[names(shiftHE1)=="Val"]<-"H"
+  shiftNE1<-subset(csdf,Atom_ID=="NE1")
+  names(shiftNE1)[names(shiftNE1)=="Val"]<-"N"
+  shiftNE1HE1=merge(shiftHE1,shiftNE1,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNE1HE1)))){shiftNE1HE1$Comp_index_ID=paste(shiftNE1HE1$Comp_index_ID,"HE1")}
+
+
+  #LYS sidechain
+  shiftHZ<-subset(csdf,Atom_ID=="HZ")
+  names(shiftHZ)[names(shiftHZ)=="Val"]<-"H"
+  shiftHZ1<-subset(csdf,Atom_ID=="HZ1")
+  names(shiftHZ1)[names(shiftHZ1)=="Val"]<-"H"
+  shiftHZ2<-subset(csdf,Atom_ID=="HZ2")
+  names(shiftHZ2)[names(shiftHZ2)=="Val"]<-"H"
+  shiftHZ3<-subset(csdf,Atom_ID=="HZ3")
+  names(shiftHZ3)[names(shiftHZ3)=="Val"]<-"H"
+  shiftNZ<-subset(csdf,Atom_ID=="NZ")
+  names(shiftNZ)[names(shiftNZ)=="Val"]<-"N"
+  shiftNHZ=merge(shiftHZ,shiftNZ,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHZ)))){shiftNHZ$Comp_index_ID=paste(shiftNHZ$Comp_index_ID,"HZ")}
+  shiftNHZ1=merge(shiftHZ1,shiftNZ,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHZ1)))){shiftNHZ1$Comp_index_ID=paste(shiftNHZ1$Comp_index_ID,"HZ1")}
+  shiftNHZ2=merge(shiftHZ2,shiftNZ,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHZ2)))){shiftNHZ2$Comp_index_ID=paste(shiftNHZ2$Comp_index_ID,"HZ2")}
+  shiftNHZ3=merge(shiftHZ3,shiftNZ,by=c('Entry_ID','Entity_ID','Comp_index_ID','Assigned_chem_shift_list_ID'))
+  if (!(all(is.na(shiftNHZ3)))){shiftNHZ3$Comp_index_ID=paste(shiftNHZ3$Comp_index_ID,"HZ3")}
+
+  shiftHN<-rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(rbind(shiftNEHE21,shiftNEHE22),shiftNDHD21),shiftNDHD22),shiftHNt),shiftND1HD1),shiftNE2HE2),shiftNEHE),shiftNHH11),shiftNHH12),shiftNHH21),shiftNHH22),shiftNHZ),shiftNHZ1),shiftNHZ2),shiftNHZ3),shiftNE1HE1)
   outdat<-shiftHN[,c("Entry_ID","Comp_index_ID","Entity_ID","Assigned_chem_shift_list_ID","Comp_ID.x","Comp_ID.y","H","N")]
   names(outdat)[names(outdat)=="Comp_ID.x"]<-"Comp_ID_H"
   names(outdat)[names(outdat)=="Comp_ID.y"]<-"Comp_ID_N"
