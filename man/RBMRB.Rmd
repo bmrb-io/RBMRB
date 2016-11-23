@@ -15,6 +15,15 @@ output:
 as a data frame in R. This facilitates access to BMRB data for statistical analysis and data visualization. It is using the [BMRB-API](https://github.com/uwbmrb/BMRB-API)  to fetch the data from BMRB database. 
 
 ##Installation
+
+####Method 1 (Easy method)
+RBMRB version 2.0 is available in CRAN archive and it can be installed using the following command.
+```{R eval=F}
+install.packages("RBMRB")
+```
+This will automatically install all the dependencies. Please make sure all the dependicies installed corretly otherwise, it will complain during runtime. 
+
+####Method 2
 RBMRB library has been developed and tested in  R version 3.3.x.  It requires the following R packages preinstalled
 
 
@@ -31,8 +40,6 @@ Here is the instruction to install those packages. Open your R and use the follo
 install.packages(c("httr","data.table","rjson","ggplot2","plotly"))
 ```
 
-
-####Method 1
 Once the necessary packages have been installed, proceed with RMRBM installation. The source file can be downloaded from [GitHub](https://github.com/uwbmrb/RBMRB/raw/master/RBMRB_2.0.tar.gz)
 
 After downloading the source file, use the following command to install RBMRB library
@@ -42,19 +49,14 @@ install.packages("~/Downloads/RBMRB_2.0.tar.gz",repos=NULL,type="source")
 
 Note: provide the correct path to the downloaded file.
 
-####Method 2
+####Method 3
 If you have devtools library in your R, then you can install directly from GitHub.
 ```{r eval=F}
 library(devtools)
 install_github("uwbmrb/RBMRB/RBMRB")
 ```
 
-####Method 3 (Easy method)
-Now RBMRB version 2.0 is available in CRAN archive and it can be installed using the following command.
-```{R eval=F}
-install.packages("RBMRB")
-```
-This will automatically install all the dependencies. Please make sure all the dependicies installed corretly otherwise, it will complain during runtime. 
+
 
 ##Usage
 RBMRB can be used in a similar way like any other library in R. 
@@ -199,11 +201,20 @@ These interactive visualization can be exported as single stand alone html file
 ```{r}
 spec1<-HSQC_15N(15060)
 spec1
-spec2<-HSQC_15N(c(17074,17076,17077),type='line')
+```
+Two or more HSQC spectra can be compared easily
+```{r}
+spec2<-HSQC_15N(c(17282,16603))
 spec2
 ```
+
 ```{r}
-spec3<-HSQC_15N(c(17074,17076,17077),type='line',interactive = F)
+spec2a<-HSQC_15N(c(17282,16603),'line')
+spec2a
+```
+Non interactive version of the spectra
+```{r}
+spec3<-HSQC_15N(c(17282,16603),type='line',interactive = F)
 spec3
 ```
 
@@ -216,12 +227,14 @@ These interactive visualization can be exported as single stand alone html file
 ```{r}
 spec1<-HSQC_13C(15060)
 spec1
-spec2<-HSQC_13C(c(17074,17076,17077))
+spec2<-HSQC_13C(c(17282,16603))
 spec2
+spec2a<-HSQC_13C(c(17282,16603),type = 'line')
+spec2a
 ```
 Non interactive plot
 ```{r}
-spec3<-HSQC_13C(c(17074,17076,17077),interactive = F)
+spec3<-HSQC_13C(c(17282,16603),type='line',interactive = F)
 spec3
 ```
 
@@ -246,14 +259,14 @@ spec3
 ####chemical_shift_corr
 This function will plot the distribution of chemical shift correlation between any two atoms from the 20 standard amino acids. The distribution of a particular residue may turn on and off by clicking the residue name in the legend.
 
-```{r}
+```{r eval=F}
 corr_plot1<-chemical_shift_corr('CB','N')
 corr_plot1
 corr_plot2<-chemical_shift_corr('CA','HA*')
 corr_plot2
 ```
 Non interactive plot
-```{r}
+```{r eval=F}
 corr_plot1<-chemical_shift_corr('CB','N',interactive = F)
 corr_plot1
 corr_plot2<-chemical_shift_corr('CA','HA*',interactive = F)
