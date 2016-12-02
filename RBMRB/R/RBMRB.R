@@ -665,15 +665,15 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   yl1=mean(cs$Val.y)-5*sd(cs$Val.y)
   yl2=mean(cs$Val.y)+5*sd(cs$Val.y)
   cs<-subset(cs,(Val.x>xl1 & Val.x<xl2 & Val.y>yl1 & Val.y<yl2))
-  names(cs)[names(cs)=="Val.x"]<-atom1
-  names(cs)[names(cs)=="Val.y"]<-atom2
+  #names(cs)[names(cs)=="Val.x"]<-atom1
+  #names(cs)[names(cs)=="Val.y"]<-atom2
   cs$Info=paste(cs$Comp_index_ID,cs$Entity_ID,cs$Atom_ID_1,cs$Atom_ID_2,cs$Assigned_chem_shift_list_ID,sep=",")
   if (type=="c"){
     if (interactive){
   plt<-ggplot2::ggplot(cs)+
     #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
     #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
-    ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
+    ggplot2::geom_density_2d(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1),bins=100)+
     #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
     ggplot2::xlab(atom1)+
     ggplot2::ylab(atom2)+ggplot2::labs(color="")
@@ -681,7 +681,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
       plt<-ggplot2::ggplot(cs)+
         #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
         #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
-        ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1),bins=100)+
+        ggplot2::geom_density_2d(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1),bins=100)+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
         ggplot2::xlab(atom1)+
         ggplot2::ylab(atom2)+ggplot2::labs(color="")
@@ -690,13 +690,13 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   else{
     if (interactive){
     plt<-ggplot2::ggplot(cs)+
-      ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
+      ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1))+
       #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
       ggplot2::xlab(atom1)+
       ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }else{
       plt<-ggplot2::ggplot(cs)+
-        ggplot2::geom_point(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
+        ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1))+
         ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
         ggplot2::xlab(atom1)+
         ggplot2::ylab(atom2)+ggplot2::labs(color="")
