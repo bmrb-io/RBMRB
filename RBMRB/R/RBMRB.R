@@ -475,7 +475,7 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_res_chemical_shifts
 #'@examples
-#'df<-fetch_res_chemical_shifts('ALA','CA)
+#'df<-fetch_res_chemical_shifts('ALA','CA')
 #'# Downloads all atom chemical shifts of ALA from macromolecules database at BMRB
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 fetch_res_chemical_shifts<-function(res='*',atm='*'){
@@ -509,9 +509,57 @@ fetch_res_chemical_shifts<-function(res='*',atm='*'){
     names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val"]="Val"
     names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val_err"]="Val_err"
     names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Assigned_chem_shift_list_ID"]="Assigned_chem_shift_list_ID"
-    dat_frame$Val=as.numeric(dat_frame$Val)
+    dat_frame$Val=suppressWarnings(as.numeric(dat_frame$Val))
+    dat_frame$Atom_ID=suppressWarnings(as.character(dat_frame$Atom_ID))
     }
   return(dat_frame)
+}
+
+#'Chemical shift histogram (or) density plot
+#'
+#'Plots the histogram (or) density of a chemical shift of given atom
+#'@param res residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY
+#'@param atm atom name in NMR-STAR nomenclautre ; Example :CA,HB2
+#'@param type count or density
+#'@param interactive TRUE/FALSE default TRUE
+#'@return R plot object
+#'@export chemical_shift_hist
+#'@examples
+#'df<-chemical_shift_hist('ALA')
+#'#plots the histogram of all atoms of ALA
+#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+chemical_shift_hist<-function(res='*',atm='*',type='count',interactive=TRUE){
+  cs_dat2<-fetch_res_chemical_shifts(res,atm)
+  if (all(is.na(cs_dat2))){
+    return(NA)
+  }else{
+    for (atom in unique(cs_dat2$Atom_ID)){
+      ss<-sd(subset(cs_dat2,Atom_ID==atom)$Val)
+      m<-mean(subset(cs_dat2,Atom_ID==atom)$Val)
+      min_val<-m-(ss*8)
+      max_val<-m+(ss*8)
+      if (exists('cs_dat')){
+        cs_dat<-rbind(cs_dat,subset(cs_dat2,Atom_ID==atom & Val>=min_val & Val<=max_val))
+      }else{
+        cs_dat<-subset(cs_dat2,Atom_ID==atom & Val>=min_val & Val<=max_val)
+      }
+    }
+    if (type=='count'){
+      plt<-ggplot2::ggplot(cs_dat)+
+        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=0.1,position = 'identity',alpha=0.5)+
+        ggplot2::xlab("Chemical shift")+ggplot2::labs(color="",fill="")
+    } else{
+      plt<-ggplot2::ggplot(cs_dat)+
+        ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.5)+
+        ggplot2::xlab("Chemical shift")+ggplot2::labs(color="",fill="")
+    }
+    if (interactive){
+      plt2<-plotly::plotly_build(plt)
+    }else{
+      plt2<-plt
+    }
+  }
+  return(plt2)
 }
 
 
