@@ -470,20 +470,25 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'NMR Chemical shifts list for a given atom from BMRB
 #'
 #'Downloads the full list of chemical shifts from BMRB macromolecular database for a given residue
-#'@param res atom name in NMR-STAR atom nomenclature ; Example: ALA,GLY
+#'@param res residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY
+#'@param atm atom name in NMR-STAR nomenclautre ; Example :CA,HB2
 #'@return R data frame that contains full chemical shift list for a given atom
 #'@export fetch_res_chemical_shifts
 #'@examples
-#'df<-fetch_res_chemical_shifts('ALA')
+#'df<-fetch_res_chemical_shifts('ALA','CA)
 #'# Downloads all atom chemical shifts of ALA from macromolecules database at BMRB
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
-fetch_res_chemical_shifts<-function(res=NA){
+fetch_res_chemical_shifts<-function(res='*',atm='*'){
+  res=gsub('[*]','%',res)
+  atm=gsub('[*]','%',atm)
+  if (res=='*'){res="%"}
+  if (atm=='*'){atm="%"}
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
   query=rjson::toJSON(list(method='select',
                            jsonrpc='2.0',
                            params=list(database='macromolecules',
-                                       query=list(where=list(Comp_ID=res),
-                                                  select='*',
+                                       query=list(where=list(Comp_ID=res,Atom_ID=atm),
+                                                  select=list('Entry_ID','Entity_ID','Entity_assembly_ID','Comp_index_ID','Comp_ID','Atom_ID','Atom_type','Val','Val_err','Assigned_chem_shift_list_ID'),
                                                   hash='false',
                                                   from='Atom_chem_shift')),
                            id=1))
@@ -494,7 +499,18 @@ fetch_res_chemical_shifts<-function(res=NA){
     dat_frame<-NA
   }else{
     dat_frame<-data.table::as.data.table(dat$result)
-  }
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entry_ID"]="Entry_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entity_ID"]="Entity_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entity_assembly_ID"]="Entity_assembly_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Comp_index_ID"]="Comp_index_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Comp_ID"]="Comp_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Atom_ID"]="Atom_ID"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Atom_type"]="Atom_type"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val"]="Val"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val_err"]="Val_err"
+    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Assigned_chem_shift_list_ID"]="Assigned_chem_shift_list_ID"
+    dat_frame$Val=as.numeric(dat_frame$Val)
+    }
   return(dat_frame)
 }
 
