@@ -466,6 +466,39 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
   return(dat_frame)
 }
 
+
+#'NMR Chemical shifts list for a given atom from BMRB
+#'
+#'Downloads the full list of chemical shifts from BMRB macromolecular database for a given residue
+#'@param res atom name in NMR-STAR atom nomenclature ; Example: ALA,GLY
+#'@return R data frame that contains full chemical shift list for a given atom
+#'@export fetch_res_chemical_shifts
+#'@examples
+#'df<-fetch_res_chemical_shifts('ALA')
+#'# Downloads all atom chemical shifts of ALA from macromolecules database at BMRB
+#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+fetch_res_chemical_shifts<-function(res=NA){
+  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
+  query=rjson::toJSON(list(method='select',
+                           jsonrpc='2.0',
+                           params=list(database='macromolecules',
+                                       query=list(where=list(Comp_ID=res),
+                                                  select='*',
+                                                  hash='false',
+                                                  from='Atom_chem_shift')),
+                           id=1))
+  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
+  dat<-httr::content(rawdata,'parsed')
+  if (length(dat$result)==0){
+    warning('Atom or db wrong')
+    dat_frame<-NA
+  }else{
+    dat_frame<-data.table::as.data.table(dat$result)
+  }
+  return(dat_frame)
+}
+
+
 #'Simulates H1-N15 HSQC spectra for a given entry or list of entries from BMRB
 #'
 #'Simulates H1-N15 HSQC(Hetronuclear Single Quantum Coherence) spectra directly from BMRB database. Default plot type will be 'scatter'.Peaks from different spectra(entries) can be connected based on residue numbers by specifying plot type as 'line'.
