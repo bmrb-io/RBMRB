@@ -511,6 +511,7 @@ fetch_res_chemical_shifts<-function(res='*',atm='*'){
     names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Assigned_chem_shift_list_ID"]="Assigned_chem_shift_list_ID"
     dat_frame$Val=suppressWarnings(as.numeric(dat_frame$Val))
     dat_frame$Atom_ID=suppressWarnings(as.character(dat_frame$Atom_ID))
+    dat_frame$Comp_ID=suppressWarnings(as.character(dat_frame$Comp_ID))
     }
   return(dat_frame)
 }
@@ -536,8 +537,8 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',interactive=TRUE){
     for (atom in unique(cs_dat2$Atom_ID)){
       ss<-sd(subset(cs_dat2,Atom_ID==atom)$Val)
       m<-mean(subset(cs_dat2,Atom_ID==atom)$Val)
-      min_val<-m-(ss*8)
-      max_val<-m+(ss*8)
+      min_val<-m-(ss*10)
+      max_val<-m+(ss*10)
       if (exists('cs_dat')){
         cs_dat<-rbind(cs_dat,subset(cs_dat2,Atom_ID==atom & Val>=min_val & Val<=max_val))
       }else{
@@ -546,12 +547,16 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',interactive=TRUE){
     }
     if (type=='count'){
       plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=0.1,position = 'identity',alpha=0.5)+
-        ggplot2::xlab("Chemical shift")+ggplot2::labs(color="",fill="")
+        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Comp_ID,fill=Atom_ID),binwidth=0.1,position = 'identity',alpha=0.5)+
+        ggplot2::xlab("Chemical shift")+
+        ggplot2::ylab("Count")+
+        ggplot2::labs(color="",fill="")
     } else{
       plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.5)+
-        ggplot2::xlab("Chemical shift")+ggplot2::labs(color="",fill="")
+        ggplot2::geom_density(ggplot2::aes(x=Val,color=Comp_ID,fill=Atom_ID),alpha=0.5)+
+        ggplot2::xlab("Chemical shift")+
+        ggplot2::ylab("Density")+
+        ggplot2::labs(color="",fill="")
     }
     if (interactive){
       plt2<-plotly::plotly_build(plt)
