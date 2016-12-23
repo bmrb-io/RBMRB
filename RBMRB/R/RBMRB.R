@@ -547,13 +547,13 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',interactive=TRUE){
     }
     if (type=='count'){
       plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Comp_ID,fill=Atom_ID),binwidth=0.1,position = 'identity',alpha=0.5)+
+        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=0.1,position = 'identity',alpha=0.5)+
         ggplot2::xlab("Chemical shift")+
         ggplot2::ylab("Count")+
         ggplot2::labs(color="",fill="")
     } else{
       plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_density(ggplot2::aes(x=Val,color=Comp_ID,fill=Atom_ID),alpha=0.5)+
+        ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.5)+
         ggplot2::xlab("Chemical shift")+
         ggplot2::ylab("Density")+
         ggplot2::labs(color="",fill="")
