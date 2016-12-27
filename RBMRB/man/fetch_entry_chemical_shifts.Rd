@@ -25,6 +25,6 @@ df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
 # Downloads data from BMRB metabolomics database
 }
 \seealso{
-\code{\link{fetch_atom_chemical_shifts}}
+\code{\link{fetch_atom_chemical_shifts}} and \code{\link{fetch_res_chemical_shifts}}
 }
 
