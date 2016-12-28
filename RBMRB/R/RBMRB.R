@@ -612,37 +612,37 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
   if (type=='scatter'){
     if (length(idlist)>1){
       if (interactive){
-    plt<-ggplot2::ggplot(hsqc_data)+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+    plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color=""))
       #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
       }else{
-        plt<-ggplot2::ggplot(hsqc_data)+
+        plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
           ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+
-          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
       }
     }else{
       if (interactive){
-      plt<-ggplot2::ggplot(hsqc_data)+
-        ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
+      plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
+        ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+ggplot2::labs(color=""))
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
       }else{
-        plt<-ggplot2::ggplot(hsqc_data)+
+        plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
           ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Comp_ID_H,label=Info))+
-          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+          ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
       }
     }
 
   } else {
     if (interactive){
-    plt<-ggplot2::ggplot(hsqc_data)+
+    plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
     ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+
-    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+    ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+ggplot2::labs(color=""))
      # ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
     }else{
-      plt<-ggplot2::ggplot(hsqc_data)+
+      plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
         ggplot2::geom_line(ggplot2::aes(x=H,y=N,group=Comp_index_ID,label=Info))+
         ggplot2::geom_point(ggplot2::aes(x=H,y=N,color=Entry_ID,label=Info))+
-        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+        ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
     }
   }
   if (interactive){
@@ -690,37 +690,37 @@ HSQC_13C<-function(idlist,type='scatter',interactive=TRUE){
         if (type=='scatter'){
           if (length(idlist)>1){
             if (interactive){
-              plt<-ggplot2::ggplot(hsqc_data)+
-                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+              plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color=""))
               #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
             }else{
-              plt<-ggplot2::ggplot(hsqc_data)+
+              plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
                 ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
-                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
             }
           }else{
             if (interactive){
-              plt<-ggplot2::ggplot(hsqc_data)+
-                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+ggplot2::labs(color="")
+              plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
+                ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+ggplot2::labs(color=""))
               #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
             }else{
-              plt<-ggplot2::ggplot(hsqc_data)+
+              plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
                 ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Comp_ID_H,label=Info))+
-                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+                ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
             }
           }
 
         } else {
           if (interactive){
-            plt<-ggplot2::ggplot(hsqc_data)+
+            plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
               ggplot2::geom_line(ggplot2::aes(x=H,y=C,group=Comp_index_ID,label=Info))+
-              ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color="")
+              ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+ggplot2::labs(color=""))
             # ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()
           }else{
-            plt<-ggplot2::ggplot(hsqc_data)+
+            plt<-suppressWarnings(ggplot2::ggplot(hsqc_data)+
               ggplot2::geom_line(ggplot2::aes(x=H,y=C,group=Comp_index_ID,label=Info))+
               ggplot2::geom_point(ggplot2::aes(x=H,y=C,color=Entry_ID,label=Info))+
-              ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")
+              ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color=""))
           }
         }
         if (interactive){
@@ -905,27 +905,27 @@ TOCSY<-function(idlist,interactive=TRUE){
     tocsy_data$Info=paste(tocsy_data$Comp_index_ID,tocsy_data$Entity_ID,tocsy_data$Comp_ID.x,tocsy_data$Atom_ID.x,tocsy_data$Atom_ID.y,tocsy_data$Assigned_chem_shift_list_ID,sep=",")
     if (length(idlist)>1){
       if (interactive){
-      plt<-ggplot2::ggplot(tocsy_data)+
+      plt<-suppressWarnings(ggplot2::ggplot(tocsy_data)+
         ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Entry_ID,label=Info))+
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
+        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color=""))
       }else{
-        plt<-ggplot2::ggplot(tocsy_data)+
+        plt<-suppressWarnings(ggplot2::ggplot(tocsy_data)+
           ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Entry_ID,label=Info))+
           ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-          ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
+          ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color=""))
       }
     }else{
       if (interactive){
-      plt<-ggplot2::ggplot(tocsy_data)+
+      plt<-suppressWarnings(ggplot2::ggplot(tocsy_data)+
         ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID.x,label=Info))+
         #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color="")
+        ggplot2::xlab("H")+ggplot2::ylab("H")+ggplot2::labs(color=""))
       }else{
-        plt<-ggplot2::ggplot(tocsy_data)+
+        plt<-suppressWarnings(ggplot2::ggplot(tocsy_data)+
           ggplot2::geom_point(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID.x,label=Info))+
           ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+ggplot2::labs(color="")+
-          ggplot2::xlab("H")+ggplot2::ylab("H")
+          ggplot2::xlab("H")+ggplot2::ylab("H"))
       }
     }
     if (interactive){
