@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{chemical_shift_hist}
 \alias{chemical_shift_hist}
-\title{Chemical shift distribution plot}
+\title{Plots chemical shift distribution}
 \usage{
 chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1,
   cutoff = 8, interactive = TRUE)
@@ -27,9 +27,9 @@ R plot object
 Plots the histogram (or) density of  chemical shift distribution of a given amino acid (or) nucleic acid from BMRB database.  Optionally particular atom can be specified in the parameter
 }
 \examples{
-plt<-chemical_shift_hist('ALA')
+#plt<-chemical_shift_hist('ALA')
 #plots the histogram of all atoms of ALA
-plt<-chemical_shift_hist('GLY',type='density')
+#plt<-chemical_shift_hist('GLY',type='density')
 #plots the density plot
 }
 \seealso{

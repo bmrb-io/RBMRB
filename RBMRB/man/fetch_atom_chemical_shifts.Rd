@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_atom_chemical_shifts}
 \alias{fetch_atom_chemical_shifts}
-\title{NMR Chemical shifts list for a given atom from BMRB}
+\title{Fetchs atom specific NMR chemical shift data from BMRB database}
 \usage{
 fetch_atom_chemical_shifts(atom, db = "macromolecules")
 }
