@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_atom_chemical_shifts}
 \alias{fetch_atom_chemical_shifts}
-\title{NMR Chemical shifts list for a given atom from BMRB}
+\title{Fetchs atom specific NMR chemical shift data from BMRB database}
 \usage{
 fetch_atom_chemical_shifts(atom, db = "macromolecules")
 }
@@ -24,6 +24,6 @@ df<-fetch_atom_chemical_shifts('C1','metabolomics')
 # Downloads C1 chemical shifts from metabolomics database at BMRB
 }
 \seealso{
-\code{\link{fetch_entry_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+\code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 }
 
