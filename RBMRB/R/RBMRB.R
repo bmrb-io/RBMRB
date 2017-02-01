@@ -45,8 +45,57 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
     warning('Entry not found')
     cs_data<-NA
   }
+  if (!("Entry_ID" %in% cs_data)){
+    cs_data$Entry_ID = makeRandomString()
+  }
   return (cs_data)
 }
+
+#'Generates random string of fixed length
+#'
+#'Local files may not have Entry_ID, in that case random Entry_ID is assigned using this function. It is an internal function
+makeRandomString <- function()
+{
+  n = 1
+  lenght = 6
+  randomString <- c(1:n)                  # initialize vector
+  for (i in 1:n)
+  {
+    randomString[i] <- paste(sample(c(0:9, letters, LETTERS),
+                                    lenght, replace=TRUE),
+                             collapse="")
+  }
+  return(randomString)
+}
+
+
+#'Exports NMR-STAR file to BMRB API server
+#'
+#'Exports NMR-STAR file to BMRB API server, so that local data can be visualized using RBMRB library. A unique tocken will be return by this function. This tocken is used to access the file and it is valid only for 7 days
+#'@param filename filename with correct path
+#'@return Temprory tocken to access the file
+#'@export export_star_data
+#'@examples
+#'#ent_id <- export_star_data('/nmrdata/hpr.str')
+#'# Exports hpr.str file to BMRB API server and gets a temprory tocken
+#'@seealso \code{\link{fetch_atom_chemical_shifts}}, \code{\link{fetch_entry_chemical_shifts}} \code{\link{fetch_res_chemical_shifts}}
+export_star_data<-function(filename){
+  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
+  query=rjson::toJSON(list(method='store',jsonrpc='2.0',params=list(data=readChar(filename, file.info(filename)$size)),id=1))
+  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
+  c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
+  if (length(c$result)!=0){
+    ent_id<-c$result$entry_id
+    print(paste("Please note down the ID",ent_id,sep=":"))
+    print(paste("ID will expire on ", as.POSIXct(c$result$expiration, origin = "1970-01-01"),sep=" "))
+  }
+  else{
+    warning('Entry not found')
+    ent_id<-NA
+  }
+  return (ent_id)
+}
+
 
 #'Fetchs atom specific NMR chemical shift data from BMRB database
 #'
