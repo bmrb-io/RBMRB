@@ -10,14 +10,14 @@ export_star_data(filename)
 \item{filename}{filename with correct path}
 }
 \value{
-Temprory tocken to access the file
+Temporary tocken to access the file
 }
 \description{
-Exports NMR-STAR file to BMRB API server, so that local data can be visualized using RBMRB library. A unique tocken will be return by this function. This tocken is used to access the file and it is valid only for 7 days
+Exports NMR-STAR file to BMRB API server, so that local data can be visualized using RBMRB library. This function will return a tocken, which can be used to access the data through RBMRB package. The tocken will expire after 7 days
 }
 \examples{
-#ent_id <- export_star_data('/nmrdata/hpr.str')
-# Exports hpr.str file to BMRB API server and gets a temprory tocken
+# ent_id <- export_star_data('/nmrdata/hpr.str')
+# Exports hpr.str file to BMRB API server and gets a temporary tocken
 }
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}}, \code{\link{fetch_entry_chemical_shifts}} \code{\link{fetch_res_chemical_shifts}}

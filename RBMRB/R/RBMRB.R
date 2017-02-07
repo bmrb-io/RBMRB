@@ -45,15 +45,18 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
     warning('Entry not found')
     cs_data<-NA
   }
-  if (!("Entry_ID" %in% cs_data)){
+  if (!("Entry_ID" %in% colnames(cs_data))){
     cs_data$Entry_ID = makeRandomString()
+  }
+  if (!("Comp_index_ID" %in% colnames(cs_data)) & ("Seq_ID" %in% colnames(cs_data)) ){
+    cs_data$Comp_index_ID = cs_data$Seq_ID
   }
   return (cs_data)
 }
 
 #'Generates random string of fixed length
 #'
-#'Local files may not have Entry_ID, in that case random Entry_ID is assigned using this function. It is an internal function
+#'Local files may not have Entry_ID, in that case random Entry_ID is assigned using this function. It is an internal function used only by RBMRB package
 makeRandomString <- function()
 {
   n = 1
@@ -71,13 +74,13 @@ makeRandomString <- function()
 
 #'Exports NMR-STAR file to BMRB API server
 #'
-#'Exports NMR-STAR file to BMRB API server, so that local data can be visualized using RBMRB library. A unique tocken will be return by this function. This tocken is used to access the file and it is valid only for 7 days
+#'Exports NMR-STAR file to BMRB API server, so that local data can be visualized using RBMRB library. This function will return a tocken, which can be used to access the data through RBMRB package. The tocken will expire after 7 days
 #'@param filename filename with correct path
-#'@return Temprory tocken to access the file
+#'@return Temporary tocken to access the file
 #'@export export_star_data
 #'@examples
-#'#ent_id <- export_star_data('/nmrdata/hpr.str')
-#'# Exports hpr.str file to BMRB API server and gets a temprory tocken
+#'# ent_id <- export_star_data('/nmrdata/hpr.str')
+#'# Exports hpr.str file to BMRB API server and gets a temporary tocken
 #'@seealso \code{\link{fetch_atom_chemical_shifts}}, \code{\link{fetch_entry_chemical_shifts}} \code{\link{fetch_res_chemical_shifts}}
 export_star_data<-function(filename){
   bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
