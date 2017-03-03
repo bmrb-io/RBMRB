@@ -1,0 +1,30 @@
+HSQC_13C                Simulates H1-C13 HSQC spectra for a given entry
+                        or list of entries from BMRB
+HSQC_15N                Simulates H1-N15 HSQC spectra for a given entry
+                        or list of entries from BMRB
+TOCSY                   Simulates TOCSY spectra for a given entry or a
+                        list of entries from BMRB
+chemical_shift_corr     Chemical shift correlation between any two
+                        atoms from a single residue
+chemical_shift_hist     Plots chemical shift distribution
+chemical_shift_hists    Plots chemical shift distribution for a list of
+                        atoms
+convert_cs_to_c13hsqc   Reformats chemical shift dataframe for easy
+                        plotting
+convert_cs_to_n15hsqc   Reformats chemical shift dataframe for easy
+                        plotting
+convert_cs_to_tocsy     Reformats chemical shift dataframe for easy
+                        plotting
+export_star_data        Exports NMR-STAR file to BMRB API server
+fetch_atom_chemical_shifts
+                        Fetchs atom specific NMR chemical shift data
+                        from BMRB database
+fetch_entry_chemical_shifts
+                        Fetchs entry specific NMR chemical shift data
+                        from BMRB database
+fetch_res_chemical_shifts
+                        Fetchs residue specific NMR chemical shift data
+                        from BMRB database
+filter_residue          Filter for standard 20 amino acids
+makeRandomString        Generates random string of fixed length(for
+                        internal use in RBMRB)

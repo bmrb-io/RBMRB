@@ -1,0 +1,364 @@
+
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RBMRB"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "RBMRB-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('RBMRB')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("HSQC_13C")
+> ### * HSQC_13C
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: HSQC_13C
+> ### Title: Simulates H1-C13 HSQC spectra for a given entry or list of
+> ###   entries from BMRB
+> ### Aliases: HSQC_13C
+> 
+> ### ** Examples
+> 
+> plot_hsqc<-HSQC_13C(c(17074,17076,17077))
+> #Simulates C13-HSQC spectra form the given list of entries
+> plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
+> #Simulates C13-HSQC and connects the peaks with same sequence number
+> plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
+> #Example for non interactive plot
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("HSQC_13C", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("HSQC_15N")
+> ### * HSQC_15N
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: HSQC_15N
+> ### Title: Simulates H1-N15 HSQC spectra for a given entry or list of
+> ###   entries from BMRB
+> ### Aliases: HSQC_15N
+> 
+> ### ** Examples
+> 
+> plot_hsqc<-HSQC_15N(c(17074,17076,17077))
+> #simulates N15-HSQC spectra for the given 3 entreis
+> plot_hsqc<-HSQC_15N(18857,'line')
+> #simulates the N15-HSQC spectra from many chemical shift lists from a single entry
+> plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
+> #example for non interactive plots
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("HSQC_15N", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("TOCSY")
+> ### * TOCSY
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: TOCSY
+> ### Title: Simulates TOCSY spectra for a given entry or a list of entries
+> ###   from BMRB
+> ### Aliases: TOCSY
+> 
+> ### ** Examples
+> 
+> plot_tocsy<-TOCSY(c(17074,17076,17077))
+> #Simulates TOCSY spectra for the given 3 entries
+> plot_tocsy<-TOCSY(c(17074,17076,17077),interactive=FALSE)
+> # Example to disable interactive plot feature
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("TOCSY", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("chemical_shift_corr")
+> ### * chemical_shift_corr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: chemical_shift_corr
+> ### Title: Chemical shift correlation between any two atoms from a single
+> ###   residue
+> ### Aliases: chemical_shift_corr
+> 
+> ### ** Examples
+> 
+> plt<-chemical_shift_corr('HE21','HE22')
+> #plots the chemical shift distribution between HE21 and HE22
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("chemical_shift_corr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("chemical_shift_hist")
+> ### * chemical_shift_hist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: chemical_shift_hist
+> ### Title: Plots chemical shift distribution
+> ### Aliases: chemical_shift_hist
+> 
+> ### ** Examples
+> 
+> #plt<-chemical_shift_hist('ALA')
+> #plots the histogram of all atoms of ALA
+> #plt<-chemical_shift_hist('GLY',type='density')
+> #plots the density plot
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("chemical_shift_hist", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("chemical_shift_hists")
+> ### * chemical_shift_hists
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: chemical_shift_hists
+> ### Title: Plots chemical shift distribution for a list of atoms
+> ### Aliases: chemical_shift_hists
+> 
+> ### ** Examples
+> 
+> #plt<-chemical_shift_hists(c('ALA-C*'))
+> #plots the histogram of all atoms of ALA
+> #plt<-chemical_shift_hists(c("GLY-H*","ALA-HA"),type='density')
+> #plots the density plot
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("chemical_shift_hists", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("convert_cs_to_c13hsqc")
+> ### * convert_cs_to_c13hsqc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: convert_cs_to_c13hsqc
+> ### Title: Reformats chemical shift dataframe for easy plotting
+> ### Aliases: convert_cs_to_c13hsqc
+> 
+> ### ** Examples
+> 
+> df<-fetch_entry_chemical_shifts(15060)
+> # Downloads data from BMRB
+> hsqc<-convert_cs_to_c13hsqc(df)
+> # Reformats for easy plotting
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("convert_cs_to_c13hsqc", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("convert_cs_to_n15hsqc")
+> ### * convert_cs_to_n15hsqc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: convert_cs_to_n15hsqc
+> ### Title: Reformats chemical shift dataframe for easy plotting
+> ### Aliases: convert_cs_to_n15hsqc
+> 
+> ### ** Examples
+> 
+> df<-fetch_entry_chemical_shifts(15060)
+> #Downloads the chemical shift data from BMRB
+> hsqc<-convert_cs_to_n15hsqc(df)
+> #Reformats for easy plotting
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("convert_cs_to_n15hsqc", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("convert_cs_to_tocsy")
+> ### * convert_cs_to_tocsy
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: convert_cs_to_tocsy
+> ### Title: Reformats chemical shift dataframe for easy plotting
+> ### Aliases: convert_cs_to_tocsy
+> 
+> ### ** Examples
+> 
+> df<-fetch_entry_chemical_shifts(15060)
+> # Downloads data from BMRB
+> tocsy<-convert_cs_to_tocsy(df)
+> # Reformats for easy plotting
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("convert_cs_to_tocsy", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("export_star_data")
+> ### * export_star_data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: export_star_data
+> ### Title: Exports NMR-STAR file to BMRB API server
+> ### Aliases: export_star_data
+> 
+> ### ** Examples
+> 
+> # ent_id <- export_star_data('/nmrdata/hpr.str')
+> # Exports hpr.str file to BMRB API server and gets a temporary tocken
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("export_star_data", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fetch_atom_chemical_shifts")
+> ### * fetch_atom_chemical_shifts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fetch_atom_chemical_shifts
+> ### Title: Fetchs atom specific NMR chemical shift data from BMRB database
+> ### Aliases: fetch_atom_chemical_shifts
+> 
+> ### ** Examples
+> 
+> df<-fetch_atom_chemical_shifts('CG2','macromolecules')
+> # Downloads CB2 chemical shifts from macromolecules database at BMRB
+> df<-fetch_atom_chemical_shifts('C1','metabolomics')
+> # Downloads C1 chemical shifts from metabolomics database at BMRB
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fetch_atom_chemical_shifts", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fetch_entry_chemical_shifts")
+> ### * fetch_entry_chemical_shifts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fetch_entry_chemical_shifts
+> ### Title: Fetchs entry specific NMR chemical shift data from BMRB database
+> ### Aliases: fetch_entry_chemical_shifts
+> 
+> ### ** Examples
+> 
+> df<-fetch_entry_chemical_shifts(15060)
+> # Downloads NMR chemical shifts of a single entry from BMRB
+> df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+> # Downloads NMR chemical shifts of multiple entries from BMRB
+> df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+> # Downloads data from BMRB metabolomics database
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fetch_entry_chemical_shifts", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("fetch_res_chemical_shifts")
+> ### * fetch_res_chemical_shifts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: fetch_res_chemical_shifts
+> ### Title: Fetchs residue specific NMR chemical shift data from BMRB
+> ###   database
+> ### Aliases: fetch_res_chemical_shifts
+> 
+> ### ** Examples
+> 
+> #df<-fetch_res_chemical_shifts('GLY')
+> # Downloads chemical shift data of all atoms of GLY
+> #df<-fetch_res_chemical_shifts('ALA','CA')
+> # Downloads C alpha chemical shifts of ALA from macromolecules database at BMRB
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("fetch_res_chemical_shifts", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("filter_residue")
+> ### * filter_residue
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: filter_residue
+> ### Title: Filter for standard 20 amino acids
+> ### Aliases: filter_residue
+> 
+> ### ** Examples
+> 
+> df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
+> #Downloads all CG2 chemical shifts and removes non standard amino acids
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("filter_residue", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  9.316 0.092 18.951 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
