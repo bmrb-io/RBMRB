@@ -26,17 +26,37 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
       else{
         csdata<-data.table::as.data.table(y$data)
         cstags<-as.data.frame(data.table::as.data.table(y$tags))$V1
-        if (exists('cs_data')){
-          cs_data<-rbind(cs_data,as.data.frame(data.table::data.table(t(csdata))))}
+        csdata<-as.data.frame(data.table::data.table(t(csdata)))
+        colnames(csdata)<-cstags
+        if (!("Entry_ID" %in% colnames(csdata))){
+          csdata$Entry_ID = makeRandomString()
+        }
+        if (!("Comp_index_ID" %in% colnames(csdata)) & ("Seq_ID" %in% colnames(csdata)) ){
+          csdata$Comp_index_ID = csdata$Seq_ID
+        }
+        if (!("Entity_ID" %in% colnames(csdata))){
+          csdata$Entity_ID=1
+        }
+        if (!("Assigned_chem_shift_list_ID" %in% colnames(csdata))){
+          csdata$Assigned_chem_shift_list_ID=1
+        }
+        if (exists('cs_data') & exists('csdata')){
+          if (length(colnames(cs_data)) != length(colnames(csdata))){
+            common_col<-intersect(colnames(cs_data),colnames(csdata))
+            cs_data<-subset(cs_data,select=common_col)
+            csdata<-subset(csdata,select=common_col)
+            warning("Entries have differnet columns;mismatch will be removed")
+          }
+          cs_data<-rbind(cs_data,csdata)}
         else{
-          cs_data<-as.data.frame(data.table::data.table(t(csdata)))}
+          cs_data<-csdata}
         }
       }
     }
     if (exists('cs_data')){
-      colnames(cs_data)<-cstags
       cs_data$Val<-suppressWarnings(as.numeric(cs_data$Val))
-      cs_data$Val_err<-suppressWarnings(as.numeric(cs_data$Val_err))}
+      cs_data$Val_err<-suppressWarnings(as.numeric(cs_data$Val_err))
+      }
     else{
       warning('No data')
       cs_data<-NA}
@@ -45,16 +65,11 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
     warning('Entry not found')
     cs_data<-NA
   }
-  if (!("Entry_ID" %in% colnames(cs_data))){
-    cs_data$Entry_ID = makeRandomString()
-  }
-  if (!("Comp_index_ID" %in% colnames(cs_data)) & ("Seq_ID" %in% colnames(cs_data)) ){
-    cs_data$Comp_index_ID = cs_data$Seq_ID
-  }
+
   return (cs_data)
 }
 
-#'Generates random string of fixed length
+#'Generates random string of fixed length(for internal use in RBMRB)
 #'
 #'Local files may not have Entry_ID, in that case random Entry_ID is assigned using this function. It is an internal function used only by RBMRB package
 makeRandomString <- function()

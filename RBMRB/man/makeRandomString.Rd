@@ -2,7 +2,7 @@
 % Please edit documentation in R/RBMRB.R
 \name{makeRandomString}
 \alias{makeRandomString}
-\title{Generates random string of fixed length}
+\title{Generates random string of fixed length(for internal use in RBMRB)}
 \usage{
 makeRandomString()
 }
