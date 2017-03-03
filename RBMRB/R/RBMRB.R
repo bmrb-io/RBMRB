@@ -51,10 +51,16 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
   if (!("Comp_index_ID" %in% colnames(cs_data)) & ("Seq_ID" %in% colnames(cs_data)) ){
     cs_data$Comp_index_ID = cs_data$Seq_ID
   }
+  if (!("Entity_ID" %in% colnames(cs_data))){
+    cs_data$Entity_ID=1
+  }
+  if (!("Assigned_chem_shift_list_ID" %in% colnames(cs_data))){
+    cs_data$Assigned_chem_shift_list_ID=1
+  }
   return (cs_data)
 }
 
-#'Generates random string of fixed length
+#'Generates random string of fixed length(for internal use in RBMRB)
 #'
 #'Local files may not have Entry_ID, in that case random Entry_ID is assigned using this function. It is an internal function used only by RBMRB package
 makeRandomString <- function()
