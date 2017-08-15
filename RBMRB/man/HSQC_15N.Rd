@@ -31,4 +31,3 @@ plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
 \seealso{
 \code{\link{HSQC_13C}} and \code{\link{TOCSY}}
 }
-

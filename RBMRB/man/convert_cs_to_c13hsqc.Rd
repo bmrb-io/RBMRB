@@ -25,4 +25,3 @@ hsqc<-convert_cs_to_c13hsqc(df)
 \seealso{
 \code{\link{convert_cs_to_n15hsqc}} and \code{\link{convert_cs_to_tocsy}}
 }
-

@@ -32,4 +32,3 @@ plt<-chemical_shift_corr('HE21','HE22')
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}}
 }
-

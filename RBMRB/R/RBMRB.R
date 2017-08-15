@@ -1,26 +1,22 @@
-#'Fetchs entry specific NMR chemical shift data from BMRB database
+#'Imports checmial shift table for a given entry id from BMRB data base
 #'
-#'Downloads NMR chemical shift data from BMRB database for a given Entry ID or list of Entry IDs
-#'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
+#'Downloads NMR chemical shift data from BMRB database for a given Entry ID
+#'@param BMRBid sinlge BMRB ID
 #'For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
 #'@return R data frame that contains  Atom_chem_shift data for a given list of entries
-#'@export fetch_entry_chemical_shifts
+#'@export fetch_entry_cs
 #'@examples
-#'df<-fetch_entry_chemical_shifts(15060)
+#'df<-fetch_entry_cs(15060)
 #'# Downloads NMR chemical shifts of a single entry from BMRB
-#'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
-#'# Downloads NMR chemical shifts of multiple entries from BMRB
-#'df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+#'df<-fetch_entry_cs('bmse000034')
 #'# Downloads data from BMRB metabolomics database
-#'@seealso \code{\link{fetch_atom_chemical_shifts}} and \code{\link{fetch_res_chemical_shifts}}
-fetch_entry_chemical_shifts<-function(BMRBidlist){
-  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
-  query=rjson::toJSON(list(method='loop',jsonrpc='2.0',params=list(ids=BMRBidlist,keys=list('_Atom_chem_shift')),id=1))
-  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
+#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_atom_chemical_shifts}} and \code{\link{fetch_res_chemical_shifts}}
+fetch_entry_cs<-function(BMRBid){
+  bmrb_apiurl<-paste0("http://webapi.bmrb.wisc.edu/v2/entry/",BMRBid,"?loop=Atom_chem_shift")
+  rawdata<-httr::GET(bmrb_apiurl,httr::add_headers(Application = "RBMRB V2.1.0"))
   c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
-  if (length(c$result)!=0){
-  for (x in c$result){
-    for (y in x$`_Atom_chem_shift`){
+  if (rawdata$status_code==200){
+    for (y in c[[1]][1]$`Atom_chem_shift`){
       if (is.null(y)){
         warnings('No Chemical shift list found')}
       else{
@@ -50,23 +46,66 @@ fetch_entry_chemical_shifts<-function(BMRBidlist){
           cs_data<-rbind(cs_data,csdata)}
         else{
           cs_data<-csdata}
-        }
       }
     }
     if (exists('cs_data')){
       cs_data$Val<-suppressWarnings(as.numeric(cs_data$Val))
       cs_data$Val_err<-suppressWarnings(as.numeric(cs_data$Val_err))
-      }
+    }
     else{
       warning('No data')
       cs_data<-NA}
-    }
+  }
   else{
-    warning('Entry not found')
+    warning(c$error)
     cs_data<-NA
   }
-
   return (cs_data)
+}
+
+
+
+
+
+
+#'Fetchs entry specific NMR chemical shift data from BMRB database
+#'
+#'Downloads NMR chemical shift data from BMRB database for a given Entry ID or list of Entry IDs
+#'@param BMRBidlist sinlge BMRB ID (or) list of BMRB IDs in csv format
+#'For metabolomics entries entry id should have 'bmse' prefix example: c('bmse000034','bmse000035','bmse000036')
+#'@return R data frame that contains  Atom_chem_shift data for a given list of entries
+#'@export fetch_entry_chemical_shifts
+#'@examples
+#'df<-fetch_entry_chemical_shifts(15060)
+#'# Downloads NMR chemical shifts of a single entry from BMRB
+#'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+#'# Downloads NMR chemical shifts of multiple entries from BMRB
+#'df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+#'# Downloads data from BMRB metabolomics database
+#'@seealso \code{\link{fetch_atom_chemical_shifts}},\code{\link{fetch_entry_cs}} and \code{\link{fetch_res_chemical_shifts}}
+fetch_entry_chemical_shifts<-function(BMRBidlist){
+  for (bid in BMRBidlist){
+    csdata<-fetch_entry_cs(bid)
+    if (all(is.na(csdata))){
+      warning("Entry not found")
+    }
+    else{
+      if (exists('cs_data') & exists('csdata')){
+        if (length(colnames(cs_data)) != length(colnames(csdata))){
+          common_col<-intersect(colnames(cs_data),colnames(csdata))
+          cs_data<-subset(cs_data,select=common_col)
+          csdata<-subset(csdata,select=common_col)
+          warning("Entries have differnet columns;mismatch will be removed")
+        }
+        cs_data<-rbind(cs_data,csdata)}
+      else{
+        cs_data<-csdata}
+    }}
+  if (exists('cs_data')==F){
+    cs_data=NA
+  }
+
+  return(cs_data)
 }
 
 #'Generates random string of fixed length(for internal use in RBMRB)
@@ -98,14 +137,14 @@ makeRandomString <- function()
 #'# Exports hpr.str file to BMRB API server and gets a temporary tocken
 #'@seealso \code{\link{fetch_atom_chemical_shifts}}, \code{\link{fetch_entry_chemical_shifts}} \code{\link{fetch_res_chemical_shifts}}
 export_star_data<-function(filename){
-  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
+  bmrb_apiurl<-"http://webapi.bmrb.wisc.edu/v2/entry/"
   query=rjson::toJSON(list(method='store',jsonrpc='2.0',params=list(data=readChar(filename, file.info(filename)$size)),id=1))
-  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
+  rawdata<-httr::POST(bmrb_apiurl,body=readChar(filename, file.info(filename)$size),httr::add_headers(Application = "RBMRB V2.1.0"))
   c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
-  if (length(c$result)!=0){
-    ent_id<-c$result$entry_id
+  if (length(c)!=0){
+    ent_id<-c$entry_id
     print(paste("Please note down the ID",ent_id,sep=":"))
-    print(paste("ID will expire on ", as.POSIXct(c$result$expiration, origin = "1970-01-01"),sep=" "))
+    print(paste("ID will expire on ", as.POSIXct(c$expiration, origin = "1970-01-01"),sep=" "))
   }
   else{
     warning('Entry not found')
@@ -129,8 +168,8 @@ export_star_data<-function(filename){
 #'# Downloads C1 chemical shifts from metabolomics database at BMRB
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
-  bmrb_api<-"http://webapi.bmrb.wisc.edu/"
-  raw_data<-httr::GET(bmrb_api,path=paste0("/v1/rest/chemical_shifts/",atom,"/",db))
+  bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?atom_id=",atom,"&database=",db)
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')
@@ -162,46 +201,22 @@ fetch_atom_chemical_shifts<-function(atom,db='macromolecules'){
 #'# Downloads C alpha chemical shifts of ALA from macromolecules database at BMRB
 #'@seealso \code{\link{fetch_atom_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_hist}}
 fetch_res_chemical_shifts<-function(res='*',atm='*'){
-  res=gsub('[*]','%',res)
-  atm=gsub('[*]','%',atm)
-  if (res=='*'){res="%"}
-  if (atm=='*'){atm="%"}
-  bmrb_apiurl_json<-"http://webapi.bmrb.wisc.edu/v1/jsonrpc"
-  query=rjson::toJSON(list(method='select',
-                           jsonrpc='2.0',
-                           params=list(database='macromolecules',
-                                       query=list(where=list(Comp_ID=res,Atom_ID=atm),
-                                                  select=list('Entry_ID','Entity_ID','Entity_assembly_ID','Comp_index_ID','Comp_ID','Atom_ID','Atom_type','Val','Val_err','Assigned_chem_shift_list_ID'),
-                                                  hash='false',
-                                                  from='Atom_chem_shift')),
-                           id=1))
-  rawdata<-httr::POST(bmrb_apiurl_json,encode='json',body=query)
-  dat<-httr::content(rawdata,'parsed')
-  if (length(dat$result)==0){
+  db='macromolecules'
+  bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?comp_id=",res,"&atom_id=",atm,"&database=",db)
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
+  dat<-httr::content(raw_data,'parsed')
+  if (length(dat$data)==0){
     warning('Atom or db wrong')
     dat_frame<-NA
   }else{
-    dat_frame<-data.table::as.data.table(dat$result)
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entry_ID"]="Entry_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entity_ID"]="Entity_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Entity_assembly_ID"]="Entity_assembly_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Comp_index_ID"]="Comp_index_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Comp_ID"]="Comp_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Atom_ID"]="Atom_ID"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Atom_type"]="Atom_type"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val"]="Val"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Val_err"]="Val_err"
-    names(dat_frame)[names(dat_frame)=="Atom_chem_shift.Assigned_chem_shift_list_ID"]="Assigned_chem_shift_list_ID"
-    dat_frame$Val=suppressWarnings(as.numeric(dat_frame$Val))
-    dat_frame$Val_err=suppressWarnings(as.character(dat_frame$Val_err))
-    dat_frame$Atom_ID=suppressWarnings(as.character(dat_frame$Atom_ID))
-    dat_frame$Comp_ID=suppressWarnings(as.character(dat_frame$Comp_ID))
-    dat_frame$Entry_ID=suppressWarnings(as.character(dat_frame$Entry_ID))
-    dat_frame$Entity_ID=suppressWarnings(as.character(dat_frame$Entity_ID))
-    dat_frame$Entity_assembly_ID=suppressWarnings(as.character(dat_frame$Entity_assembly_ID))
-    dat_frame$Comp_index_ID=suppressWarnings(as.numeric(dat_frame$Comp_index_ID))
-    dat_frame$Atom_type=suppressWarnings(as.character(dat_frame$Atom_type))
-    dat_frame$Assigned_chem_shift_list_ID=suppressWarnings(as.character(dat_frame$Assigned_chem_shift_list_ID))
+    dat_tab<-data.table::as.data.table(dat$data)
+    dat_frame<-as.data.frame(data.table::data.table(t(dat_tab)))
+    for (name in names(dat_frame)){dat_frame[[name]]<-unlist(as.character(dat_frame[[name]]))}
+    dat_tags<-as.data.frame(data.table::data.table(t(data.table::as.data.table(dat$columns))))
+    for (i in 1:length(dat_tags$V1)){dat_tags$V1[i]<-strsplit(dat_tags$V1[i],"[.]")[[1]][2]}
+    colnames(dat_frame)<-dat_tags$V1
+    dat_frame$Val<-suppressWarnings(as.numeric(dat_frame$Val))
+    dat_frame$Val_err<-suppressWarnings(as.numeric(dat_frame$Val_err))
   }
   return(dat_frame)
 }
@@ -628,17 +643,19 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,inter
       }
     }
     if (type=='count'){
-      plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=bw,position = 'identity',alpha=0.7)+
-        ggplot2::xlab("Chemical shift")+
-        ggplot2::ylab("Count")+
-        ggplot2::labs(color="",fill="")
+      plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$Atom_ID) %>% layout(barmode = "overlay")
+      # plt<-ggplot2::ggplot(cs_dat)+
+      #   ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=bw,position = 'identity',alpha=0.7)+
+      #   ggplot2::xlab("Chemical shift")+
+      #   ggplot2::ylab("Count")+
+      #   ggplot2::labs(color="",fill="")
     } else{
-      plt<-ggplot2::ggplot(cs_dat)+
-        ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.7,trim=T)+
-        ggplot2::xlab("Chemical shift")+
-        ggplot2::ylab("Density")+
-        ggplot2::labs(color="",fill="")
+      plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$Atom_ID,histnorm = "probability") %>% layout(barmode = "overlay")
+      # plt<-ggplot2::ggplot(cs_dat)+
+      #   ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.7,trim=T)+
+      #   ggplot2::xlab("Chemical shift")+
+      #   ggplot2::ylab("Density")+
+      #   ggplot2::labs(color="",fill="")
     }
     if (interactive){
       plt2<-plotly::plotly_build(plt)

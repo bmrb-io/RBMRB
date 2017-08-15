@@ -22,4 +22,3 @@ df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}}
 }
-

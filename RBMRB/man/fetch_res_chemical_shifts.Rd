@@ -26,4 +26,3 @@ Downloads the full list of chemical shifts from BMRB macromolecular database for
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_hist}}
 }
-
