@@ -24,7 +24,7 @@ chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1,
 R plot object
 }
 \description{
-Plots the histogram (or) density of  chemical shift distribution of a given amino acid (or) nucleic acid from BMRB database.  Optionally particular atom can be specified in the parameter
+Plots the histogram (or) density of  chemical shift distribution of a given atom from amino acid (or) nucleic acid from BMRB database.  Optionally particular atom can be specified in the parameter
 }
 \examples{
 #plt<-chemical_shift_hist('ALA')
@@ -35,3 +35,4 @@ Plots the histogram (or) density of  chemical shift distribution of a given amin
 \seealso{
 \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 }
+

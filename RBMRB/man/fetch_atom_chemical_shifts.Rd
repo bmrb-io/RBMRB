@@ -2,12 +2,12 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_atom_chemical_shifts}
 \alias{fetch_atom_chemical_shifts}
-\title{Fetchs atom specific NMR chemical shift data from BMRB database}
+\title{Imports all chemical shifts of a given atom from BMRB database}
 \usage{
-fetch_atom_chemical_shifts(atom, db = "macromolecules")
+fetch_atom_chemical_shifts(atom = "*", db = "macromolecules")
 }
 \arguments{
-\item{atom}{atom name in NMR-STAR atom nomenclature ; Example: CA,CB2}
+\item{atom}{atom name in NMR-STAR atom nomenclature ; Example: CA,CB2; default * (all atoms)}
 
 \item{db}{macromolecules, metabolomics (optional, by default will fetch from macromolecules database)}
 }
@@ -15,7 +15,7 @@ fetch_atom_chemical_shifts(atom, db = "macromolecules")
 R data frame that contains full chemical shift list for a given atom
 }
 \description{
-Downloads the full list of chemical shifts from BMRB macromolecular/metabolomics database for a given atom
+Downloads the full chemical shift data from BMRB macromolecules/metabolomics database for a given atom
 }
 \examples{
 df<-fetch_atom_chemical_shifts('CG2','macromolecules')
@@ -26,3 +26,4 @@ df<-fetch_atom_chemical_shifts('C1','metabolomics')
 \seealso{
 \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
 }
+

@@ -2,20 +2,20 @@
 % Please edit documentation in R/RBMRB.R
 \name{fetch_res_chemical_shifts}
 \alias{fetch_res_chemical_shifts}
-\title{Fetchs residue specific NMR chemical shift data from BMRB database}
+\title{Imports chemical shift data for a given amino acid/nucleic acid}
 \usage{
 fetch_res_chemical_shifts(res = "*", atm = "*")
 }
 \arguments{
-\item{res}{residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY ; default '*' (includes everything)}
+\item{res}{residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY ; default '*' (all residues)}
 
-\item{atm}{atom name in NMR-STAR nomenclautre ; Example :CA,HB2; default * (includes all atoms)}
+\item{atm}{atom name in NMR-STAR nomenclautre ; Example :CA,HB2; default * (all atoms)}
 }
 \value{
 R data frame that contains full chemical shift list for a given atom
 }
 \description{
-Downloads the full list of chemical shifts from BMRB macromolecular database for a given amino acid (or) nucleic acid. Optionally particular atom can be specified in the parameter
+Downloads chemical shift data from BMRB macromolecular database for a given amino acid (or) nucleic acid. Optionally particular atom can be specified in the parameter
 }
 \examples{
 #df<-fetch_res_chemical_shifts('GLY')
@@ -26,3 +26,4 @@ Downloads the full list of chemical shifts from BMRB macromolecular database for
 \seealso{
 \code{\link{fetch_atom_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_hist}}
 }
+
