@@ -167,7 +167,7 @@ export_star_data<-function(filename){
 #'# Downloads CB2 chemical shifts from macromolecules database at BMRB
 #'df<-fetch_atom_chemical_shifts('C1','metabolomics')
 #'# Downloads C1 chemical shifts from metabolomics database at BMRB
-#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+#'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 fetch_atom_chemical_shifts<-function(atom="*",db='macromolecules'){
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?atom_id=",atom,"&database=",db)
   raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
@@ -626,7 +626,7 @@ convert_cs_to_c13hsqc<-function(csdf){
 #'#plt<-chemical_shift_hist('GLY',type='density')
 #'#plots the density plot
 #'@importFrom plotly %>%
-#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 chemical_shift_hist_res<-function(res='*',type='count',cutoff=8,interactive=TRUE){
     cs_dat2<-fetch_res_chemical_shifts(res)
   with(cs_dat2,{
@@ -696,17 +696,18 @@ chemical_shift_hist_res<-function(res='*',type='count',cutoff=8,interactive=TRUE
 #'@param type count ; other than count will assume density plot
 #'@param bw binwith for histogram; default value 0.1ppm
 #'@param cutoff values not with in the cutoff time standard deviation from both sides ofthe mean will be excluded from the plot;default value 8
-#'@param interactive TRUE/FALSE default TRUE
 #'@return R plot object
 #'@export chemical_shift_hist
 #'@examples
 #'#plt<-chemical_shift_hist('ALA')
 #'#plots the histogram of all atoms of ALA
+#'#plt<-chemical_shift_hist("*","CB*")
+#'#plots  CB chemical shift distribution of standard amino acids
 #'#plt<-chemical_shift_hist('GLY',type='density')
 #'#plots the density plot
 #'@importFrom plotly %>%
-#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
-chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,interactive=TRUE){
+#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
+chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8){
   if (res=="*"){
     cs_dat2<-filter_residue(fetch_atom_chemical_shifts(atm))
   }else{
@@ -783,13 +784,13 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,inter
     cs_dat$Info = paste0("Mean=",round(cs_dat$Mean,2),";","SD=",round(cs_dat$SD,2))
     if (type=='count'){
       if (res=="*" & atm == "*"){
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$UID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info, visible = F) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings( plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$UID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info, visible = F) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Count",zeroline = F)))
       }else if (atm=="*") {
-      plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$Atom_ID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay")
+      plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$Atom_ID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Count",zeroline = F)))
       }else if (res=="*") {
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$Comp_ID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram", color = cs_dat$Comp_ID,alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Count",zeroline = F)))
       }else{
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram",alpha = 0.6, nbinsx = cs_dat$bins,text = cs_dat$Info) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Count",zeroline = F)))
       }
       # plt<-ggplot2::ggplot(cs_dat)+
       #   ggplot2::geom_histogram(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),binwidth=bw,position = 'identity',alpha=0.7)+
@@ -798,13 +799,13 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,inter
       #   ggplot2::labs(color="",fill="")
     } else{
       if (res=="*" & atm == "*"){
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$UID,histnorm = "probability",alpha = 0.6,visible = F) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$UID,histnorm = "probability",alpha = 0.6,visible = F) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Probability density",zeroline = F)))
       }else if (atm == "*") {
-      plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$Atom_ID,histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay")
+      plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$Atom_ID,histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Probability density",zeroline = F)))
       }else if (res == "*"){
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$Comp_ID,histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram",color = cs_dat$Comp_ID,histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Probability density",zeroline = F)))
       }else{
-        plt<-plotly::plot_ly(x = cs_dat$Val,type = "histogram",histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay")
+        plt<-suppressWarnings(plotly::plot_ly(x = cs_dat$Val,type = "histogram",histnorm = "probability",alpha = 0.6) %>% plotly::layout(barmode = "overlay",xaxis = list(title="Chemical shift",zeroline = F),yaxis = list(title="Probability density",zeroline = F)))
       }
       # plt<-ggplot2::ggplot(cs_dat)+
       #   ggplot2::geom_density(ggplot2::aes(x=Val,color=Atom_ID,fill=Atom_ID),alpha=0.7,trim=T)+
@@ -812,12 +813,7 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,inter
       #   ggplot2::ylab("Density")+
       #   ggplot2::labs(color="",fill="")
     }
-    if (interactive){
-      #plt2<-plotly::plotly_build(plt)
-      plt2<-plt
-    }else{
-      plt2<-plt
-    }
+    plt2<-plt
   }
   return(plt2)
   })
@@ -838,7 +834,7 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8,inter
 #'#plots the histogram of all atoms of ALA
 #'#plt<-chemical_shift_hists(c("GLY-H*","ALA-HA"),type='density')
 #'#plots the density plot
-#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+#'@seealso \code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 chemical_shift_hists<-function(atm=NA,type='count',bw=0.1,cutoff=8,interactive=TRUE){
   for (atom in atm){
     res<-strsplit(atom,"-")[[1]][1]
@@ -1132,12 +1128,12 @@ TOCSY<-function(idlist,interactive=TRUE){
 #'@param type 'c' for contour plot and 's' for scatter plot default 'c'.scatter plot will be slow and heavy for large data set
 #'@param interactive TRUE/FALSE default=TRUE
 #'@return plot object
-#'@export chemical_shift_corr
+#'@export chem_shift_corr
 #'@examples
-#'plt<-chemical_shift_corr('HE21','HE22')
+#'#plt<-chem_shift_corr('HE21','HE22')
 #'#plots the chemical shift distribution between HE21 and HE22
-#'@seealso \code{\link{fetch_atom_chemical_shifts}}
-chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
+#'@seealso \code{\link{fetch_atom_chemical_shifts}} and \code{\link{atom_chem_shift_corr}}
+chem_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   at1_cs<-fetch_atom_chemical_shifts(atom1)
   at2_cs<-fetch_atom_chemical_shifts(atom2)
   if (all(is.na(at1_cs)) | all(is.na(at2_cs))){
@@ -1170,21 +1166,13 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
   cs$Info=paste(cs$Comp_index_ID,cs$Entity_ID,cs$Atom_ID_1,cs$Atom_ID_2,cs$Assigned_chem_shift_list_ID,sep=",")
   if (type=="c"){
     if (interactive){
-      plt<-plotly::subplot(
-        plotly::plot_ly(x = cs$Val.x, type = "histogram" , color = cs$Comp_ID_1, type= "lines", alpha = 0.7) %>% plotly::layout(barmode = "overlay"),
-        plotly::plotly_empty(),
-        plotly::plot_ly(x = cs$Val.x, y = cs$Val.y, type = "histogram2dcontour", type = "lines" , linetype = cs$Comp_ID_1, alpha = 0.5) %>% plotly::layout(barmode = "overlay"),
-        plotly::plot_ly(y = cs$Val.y, type = "histogram", color = cs$Comp_ID_2, type = "lines", alpha = 0.7) %>% plotly::layout(barmode = "overlay"),
-        nrows = 2, heights = c(0.2, 0.8), widths = c(0.8, 0.2), margin = 0,
-        shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE
-      )
-  # plt<-ggplot2::ggplot(cs)+
-  #   #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
-  #   #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
-  #   ggplot2::geom_density_2d(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1),bins=100)+
-  #   #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
-  #   ggplot2::xlab(atom1)+
-  #   ggplot2::ylab(atom2)+ggplot2::labs(color="")
+   plt<-ggplot2::ggplot(cs)+
+     #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
+     #ggplot2::stat_density_2d(geom='polygon',ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),fill= Comp_ID_1),bins=500)+
+     ggplot2::geom_density_2d(ggplot2::aes(x=Val.x,y=Val.y,color=Comp_ID_1),bins=100)+
+     #ggplot2::scale_y_reverse()+ggplot2::scale_x_reverse()+
+     ggplot2::xlab(atom1)+
+     ggplot2::ylab(atom2)+ggplot2::labs(color="")
     }else{
       plt<-ggplot2::ggplot(cs)+
         #ggplot2::geom_density_2d(ggplot2::aes(x=eval(as.name(atom1)),y=eval(as.name(atom2)),color=Comp_ID_1))+
@@ -1211,7 +1199,7 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
     }
   }
   if (interactive){
-    #plt2<-plotly::plotly_build(plt)
+    plt2<-plotly::plotly_build(plt)
     plt2$x$layout$xaxis$autorange = "reversed"
     plt2$x$layout$yaxis$autorange = "reversed"}
   else{
@@ -1233,21 +1221,29 @@ chemical_shift_corr<-function(atom1,atom2,res=NA,type="c",interactive=TRUE){
 #'@param atom2 atom name in NMR-STAR nomenclature like HA,HB2
 #'@param res residue name in NMR-STAR nomenclature like ALA
 #'@return plot object
-#'@export chemical_shift_corr_res
+#'@export atom_chem_shift_corr
 #'@examples
-#'plt<-chemical_shift_corr_res('HE21','HE22')
+#'#plt<-atom_chem_shift_corr('HE21','HE22','GLN')
 #'#plots the chemical shift distribution between HE21 and HE22
-#'@seealso \code{\link{fetch_atom_chemical_shifts}}
-chemical_shift_corr_res<-function(atom1,atom2,res){
+#'@seealso \code{\link{fetch_res_chemical_shifts}} and \code{\link{chem_shift_corr}}
+atom_chem_shift_corr<-function(atom1,atom2,res=NA){
   if (is.na(res)){
     stop("Residue must be specified")
   }
   else{
-    cs2<-fetch_res_chemical_shifts(res)
-  cs1<-subset(cs2,Atom_ID == atom1)
-  cs2<-subset(cs2,Atom_ID == atom2)
+    css2<-fetch_res_chemical_shifts(res)
+  with(css2,{if (grepl("\\*",atom1)){
+    cs1<-subset(css2,grepl(paste0("^",sub("\\*","",atom1)),Atom_ID))
+  }else{
+      cs1<-subset(css2,Atom_ID == atom1)
+  }
+  if (grepl("\\*",atom2)){
+    cs2<-subset(css2,grepl(paste0("^",sub("\\*","",atom2)),Atom_ID))
+  }else{
+  cs2<-subset(css2,Atom_ID == atom2)
+  }
   if (all(is.na(cs1)) | all(is.na(cs2))){
-    warning('No data or not a valid atom name')
+    stop('One of the input atom has no data')
     plt2<-NA
     return(plt2)}
   else{
@@ -1266,17 +1262,18 @@ chemical_shift_corr_res<-function(atom1,atom2,res){
         #names(cs)[names(cs)=="Val.x"]<-atom1
         #names(cs)[names(cs)=="Val.y"]<-atom2
         cs$Info=paste(cs$Comp_index_ID,cs$Entity_ID,cs$Atom_ID_1,cs$Atom_ID_2,cs$Assigned_chem_shift_list_ID,sep=",")
-            plt<-plotly::subplot(
-              plotly::plot_ly(x = cs$Val.x, type = "histogram" , color = cs$Atom_ID_1, alpha = 0.7) %>% plotly::layout(barmode = "overlay"),
-              plotly::plotly_empty(),
-              plotly::plot_ly(x = cs$Val.x, y = cs$Val.y, type = "histogram2dcontour", linetype = cs$Comp_ID_1),
-              plotly::plot_ly(y = cs$Val.y, type = "histogram", color = cs$Atom_ID_2, alpha = 0.7) %>% plotly::layout(barmode = "overlay"),
+            plt<- plotly::subplot(
+              plotly::plot_ly(x = cs$Val.x,type = "histogram" , text = cs$Info, alpha = 0.7,showlegend = F),
+              suppressWarnings( plotly::plotly_empty(type = "scatter", mode = "markders")),
+              plotly::plot_ly(x = cs$Val.x, y = cs$Val.y, type = "histogram2dcontour", showscale = FALSE, contours = list(coloring = "lines")) %>%
+                plotly::layout(xaxis = list(title=atom1,zeroline = F),yaxis = list(title=atom2,zeroline = F)),
+              plotly::plot_ly(y = cs$Val.y, type = "histogram", text = cs$Info, alpha = 0.7,showlegend = F),
               nrows = 2, heights = c(0.2, 0.8), widths = c(0.8, 0.2), margin = 0,
-              shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE
+              shareX = TRUE, shareY = TRUE, titleX = TRUE, titleY = TRUE
             )
         return(plt)
       })})
-  }
+  }})
   }
 }
 

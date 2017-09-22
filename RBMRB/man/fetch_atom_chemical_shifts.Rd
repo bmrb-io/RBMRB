@@ -24,6 +24,5 @@ df<-fetch_atom_chemical_shifts('C1','metabolomics')
 # Downloads C1 chemical shifts from metabolomics database at BMRB
 }
 \seealso{
-\code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+\code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 }
-

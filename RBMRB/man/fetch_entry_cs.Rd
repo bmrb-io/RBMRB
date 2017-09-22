@@ -25,4 +25,3 @@ df<-fetch_entry_cs('bmse000034')
 \seealso{
 \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_atom_chemical_shifts}} and \code{\link{fetch_res_chemical_shifts}}
 }
-

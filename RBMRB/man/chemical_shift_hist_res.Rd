@@ -29,6 +29,5 @@ Plots the histogram (or) density of  chemical shift distribution of  all atoms o
 #plots the density plot
 }
 \seealso{
-\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 }
-

@@ -5,7 +5,7 @@
 \title{Plots chemical shift distribution}
 \usage{
 chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1,
-  cutoff = 8, interactive = TRUE)
+  cutoff = 8)
 }
 \arguments{
 \item{res}{residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY ; default '*' (includes everything)}
@@ -17,8 +17,6 @@ chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1,
 \item{bw}{binwith for histogram; default value 0.1ppm}
 
 \item{cutoff}{values not with in the cutoff time standard deviation from both sides ofthe mean will be excluded from the plot;default value 8}
-
-\item{interactive}{TRUE/FALSE default TRUE}
 }
 \value{
 R plot object
@@ -29,10 +27,11 @@ Plots the histogram (or) density of  chemical shift distribution of a given atom
 \examples{
 #plt<-chemical_shift_hist('ALA')
 #plots the histogram of all atoms of ALA
+#plt<-chemical_shift_hist("*","CB*")
+#plots  CB chemical shift distribution of standard amino acids
 #plt<-chemical_shift_hist('GLY',type='density')
 #plots the density plot
 }
 \seealso{
-\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_corr}}
+\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 }
-
