@@ -20,5 +20,5 @@ Filters out non standard amino acids using Comp_ID. The data frame should contai
 #Downloads all CG2 chemical shifts and removes non standard amino acids
 }
 \seealso{
-\code{\link{fetch_atom_chemical_shifts}}
+\code{\link{fetch_atom_chemical_shifts}} and \code{\link{filter_outlier}}
 }

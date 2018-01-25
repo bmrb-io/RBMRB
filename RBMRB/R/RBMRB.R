@@ -203,7 +203,7 @@ fetch_atom_chemical_shifts<-function(atom="*",db='macromolecules'){
 #'@seealso \code{\link{fetch_atom_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chemical_shift_hist}}
 fetch_res_chemical_shifts<-function(res='*',atm='*'){
   if (res=="*"){
-    dat_frame<-fetch_atom_chemical_shifts(atm)
+    dat_frame<-filter_residue(fetch_atom_chemical_shifts(atm))
   }else{
   db='macromolecules'
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?comp_id=",res,"&atom_id=",atm,"&database=",db)
@@ -711,7 +711,7 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8){
   if (res=="*"){
     cs_dat2<-filter_residue(fetch_atom_chemical_shifts(atm))
   }else{
-  cs_dat2<-filter_residue(fetch_res_chemical_shifts(res,atm))
+  cs_dat2<-fetch_res_chemical_shifts(res,atm)
   }
   with(cs_dat2,{
     cs_dat2$Mean=NA
@@ -723,38 +723,46 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8){
   }else{
     if (atm == "*" & res == "*"){
       for (atom in unique(cs_dat2$UID)){
-        ss<-stats::sd(subset(cs_dat2,UID==atom)$Val)
-        m<-mean(subset(cs_dat2,UID==atom)$Val)
-        cs_dat2$Mean[cs_dat2$UID == atom] = m
-        cs_dat2$SD[cs_dat2$UID == atom] = ss
-        min_val<-m-(ss*cutoff)
-        max_val<-m+(ss*cutoff)
-        cs_dat2$bins[cs_dat2$UID == atom]=(max_val-min_val)/bw
-        if (exists('cs_dat')){
-          cs_dat<-rbind(cs_dat,subset(cs_dat2, UID == atom & Val>=min_val & Val<=max_val))
-        }else{
-          cs_dat<-subset(cs_dat2, UID == atom & Val>=min_val & Val<=max_val)
+        if (length(subset(cs_dat2,UID==atom)$Val)>5)
+        {
+          ss<-stats::sd(subset(cs_dat2,UID==atom)$Val)
+          m<-mean(subset(cs_dat2,UID==atom)$Val)
+          cs_dat2$Mean[cs_dat2$UID == atom] = m
+          cs_dat2$SD[cs_dat2$UID == atom] = ss
+          min_val<-m-(ss*cutoff)
+          max_val<-m+(ss*cutoff)
+          cs_dat2$bins[cs_dat2$UID == atom]=(max_val-min_val)/bw
+          if (exists('cs_dat')){
+            cs_dat<-rbind(cs_dat,subset(cs_dat2, UID == atom & Val>=min_val & Val<=max_val))
+          }else{
+            cs_dat<-subset(cs_dat2, UID == atom & Val>=min_val & Val<=max_val)
+          }
         }
       }
     }
     else if (atm == "*"){
     for (atom in unique(cs_dat2$Atom_ID)){
-      ss<-stats::sd(subset(cs_dat2,Atom_ID==atom)$Val)
-      m<-mean(subset(cs_dat2,Atom_ID==atom)$Val)
-      cs_dat2$Mean[cs_dat2$Atom_ID == atom] = m
-      cs_dat2$SD[cs_dat2$Atom_ID == atom] = ss
-      min_val<-m-(ss*cutoff)
-      max_val<-m+(ss*cutoff)
-      cs_dat2$bins[cs_dat2$Atom_ID == atom]=(max_val-min_val)/bw
-      if (exists('cs_dat')){
-        cs_dat<-rbind(cs_dat,subset(cs_dat2, Atom_ID == atom & Val>=min_val & Val<=max_val))
-      }else{
-        cs_dat<-subset(cs_dat2, Atom_ID == atom & Val>=min_val & Val<=max_val)
+      if (length(subset(cs_dat2,Atom_ID==atom)$Val)>5)
+      {
+        ss<-stats::sd(subset(cs_dat2,Atom_ID==atom)$Val)
+        m<-mean(subset(cs_dat2,Atom_ID==atom)$Val)
+        cs_dat2$Mean[cs_dat2$Atom_ID == atom] = m
+        cs_dat2$SD[cs_dat2$Atom_ID == atom] = ss
+        min_val<-m-(ss*cutoff)
+        max_val<-m+(ss*cutoff)
+        cs_dat2$bins[cs_dat2$Atom_ID == atom]=(max_val-min_val)/bw
+        if (exists('cs_dat')){
+          cs_dat<-rbind(cs_dat,subset(cs_dat2, Atom_ID == atom & Val>=min_val & Val<=max_val))
+        }else{
+          cs_dat<-subset(cs_dat2, Atom_ID == atom & Val>=min_val & Val<=max_val)
+        }
       }
     }
     }else if (res == "*"){
 
         for (atom in unique(cs_dat2$Comp_ID)){
+          if (length(subset(cs_dat2,Comp_ID==atom)$Val)>5)
+          {
           ss<-stats::sd(subset(cs_dat2,Comp_ID==atom)$Val)
           m<-mean(subset(cs_dat2,Comp_ID==atom)$Val)
           cs_dat2$Mean[cs_dat2$Comp_ID == atom] = m
@@ -766,6 +774,7 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8){
             cs_dat<-rbind(cs_dat,subset(cs_dat2, Comp_ID == atom & Val>=min_val & Val<=max_val))
           }else{
             cs_dat<-subset(cs_dat2, Comp_ID == atom & Val>=min_val & Val<=max_val)
+          }
           }
         }
 
@@ -813,6 +822,7 @@ chemical_shift_hist<-function(res='*',atm='*',type='count',bw=0.1,cutoff=8){
       #   ggplot2::ylab("Density")+
       #   ggplot2::labs(color="",fill="")
     }
+    suppressWarnings(print(plt))
     plt2<-plt
   }
   return(plt2)
@@ -1293,7 +1303,7 @@ atom_chem_shift_corr<-function(atom1,atom2,res=NA){
 #'@examples
 #'#df<-filter_residue(fetch_atom_chemical_shifts("CG2"))
 #'#Downloads all CG2 chemical shifts and removes non standard amino acids
-#'@seealso \code{\link{fetch_atom_chemical_shifts}}
+#'@seealso \code{\link{fetch_atom_chemical_shifts}} and \code{\link{filter_outlier}}
 filter_residue<-function(df){
   if (is.data.frame(df)){
   with(df,{
@@ -1317,7 +1327,7 @@ filter_residue<-function(df){
                     Comp_ID=="THR" |
                     Comp_ID=="TRP" |
                     Comp_ID=="TYR" |
-                    Comp_ID=="VAL")
+                    Comp_ID=="VAL" )
   return(out_dat)
     }
   else{
@@ -1334,5 +1344,32 @@ filter_residue<-function(df){
   }
 }
 
-
-
+#'Remove chemical shift outliers
+#'
+#'Removes chemical shifts values outside of cutoff times standard deviation on both sides of the mean
+#'@param cs data frame with amino acid information in Comp_ID and Atom_ID column
+#'@param cutoff cutoff value(cutoff times standard deviation is used to trim the value on boths sides of mean)
+#'@return R data frame with chemical shift values
+#'@export filter_outlier
+#'@examples
+#'#df<-filter_outlier(fetch_atom_chemical_shifts("CG2"))
+#'#Downloads all CG2 chemical shifts and removes the outliers
+#'@seealso \code{\link{filter_residue}} and \code{\link{fetch_atom_chemical_shifts}}
+filter_outlier<-name <- function(cs = NA ,cutoff = 8) {
+  with(cs,{
+  for (res in unique(cs$Comp_ID)){
+    for (atom in unique(cs$Atom_ID)){
+      ss<-stats::sd(subset(cs,Comp_ID == res & Atom_ID==atom)$Val)
+      m<-mean(subset(cs,Comp_ID == res & Atom_ID==atom)$Val)
+      min_val<-m-(ss*cutoff)
+      max_val<-m+(ss*cutoff)
+      if (exists('cs_out')){
+        cs_out<-rbind(cs_out,subset(cs,Comp_ID == res & Atom_ID==atom & Val< max_val & Val > min_val))
+      }else{
+        cs_out<-subset(cs,Comp_ID == res & Atom_ID==atom & Val< max_val & Val > min_val)
+      }
+    }
+  }
+  return(cs_out)
+  })
+}
