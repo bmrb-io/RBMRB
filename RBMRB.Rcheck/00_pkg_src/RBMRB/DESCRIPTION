@@ -1,0 +1,25 @@
+Package: RBMRB
+Type: Package
+Title: BMRB Data Access and Visualization
+Version: 2.1.2
+Date: 2018-01-30
+Author: Kumaran Baskaran
+Maintainer: Kumaran Baskaran<kbaskaran@bmrb.wisc.edu>
+Description: The Biological Magnetic Resonance Data Bank (BMRB,<http://
+    www.bmrb.wisc.edu/>) collects, annotates, archives, and disseminates (worldwide
+    in the public domain) the important spectral and quantitative data derived
+    from NMR(Nuclear Magnetic Resonance) spectroscopic investigations of biological
+    macromolecules and metabolites. This package provides an interface to BMRB
+    database for easy data access and includes a minimal set of data visualization
+    functions. Users are encouraged to make their own data visualizations using BMRB
+    data.
+Depends: R(>= 3.4.0),
+License: GPL-2
+URL: https://github.com/uwbmrb/RBMRB,
+        https://github.com/kumar-physics/RBMRB
+LazyData: TRUE
+RoxygenNote: 6.0.1
+Imports: data.table(>= 1.9.8), httr(>= 1.2.1), rjson(>= 0.2.15),
+        ggplot2(>= 2.2.0), plotly(>= 4.5.6), stats
+NeedsCompilation: no
+Packaged: 2018-01-30 16:33:21 UTC; kumaran
