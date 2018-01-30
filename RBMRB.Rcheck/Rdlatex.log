@@ -1,0 +1,551 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.10, 2016/02/22 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [1{/var/lib/texmf/fonts
+/map/pdftex/updmap/pdftex.map}]
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 112--113
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 158--159
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 200--201
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+[4] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (1.20093pt too wide) in paragraph at lines 385--386
+[][][]\T1/zi4/m/n/10 fetch_atom_chemical_shifts[][][]\T1/ptm/m/n/10 , [][]\T1/z
+i4/m/n/10 fetch_entry_chemical_shifts[][][] [][]fetch_res_chemical_shifts[][][]
+ 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (33.02087pt too wide) in paragraph at lines 420--421
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4/m/n/10 fil
+ter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_corr[][][]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (129.59718pt too wide) in paragraph at lines 446--448
+\T1/ptm/m/n/10 For metabolomics en-tries it should have 'bmse' pre-fix (ex-am-p
+le: c('bmse000035','bmse000035','bmse000036')) 
+[9] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (15.52087pt too wide) in paragraph at lines 494--495
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_atom_chemical_shifts[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/1
+0 fetch_res_chemical_shifts[][][] 
+[10] (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+No file Rd2.ind.
+[15] (/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information){/usr/share/texlive/texmf-d
+ist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/share/texlive/texmf-dist/fonts
+/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsola
+ta/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/In
+consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (15 pages, 111808 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.10, 2016/02/22 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/
+updmap/pdftex.map}]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 112--113
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 158--159
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 200--201
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (1.20093pt too wide) in paragraph at lines 385--386
+[][][]\T1/zi4/m/n/10 fetch_atom_chemical_shifts[][][]\T1/ptm/m/n/10 , [][]\T1/z
+i4/m/n/10 fetch_entry_chemical_shifts[][][] [][]fetch_res_chemical_shifts[][][]
+ 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [9]
+Overfull \hbox (33.02087pt too wide) in paragraph at lines 420--421
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4/m/n/10 fil
+ter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_corr[][][]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (129.59718pt too wide) in paragraph at lines 446--448
+\T1/ptm/m/n/10 For metabolomics en-tries it should have 'bmse' pre-fix (ex-am-p
+le: c('bmse000035','bmse000035','bmse000036')) 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+Overfull \hbox (15.52087pt too wide) in paragraph at lines 494--495
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_atom_chemical_shifts[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/1
+0 fetch_res_chemical_shifts[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
+No file Rd2.ind.
+[16] (/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux) )
+(see the transcript file for additional information){/usr/share/texlive/texmf-d
+ist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/share/texlive/texmf-dist/fonts
+/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsola
+ta/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/In
+consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (16 pages, 114580 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2015] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (74 entries accepted, 0 rejected).
+Sorting entries....done (468 comparisons).
+Generating output file Rd2.ind....done (63 lines written, 7 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.10, 2016/02/22 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/
+updmap/pdftex.map}]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 112--113
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 158--159
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 200--201
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (1.20093pt too wide) in paragraph at lines 385--386
+[][][]\T1/zi4/m/n/10 fetch_atom_chemical_shifts[][][]\T1/ptm/m/n/10 , [][]\T1/z
+i4/m/n/10 fetch_entry_chemical_shifts[][][] [][]fetch_res_chemical_shifts[][][]
+ 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [9]
+Overfull \hbox (33.02087pt too wide) in paragraph at lines 420--421
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4/m/n/10 fil
+ter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_corr[][][]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (129.59718pt too wide) in paragraph at lines 446--448
+\T1/ptm/m/n/10 For metabolomics en-tries it should have 'bmse' pre-fix (ex-am-p
+le: c('bmse000035','bmse000035','bmse000036')) 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+Overfull \hbox (15.52087pt too wide) in paragraph at lines 494--495
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_atom_chemical_shifts[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/1
+0 fetch_res_chemical_shifts[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.ind [16] [17])
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information){/usr/share/texlive/texmf-d
+ist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/share/texlive/texmf-dist/fonts
+/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsola
+ta/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/In
+consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 117865 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2015] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (74 entries accepted, 0 rejected).
+Sorting entries....done (468 comparisons).
+Generating output file Rd2.ind....done (63 lines written, 7 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(./Rd2.tex
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo))
+(/usr/share/R/share/texmf/tex/latex/Rd.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.10, 2016/02/22 Text macros for Inconsolata (msharpe)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg)
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty)))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu))
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def))
+Writing index file Rd2.idx
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.out)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.toc [1{/var/lib/texmf/fonts/map/pdftex/
+updmap/pdftex.map}]) (/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 112--113
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 158--159
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (13.76086pt too wide) in paragraph at lines 200--201
+[][][]\T1/zi4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4
+/m/n/10 filter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_c
+orr[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 atom_chem_shift_corr[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [5]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [6]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [7]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [8]
+Overfull \hbox (1.20093pt too wide) in paragraph at lines 385--386
+[][][]\T1/zi4/m/n/10 fetch_atom_chemical_shifts[][][]\T1/ptm/m/n/10 , [][]\T1/z
+i4/m/n/10 fetch_entry_chemical_shifts[][][] [][]fetch_res_chemical_shifts[][][]
+ 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [9]
+Overfull \hbox (33.02087pt too wide) in paragraph at lines 420--421
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_res_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/zi4/m/n/10 fil
+ter_residue[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/10 chem_shift_corr[][][]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (129.59718pt too wide) in paragraph at lines 446--448
+\T1/ptm/m/n/10 For metabolomics en-tries it should have 'bmse' pre-fix (ex-am-p
+le: c('bmse000035','bmse000035','bmse000036')) 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [10]
+Overfull \hbox (15.52087pt too wide) in paragraph at lines 494--495
+[][][]\T1/zi4/m/n/10 fetch_entry_chemical_shifts[][][]\T1/ptm/m/n/10 ,[][]\T1/z
+i4/m/n/10 fetch_atom_chemical_shifts[][][] \T1/ptm/m/n/10 and [][]\T1/zi4/m/n/1
+0 fetch_res_chemical_shifts[][][] 
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [11]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [12]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [13]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [14]
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def) [15]
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.ind [16] [17])
+(/tmp/RtmpyWZfTc/Rd2pdf662240930fd3/Rd2.aux) )
+(see the transcript file for additional information){/usr/share/texlive/texmf-d
+ist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/usr/share/texlive/texmf-dist/fonts
+/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsola
+ta/i4-t1-0.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/In
+consolata-zi4r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 118190 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘RBMRB-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -rf /tmp/RtmpyWZfTc/Rd2pdf662240930fd3'
