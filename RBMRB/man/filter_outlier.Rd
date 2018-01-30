@@ -15,7 +15,7 @@ filter_outlier(cs = NA, cutoff = 8)
 R data frame with chemical shift values
 }
 \description{
-Renives chemical shifts values outside of cutoff times standard deviation on both sides of the mean
+Removes chemical shifts values outside of cutoff times standard deviation on both sides of the mean
 }
 \examples{
 #df<-filter_outlier(fetch_atom_chemical_shifts("CG2"))
