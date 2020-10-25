@@ -16,7 +16,14 @@ fetch_entry_cs<-function(ID){
     stop("This Function takes only one ID; Use fetch_entry_chemical_shifts for a list of IDs")
   }
   bmrb_apiurl<-paste0("http://webapi.bmrb.wisc.edu/v2/entry/",ID,"?loop=Atom_chem_shift")
-  rawdata<-httr::GET(bmrb_apiurl,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403) & (nattempts < 5)){
+  rawdata<-httr::GET(bmrb_apiurl,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <- rawdata$status_code
+  Sys.sleep(nattempts*5)
+  nattempts<-nattempts+1
+  }
   c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
   if (rawdata$status_code==200){
     for (y in c[[1]][1]$`Atom_chem_shift`){
@@ -170,7 +177,14 @@ export_star_data<-function(filename){
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 fetch_atom_chemical_shifts<-function(atom="*",db='macromolecules'){
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?atom_id=",atom,"&database=",db)
-  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403)& (nattempts < 5)){
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <-raw_data$status_code
+  Sys.sleep(nattempts*5)
+  nattempts <- nattempts +1
+  }
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')
@@ -207,7 +221,14 @@ fetch_res_chemical_shifts<-function(res='*',atm='*'){
   }else{
   db='macromolecules'
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?comp_id=",res,"&atom_id=",atm,"&database=",db)
-  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403)&(nattempts < 5)){
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <-raw_data$status_code
+  Sys.sleep(nattempts*5)
+  nattempts <-nattempts +1
+  }
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')
@@ -910,7 +931,7 @@ chemical_shift_hists<-function(atm=NA,type='count',bw=0.1,cutoff=8,interactive=T
 #'@return R plot object
 #'@export HSQC_15N
 #'@examples
-#'plot_hsqc<-HSQC_15N(c(17074,17076,17077))
+#'#plot_hsqc<-HSQC_15N(c(17074,17076,17077))
 #'#simulates N15-HSQC spectra for the given 3 entreis
 #'plot_hsqc<-HSQC_15N(18857,'line')
 #'#simulates the N15-HSQC spectra from many chemical shift lists from a single entry

@@ -4,8 +4,13 @@
 \alias{chemical_shift_hists}
 \title{Plots chemical shift distribution for a list of atoms}
 \usage{
-chemical_shift_hists(atm = NA, type = "count", bw = 0.1, cutoff = 8,
-  interactive = TRUE)
+chemical_shift_hists(
+  atm = NA,
+  type = "count",
+  bw = 0.1,
+  cutoff = 8,
+  interactive = TRUE
+)
 }
 \arguments{
 \item{atm}{list Example: c("ALA-CA","GLY-CA")}

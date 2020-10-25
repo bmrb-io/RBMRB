@@ -4,8 +4,12 @@
 \alias{chemical_shift_hist_res}
 \title{Plots chemical shift distribution of all atoms of a given amino acid}
 \usage{
-chemical_shift_hist_res(res = "*", type = "count", cutoff = 8,
-  interactive = TRUE)
+chemical_shift_hist_res(
+  res = "*",
+  type = "count",
+  cutoff = 8,
+  interactive = TRUE
+)
 }
 \arguments{
 \item{res}{residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY}
