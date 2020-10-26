@@ -4,8 +4,7 @@
 \alias{chemical_shift_hist}
 \title{Plots chemical shift distribution}
 \usage{
-chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1,
-  cutoff = 8)
+chemical_shift_hist(res = "*", atm = "*", type = "count", bw = 0.1, cutoff = 8)
 }
 \arguments{
 \item{res}{residue name in NMR-STAR atom nomenclature ; Example: ALA,GLY ; default '*' (includes everything)}

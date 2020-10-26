@@ -6,9 +6,9 @@
 #'@return R data frame that contains  Atom_chem_shift data for a given entry ID
 #'@export fetch_entry_cs
 #'@examples
-#'df<-fetch_entry_cs(15060)
+#'# df<-fetch_entry_cs(15060)
 #'# Downloads NMR chemical shifts of the given entry from macromolecule database
-#'df<-fetch_entry_cs('bmse000034')
+#'# df<-fetch_entry_cs('bmse000034')
 #'# Downloads data from BMRB metabolomics database
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_atom_chemical_shifts}} and \code{\link{fetch_res_chemical_shifts}}
 fetch_entry_cs<-function(ID){
@@ -16,7 +16,14 @@ fetch_entry_cs<-function(ID){
     stop("This Function takes only one ID; Use fetch_entry_chemical_shifts for a list of IDs")
   }
   bmrb_apiurl<-paste0("http://webapi.bmrb.wisc.edu/v2/entry/",ID,"?loop=Atom_chem_shift")
-  rawdata<-httr::GET(bmrb_apiurl,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403) & (nattempts < 5)){
+  rawdata<-httr::GET(bmrb_apiurl,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <- rawdata$status_code
+  Sys.sleep(nattempts*5)
+  nattempts<-nattempts+1
+  }
   c<-rjson::fromJSON(httr::content(rawdata,'text',encoding = 'UTF-8'))
   if (rawdata$status_code==200){
     for (y in c[[1]][1]$`Atom_chem_shift`){
@@ -77,11 +84,11 @@ fetch_entry_cs<-function(ID){
 #'@return R data frame that contains  Atom_chem_shift data for a given list of entries
 #'@export fetch_entry_chemical_shifts
 #'@examples
-#'df<-fetch_entry_chemical_shifts(15060)
+#'#df<-fetch_entry_chemical_shifts(15060)
 #'# Downloads NMR chemical shifts of a single entry from BMRB
-#'df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+#'#df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 #'# Downloads NMR chemical shifts of multiple entries from BMRB
-#'df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+#'# df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
 #'# Downloads data from BMRB metabolomics database
 #'@seealso \code{\link{fetch_atom_chemical_shifts}},\code{\link{fetch_entry_cs}} and \code{\link{fetch_res_chemical_shifts}}
 fetch_entry_chemical_shifts<-function(IDlist){
@@ -170,7 +177,14 @@ export_star_data<-function(filename){
 #'@seealso \code{\link{fetch_entry_chemical_shifts}},\code{\link{fetch_res_chemical_shifts}},\code{\link{filter_residue}} and \code{\link{chem_shift_corr}} and \code{\link{atom_chem_shift_corr}}
 fetch_atom_chemical_shifts<-function(atom="*",db='macromolecules'){
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?atom_id=",atom,"&database=",db)
-  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403)& (nattempts < 5)){
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <-raw_data$status_code
+  Sys.sleep(nattempts*5)
+  nattempts <- nattempts +1
+  }
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')
@@ -207,7 +221,14 @@ fetch_res_chemical_shifts<-function(res='*',atm='*'){
   }else{
   db='macromolecules'
   bmrb_api<-paste0("http://webapi.bmrb.wisc.edu/v2/search/chemical_shifts?comp_id=",res,"&atom_id=",atm,"&database=",db)
-  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"))
+  rate_limit <- 403
+  nattempts = 0
+  while ((rate_limit == 403)&(nattempts < 5)){
+  raw_data<-httr::GET(bmrb_api,httr::add_headers(Application = "RBMRB V2.1.0"),httr::timeout(25))
+  rate_limit <-raw_data$status_code
+  Sys.sleep(nattempts*5)
+  nattempts <-nattempts +1
+  }
   dat<-httr::content(raw_data,'parsed')
   if (length(dat$data)==0){
     warning('Atom or db wrong')
@@ -234,9 +255,9 @@ fetch_res_chemical_shifts<-function(res='*',atm='*'){
 #'@return R data frame that contains proton and nitrogen chemical shifts in two columns for each residue
 #'@export convert_cs_to_n15hsqc
 #'@examples
-#'df<-fetch_entry_chemical_shifts(15060)
+#'#df<-fetch_entry_chemical_shifts(15060)
 #'#Downloads the chemical shift data from BMRB
-#'hsqc<-convert_cs_to_n15hsqc(df)
+#'#hsqc<-convert_cs_to_n15hsqc(df)
 #'#Reformats for easy plotting
 #'@seealso \code{\link{convert_cs_to_c13hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_n15hsqc<-function(csdf){
@@ -392,9 +413,9 @@ convert_cs_to_tocsy<-function(csdf){
 #'@return R data frame that contains proton and carbon chemical shifts in two columns for each residue
 #'@export convert_cs_to_c13hsqc
 #'@examples
-#'df<-fetch_entry_chemical_shifts(15060)
+#'#df<-fetch_entry_chemical_shifts(15060)
 #'# Downloads data from BMRB
-#'hsqc<-convert_cs_to_c13hsqc(df)
+#'#hsqc<-convert_cs_to_c13hsqc(df)
 #'# Reformats for easy plotting
 #'@seealso \code{\link{convert_cs_to_n15hsqc}} and \code{\link{convert_cs_to_tocsy}}
 convert_cs_to_c13hsqc<-function(csdf){
@@ -910,11 +931,11 @@ chemical_shift_hists<-function(atm=NA,type='count',bw=0.1,cutoff=8,interactive=T
 #'@return R plot object
 #'@export HSQC_15N
 #'@examples
-#'plot_hsqc<-HSQC_15N(c(17074,17076,17077))
+#'#plot_hsqc<-HSQC_15N(c(17074,17076,17077))
 #'#simulates N15-HSQC spectra for the given 3 entreis
-#'plot_hsqc<-HSQC_15N(18857,'line')
+#'#plot_hsqc<-HSQC_15N(18857,'line')
 #'#simulates the N15-HSQC spectra from many chemical shift lists from a single entry
-#'plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
+#'#plot_hsqc<-HSQC_15N(c(17074,17076,17077),interactive=FALSE)
 #'#example for non interactive plots
 #'@seealso \code{\link{HSQC_13C}} and \code{\link{TOCSY}}
 #'@importFrom plotly %>%
@@ -995,9 +1016,9 @@ HSQC_15N<-function(idlist,type='scatter',interactive=TRUE){
 #'@examples
 #'plot_hsqc<-HSQC_13C(c(17074,17076,17077))
 #'#Simulates C13-HSQC spectra form the given list of entries
-#'plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
+#'#plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
 #'#Simulates C13-HSQC and connects the peaks with same sequence number
-#'plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
+#'#plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
 #'#Example for non interactive plot
 #'@seealso \code{\link{HSQC_15N}} and \code{\link{TOCSY}}
 #'

@@ -22,9 +22,9 @@ Simulates H1-C13 HSQC(Hetronuclear Single Quantum Coherence) spectra directly fr
 \examples{
 plot_hsqc<-HSQC_13C(c(17074,17076,17077))
 #Simulates C13-HSQC spectra form the given list of entries
-plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
+#plot_hsqc<-HSQC_13C(c(17074,17076,17077),'line')
 #Simulates C13-HSQC and connects the peaks with same sequence number
-plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
+#plot_hsqc<-HSQC_13C(c(17074,17076,17077),interactive=FALSE)
 #Example for non interactive plot
 }
 \seealso{
