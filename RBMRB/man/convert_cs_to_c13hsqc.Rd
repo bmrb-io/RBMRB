@@ -17,9 +17,9 @@ Reformats the output dataframe from \link{fetch_entry_chemical_shifts} into a si
 This will be helpful to plot 1H-13C HSQC(Hetronuclear Single Quantum Coherence) spectrum
 }
 \examples{
-df<-fetch_entry_chemical_shifts(15060)
+#df<-fetch_entry_chemical_shifts(15060)
 # Downloads data from BMRB
-hsqc<-convert_cs_to_c13hsqc(df)
+#hsqc<-convert_cs_to_c13hsqc(df)
 # Reformats for easy plotting
 }
 \seealso{

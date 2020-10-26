@@ -17,11 +17,11 @@ R data frame that contains  Atom_chem_shift data for a given list of entries
 Downloads NMR chemical shift data from BMRB database for a given Entry ID or list of Entry IDs
 }
 \examples{
-df<-fetch_entry_chemical_shifts(15060)
+#df<-fetch_entry_chemical_shifts(15060)
 # Downloads NMR chemical shifts of a single entry from BMRB
-df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
+#df<-fetch_entry_chemical_shifts(c(17074,17076,17077))
 # Downloads NMR chemical shifts of multiple entries from BMRB
-df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
+# df<-fetch_entry_chemical_shifts(c('bmse000034','bmse000035','bmse000036'))
 # Downloads data from BMRB metabolomics database
 }
 \seealso{

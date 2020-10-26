@@ -17,9 +17,9 @@ R data frame that contains  Atom_chem_shift data for a given entry ID
 Downloads NMR chemical shift data from BMRB database for a given Entry ID
 }
 \examples{
-df<-fetch_entry_cs(15060)
+# df<-fetch_entry_cs(15060)
 # Downloads NMR chemical shifts of the given entry from macromolecule database
-df<-fetch_entry_cs('bmse000034')
+# df<-fetch_entry_cs('bmse000034')
 # Downloads data from BMRB metabolomics database
 }
 \seealso{
