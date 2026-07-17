@@ -20,7 +20,7 @@ create_2d_peaklist(
 
 \item{atom_y}{Atom name for the Y axis.}
 
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 
@@ -29,7 +29,7 @@ create_2d_peaklist(
 \item{draw_trace}{Draw lines connecting same-residue peaks across
 datasets.}
 
-\item{include_preceding}{Include preceding (i−1) residue Y-axis peaks.}
+\item{include_preceding}{Include preceding (i-1) residue Y-axis peaks.}
 
 \item{include_next}{Include following  (i+1) residue Y-axis peaks.}
 }

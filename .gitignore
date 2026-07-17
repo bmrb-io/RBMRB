@@ -2,6 +2,7 @@
 .Rhistory
 .Rapp.history
 .RData
+.idea/
 # Example code in package build process
 *-Ex.R
 
@@ -12,3 +13,4 @@
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
+.DS_Store

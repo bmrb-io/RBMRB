@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectra.R
 \name{create_c13hsqc_peaklist}
 \alias{create_c13hsqc_peaklist}
-\title{Build a ¹H–¹³C HSQC peak list}
+\title{Build a 1H-13C HSQC peak list}
 \usage{
 create_c13hsqc_peaklist(
   bmrb_ids = NULL,
@@ -12,7 +12,7 @@ create_c13hsqc_peaklist(
 )
 }
 \arguments{
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 

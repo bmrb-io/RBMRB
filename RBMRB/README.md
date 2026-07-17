@@ -16,7 +16,7 @@ install.packages("RBMRB")
 
 # Development version from GitHub
 # install.packages("remotes")
-remotes::install_github("uwbmrb/RBMRB")
+remotes::install_github("bmrb-io/RBMRB")
 ```
 
 ## Quick start

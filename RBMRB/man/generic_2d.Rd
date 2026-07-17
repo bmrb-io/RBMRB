@@ -29,7 +29,7 @@ generic_2d(
 
 \item{atom_y}{Atom name for the Y axis.}
 
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 
@@ -43,13 +43,13 @@ datasets.}
 \item{peak_list}{Path to a 2-column CSV file of unassigned peaks
 (`H_ppm`, `N_ppm`) to overlay.}
 
-\item{include_preceding}{Include chemical shifts from the preceding (i−1)
+\item{include_preceding}{Include chemical shifts from the preceding (i-1)
 residue on the Y axis. Default `FALSE`.}
 
 \item{include_next}{Include chemical shifts from the following (i+1)
 residue on the Y axis. Default `FALSE`.}
 
-\item{seq_walk}{Draw a trace connecting sequential i→i±1 pairs for
+\item{seq_walk}{Draw a trace connecting sequential i->i+/-1 pairs for
 continuous sequence segments. Default `FALSE`.}
 
 \item{full_walk}{Like `seq_walk` but ignores missing residues. Default `FALSE`.}

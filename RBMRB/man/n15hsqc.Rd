@@ -20,7 +20,7 @@ n15hsqc(
 )
 }
 \arguments{
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 
@@ -31,7 +31,7 @@ n15hsqc(
 \item{draw_trace}{Draw lines connecting same-residue peaks across
 datasets.}
 
-\item{include_sidechain}{Include sidechain NH₂ peaks (ASN/GLN/ARG/TRP/HIS).}
+\item{include_sidechain}{Include sidechain NH2 peaks (ASN/GLN/ARG/TRP/HIS).}
 
 \item{peak_list}{Path to a 2-column CSV file of unassigned peaks
 (`H_ppm`, `N_ppm`) to overlay.}
@@ -50,7 +50,7 @@ Invisibly, a list with elements `x` (H ppm), `y` (N ppm),
   `dataset`, `residue`, `info`, and (when `draw_trace = TRUE`) `cs_track`.
 }
 \description{
-Plots an interactive ¹H–¹⁵N HSQC spectrum for one or more BMRB entries
+Plots an interactive 1H-15N HSQC spectrum for one or more BMRB entries
 and/or NMR-STAR files. Overlay multiple datasets as scatter plots; optionally
 draw trace lines connecting peaks from the same residue position across
 datasets. Equivalent to `pybmrb.Spectra.n15hsqc()`.

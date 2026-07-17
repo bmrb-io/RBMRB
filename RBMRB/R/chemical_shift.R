@@ -1,5 +1,5 @@
 # =============================================================================
-# RBMRB 1.1.0 — ChemicalShift module
+# RBMRB 1.1.0 -- ChemicalShift module
 # Uses .fetch_entry_json() which fetches ?format=zlib (PyBMRB method)
 # =============================================================================
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# RBMRB — NMR-STAR 3 file parser
+# RBMRB -- NMR-STAR 3 file parser
 # Parses the Atom_chem_shift loop from .str / .nmrstar files.
 # This is a pure-R parser; no external dependencies needed.
 # =============================================================================

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectra.R
 \name{create_n15hsqc_peaklist}
 \alias{create_n15hsqc_peaklist}
-\title{Build a ¹H–¹⁵N HSQC peak list}
+\title{Build a 1H-15N HSQC peak list}
 \usage{
 create_n15hsqc_peaklist(
   bmrb_ids = NULL,
@@ -13,7 +13,7 @@ create_n15hsqc_peaklist(
 )
 }
 \arguments{
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 
@@ -22,7 +22,7 @@ create_n15hsqc_peaklist(
 \item{draw_trace}{Draw lines connecting same-residue peaks across
 datasets.}
 
-\item{include_sidechain}{Include sidechain NH₂ peaks (ASN/GLN/ARG/TRP/HIS).}
+\item{include_sidechain}{Include sidechain NH2 peaks (ASN/GLN/ARG/TRP/HIS).}
 }
 \value{
 A list with elements: `x` (H ppm), `y` (N ppm), `dataset`,

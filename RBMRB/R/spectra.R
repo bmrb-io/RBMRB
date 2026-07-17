@@ -1,5 +1,5 @@
 # =============================================================================
-# RBMRB — Spectra module
+# RBMRB -- Spectra module
 # Mirrors PyBMRB's pybmrb.Spectra
 # All spectrum-simulation functions share the same input/output contract.
 # =============================================================================
@@ -10,18 +10,18 @@
 
 #' Simulate a \ifelse{html}{\out{<sup>1</sup>H-<sup>15</sup>N HSQC}}{\eqn{^{1}H{-}^{15}N} HSQC} spectrum
 #'
-#' Plots an interactive ¹H–¹⁵N HSQC spectrum for one or more BMRB entries
+#' Plots an interactive 1H-15N HSQC spectrum for one or more BMRB entries
 #' and/or NMR-STAR files. Overlay multiple datasets as scatter plots; optionally
 #' draw trace lines connecting peaks from the same residue position across
 #' datasets. Equivalent to `pybmrb.Spectra.n15hsqc()`.
 #'
-#' @param bmrb_ids         BMRB entry ID(s) — integer, character, or vector.
+#' @param bmrb_ids         BMRB entry ID(s) -- integer, character, or vector.
 #' @param input_file_names Path(s) to local NMR-STAR `.str` files.
 #' @param auth_tag         Use `Auth_seq_ID` for sequence numbering.
 #' @param legend           `NULL` (default), `"residue"`, or `"dataset"`.
 #' @param draw_trace       Draw lines connecting same-residue peaks across
 #'                         datasets.
-#' @param include_sidechain Include sidechain NH₂ peaks (ASN/GLN/ARG/TRP/HIS).
+#' @param include_sidechain Include sidechain NH2 peaks (ASN/GLN/ARG/TRP/HIS).
 #' @param peak_list        Path to a 2-column CSV file of unassigned peaks
 #'                         (`H_ppm`, `N_ppm`) to overlay.
 #' @param output_format    `"html"` (default), `"png"`, `"jpg"`, `"pdf"`,
@@ -175,11 +175,11 @@ tocsy <- function(bmrb_ids           = NULL,
 #'
 #' @param atom_x Atom name for the X axis (IUPAC, e.g. `"N"`, `"CA"`).
 #' @param atom_y Atom name for the Y axis.
-#' @param include_preceding Include chemical shifts from the preceding (i−1)
+#' @param include_preceding Include chemical shifts from the preceding (i-1)
 #'   residue on the Y axis. Default `FALSE`.
 #' @param include_next      Include chemical shifts from the following (i+1)
 #'   residue on the Y axis. Default `FALSE`.
-#' @param seq_walk Draw a trace connecting sequential i→i±1 pairs for
+#' @param seq_walk Draw a trace connecting sequential i->i+/-1 pairs for
 #'   continuous sequence segments. Default `FALSE`.
 #' @param full_walk Like `seq_walk` but ignores missing residues. Default `FALSE`.
 #' @inheritParams n15hsqc
@@ -243,7 +243,7 @@ generic_2d <- function(atom_x,
 # Peaklist builders (no plotting)
 # ---------------------------------------------------------------------------
 
-#' Build a ¹H–¹⁵N HSQC peak list
+#' Build a 1H-15N HSQC peak list
 #'
 #' Extracts backbone amide (and optionally sidechain NH) chemical shifts from
 #' BMRB entries / NMR-STAR files and returns the 2D peak coordinates.
@@ -316,7 +316,7 @@ create_n15hsqc_peaklist <- function(bmrb_ids         = NULL,
        x_atom   = "H", y_atom = "N")
 }
 
-#' Build a ¹H–¹³C HSQC peak list
+#' Build a 1H-13C HSQC peak list
 #'
 #' Equivalent to `pybmrb.Spectra.create_c13hsqc_peaklist()`.
 #' @inheritParams n15hsqc
@@ -381,7 +381,7 @@ create_c13hsqc_peaklist <- function(bmrb_ids        = NULL,
        x_atom   = "H", y_atom = "C")
 }
 
-#' Build a ¹H–¹H TOCSY peak list
+#' Build a 1H-1H TOCSY peak list
 #'
 #' Pairs all protons within each residue (full spin-system). Both diagonal and
 #' off-diagonal peaks are included.
@@ -417,7 +417,7 @@ create_tocsy_peaklist <- function(bmrb_ids        = NULL,
         # All H-H pairs (including self-correlations on diagonal)
         for (a in seq_len(nH)) {
           for (b in seq_len(nH)) {
-            if (a > b) next  # upper triangle only → symmetric spectrum
+            if (a > b) next  # upper triangle only -> symmetric spectrum
             hA <- h_res[a, ]
             hB <- h_res[b, ]
             x_out    <- c(x_out, hA$Val, hB$Val)  # symmetric pair
@@ -449,7 +449,7 @@ create_tocsy_peaklist <- function(bmrb_ids        = NULL,
 #' Equivalent to `pybmrb.Spectra.create_2d_peaklist()`.
 #' @param atom_x Atom name for the X axis.
 #' @param atom_y Atom name for the Y axis.
-#' @param include_preceding Include preceding (i−1) residue Y-axis peaks.
+#' @param include_preceding Include preceding (i-1) residue Y-axis peaks.
 #' @param include_next      Include following  (i+1) residue Y-axis peaks.
 #' @inheritParams n15hsqc
 #' @return Same structure as [create_n15hsqc_peaklist()].
@@ -797,7 +797,7 @@ export_peak_list <- function(peak_list,
     }
   }
 
-  # Layout: NMR convention — both axes reversed
+  # Layout: NMR convention -- both axes reversed
   fig <- plotly::layout(fig,
     title  = list(text = title, font = list(size = 16)),
     xaxis  = list(title = x_label, autorange = "reversed"),

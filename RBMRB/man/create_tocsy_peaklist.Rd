@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectra.R
 \name{create_tocsy_peaklist}
 \alias{create_tocsy_peaklist}
-\title{Build a ¹H–¹H TOCSY peak list}
+\title{Build a 1H-1H TOCSY peak list}
 \usage{
 create_tocsy_peaklist(
   bmrb_ids = NULL,
@@ -12,7 +12,7 @@ create_tocsy_peaklist(
 )
 }
 \arguments{
-\item{bmrb_ids}{BMRB entry ID(s) — integer, character, or vector.}
+\item{bmrb_ids}{BMRB entry ID(s) -- integer, character, or vector.}
 
 \item{input_file_names}{Path(s) to local NMR-STAR `.str` files.}
 
