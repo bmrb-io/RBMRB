@@ -1,5 +1,5 @@
 Package: RBMRB
-Title: R Interface to the Biological Magnetic Resonance Data Bank (BMRB)
+Title: R Interface to the Biological Magnetic Resonance Data Bank ('BMRB')
 Version: 3.0.0
 Date: 2026-07-16
 Authors@R: person(
