@@ -1,5 +1,5 @@
 Package: RBMRB
-Title: R Interface to the Biological Magnetic Resonance Data Bank ('BMRB')
+Title: Interface to the Biological Magnetic Resonance Data Bank ('BMRB')
 Version: 3.0.0
 Date: 2026-09-20
 Authors@R: person(
@@ -8,7 +8,7 @@ Authors@R: person(
     email   = "baskaran@uchc.edu",
     role    = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-0418-0286"))
-Description: A comprehensive R interface to the Biological Magnetic Resonance
+Description: A comprehensive interface to the Biological Magnetic Resonance
     Data Bank ('BMRB') <https://bmrb.io>, mirroring all functionality of the
     'PyBMRB' 'Python' package (v3.0). Provides four modules: (1) 'ChemicalShift'
     for fetching per-entry  chemical shift data from the 'BMRB' 'REST' 'API'
