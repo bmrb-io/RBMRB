@@ -1,7 +1,7 @@
 Package: RBMRB
 Title: Interface to the Biological Magnetic Resonance Data Bank ('BMRB')
 Version: 3.0.0
-Date: 2026-09-20
+Date: 2026-10-01
 Authors@R: person(
     given   = "Kumaran",
     family  = "Baskaran",
