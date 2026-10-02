@@ -13,7 +13,9 @@ A named logical vector with elements \code{api_status},
 \description{
 Performs three checks: BMRB API status, entry fetch and parse for entry
 15060, and the chemical shift search endpoint. Useful for verifying
-that the BMRB API is reachable from your network.
+that the BMRB API is reachable from your network. Progress is reported
+with \code{message()}, so it can be silenced with
+\code{suppressMessages()}.
 }
 \examples{
 \dontrun{

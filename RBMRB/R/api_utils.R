@@ -159,24 +159,25 @@
 # Public API utility functions
 # ---------------------------------------------------------------------------
 
-#' Print the installed RBMRB version
+#' Get the installed RBMRB version
 #'
-#' Prints the package version and lists all exported functions.
+#' Returns the version of the installed RBMRB package as a string.
 #'
-#' @return The version string, invisibly.
+#' @return A character string with the package version.
 #' @export
 #' @examples
 #' RBMRB_version()
 RBMRB_version <- function() {
-  cat("RBMRB version:", as.character(utils::packageVersion("RBMRB")), "\n")
-  invisible(TRUE)
+  as.character(utils::packageVersion("RBMRB"))
 }
 
 #' Run a connectivity self-test
 #'
 #' Performs three checks: BMRB API status, entry fetch and parse for entry
 #' 15060, and the chemical shift search endpoint. Useful for verifying
-#' that the BMRB API is reachable from your network.
+#' that the BMRB API is reachable from your network. Progress is reported
+#' with \code{message()}, so it can be silenced with
+#' \code{suppressMessages()}.
 #'
 #' @return A named logical vector with elements \code{api_status},
 #'   \code{entry_fetch}, and \code{search_query} (invisibly).
@@ -186,35 +187,37 @@ RBMRB_version <- function() {
 #' bmrb_test()
 #' }
 bmrb_test <- function() {
-  cat("RBMRB", as.character(utils::packageVersion("RBMRB")), "self-test\n")
-  cat(paste(rep("-", 40), collapse = ""), "\n")
+  report <- function(label, ok, detail = "")
+    message(label, " ... ", if (ok) paste0("PASS", detail) else "FAIL")
+
+  message("RBMRB ", as.character(utils::packageVersion("RBMRB")), " self-test")
+  message(strrep("-", 40))
   results <- logical(3)
 
-  cat("[1/3] API status   ... ")
   results[1] <- tryCatch(!is.null(.bmrb_get("/status")), error = function(e) FALSE)
-  cat(if (results[1]) "PASS\n" else "FAIL\n")
+  report("[1/3] API status  ", results[1])
 
-  cat("[2/3] Entry 15060  ... ")
+  n_shifts <- 0L
   results[2] <- tryCatch({
     ej  <- .fetch_entry_json("15060")
     dfs <- .entry_json_to_cs_dfs(ej)
-    n   <- sum(vapply(dfs, nrow, integer(1L)))
-    if (n > 0L) { cat("PASS (", n, " shifts)\n", sep = ""); TRUE }
-    else { cat("FAIL\n"); FALSE }
-  }, error = function(e) { cat("FAIL\n"); FALSE })
+    n_shifts <- sum(vapply(dfs, nrow, integer(1L)))
+    n_shifts > 0L
+  }, error = function(e) FALSE)
+  report("[2/3] Entry 15060 ", results[2], paste0(" (", n_shifts, " shifts)"))
 
-  cat("[3/3] Search ALA CA ... ")
+  n_rows <- 0L
   results[3] <- tryCatch({
     r <- .bmrb_get("/search/chemical_shifts",
                     params = list(comp_id = "ALA", atom_id = "CA"))
     k <- names(r)[names(r) %in% c("columns", "tags")]
-    if (length(k) > 0L && length(r$data) > 0L) {
-      cat("PASS (", length(r$data), " rows)\n", sep = ""); TRUE
-    } else { cat("FAIL\n"); FALSE }
-  }, error = function(e) { cat("FAIL\n"); FALSE })
+    n_rows <- length(r$data)
+    length(k) > 0L && n_rows > 0L
+  }, error = function(e) FALSE)
+  report("[3/3] Search ALA CA", results[3], paste0(" (", n_rows, " rows)"))
 
-  cat(paste(rep("-", 40), collapse = ""), "\n")
-  cat(if (all(results)) "All tests PASSED.\n" else "Some tests FAILED.\n")
+  message(strrep("-", 40))
+  message(if (all(results)) "All tests PASSED." else "Some tests FAILED.")
   names(results) <- c("api_status", "entry_fetch", "search_query")
   invisible(results)
 }
@@ -234,45 +237,49 @@ bmrb_test <- function() {
 #' }
 bmrb_debug_entry <- function(bmrb_id) {
   id <- as.character(bmrb_id)
-  cat("=== bmrb_debug_entry(", id, ") ===\n")
-  cat("[1] Fetching zlib bytes ... ")
+  message("=== bmrb_debug_entry(", id, ") ===")
+
+  fetch_err <- NULL
   raw <- tryCatch(
     .bmrb_get_raw(paste0("/entry/", id), params = list(format = "zlib")),
-    error = function(e) { cat("FAIL:", conditionMessage(e), "\n"); NULL })
-  if (!is.null(raw)) {
-    cat(length(raw), "bytes\n")
+    error = function(e) { fetch_err <<- conditionMessage(e); NULL })
+  if (is.null(raw)) {
+    message("[1] Fetching zlib bytes ... FAIL: ", fetch_err)
+  } else {
+    message("[1] Fetching zlib bytes ... ", length(raw), " bytes")
     for (dt in c("unknown", "gzip")) {
       txt <- tryCatch(rawToChar(memDecompress(raw, type = dt)),
                       error = function(e) NULL)
       if (!is.null(txt) && nchar(txt) > 10L) {
-        cat("[2] Decompressed (type =", dt, "):", nchar(txt), "chars\n")
+        message("[2] Decompressed (type = ", dt, "): ", nchar(txt), " chars")
         ej <- tryCatch(jsonlite::fromJSON(txt, simplifyVector = FALSE),
                        error = function(e) NULL)
         if (!is.null(ej) && !is.null(ej$saveframes)) {
           dfs <- .entry_json_to_cs_dfs(ej)
           n   <- sum(vapply(dfs, nrow, integer(1L)))
-          cat("[3] CS rows:", n, "--", if (n > 0L) "SUCCESS\n" else "FAIL\n")
+          message("[3] CS rows: ", n, " -- ", if (n > 0L) "SUCCESS" else "FAIL")
           return(invisible(ej))
         }
         break
       }
     }
-    cat("[2] Decompression failed\n")
+    message("[2] Decompression failed")
   }
-  cat("[1b] Plain JSON fallback ... ")
-  ej <- tryCatch(.bmrb_get(paste0("/entry/", id)),
-                  error = function(e) { cat("FAIL\n"); NULL })
-  if (!is.null(ej)) {
-    cat("keys:", paste(names(ej), collapse = ", "), "\n")
+
+  ej <- tryCatch(.bmrb_get(paste0("/entry/", id)), error = function(e) NULL)
+  if (is.null(ej)) {
+    message("[1b] Plain JSON fallback ... FAIL")
+  } else {
+    message("[1b] Plain JSON fallback ... keys: ", paste(names(ej), collapse = ", "))
     ej <- .fetch_entry_json(id)
     if (!is.null(ej)) {
       dfs <- .entry_json_to_cs_dfs(ej)
       n   <- sum(vapply(dfs, nrow, integer(1L)))
-      cat("[3] CS rows:", n, "--", if (n > 0L) "SUCCESS\n" else "FAIL\n")
+      message("[3] CS rows: ", n, " -- ", if (n > 0L) "SUCCESS" else "FAIL")
       return(invisible(ej))
     }
   }
-  cat("FAIL: could not fetch entry", id, "\n")
+  message("FAIL: could not fetch entry ", id)
   invisible(NULL)
 }
 

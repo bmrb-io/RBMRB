@@ -10,10 +10,12 @@ cs_summary(cs_data)
 \item{cs_data}{Nested list from [cs_from_bmrb()] or [cs_from_file()].}
 }
 \value{
-Invisibly, a data.frame summary.
+A data.frame with one row per dataset and chain.
 }
 \description{
-Prints a tidy summary of datasets, chains, and atom coverage.
+Builds a tidy summary of datasets, chains, and atom coverage. The summary
+is returned rather than printed, so it prints automatically at the console
+and can also be assigned and reused.
 }
 \examples{
 \dontrun{ cs <- cs_from_bmrb(15060); cs_summary(cs) }

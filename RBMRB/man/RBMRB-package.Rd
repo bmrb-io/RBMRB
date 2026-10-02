@@ -4,9 +4,9 @@
 \name{RBMRB-package}
 \alias{RBMRB}
 \alias{RBMRB-package}
-\title{RBMRB: R Interface to the Biological Magnetic Resonance Data Bank (BMRB)}
+\title{RBMRB: R Interface to the Biological Magnetic Resonance Data Bank ('BMRB')}
 \description{
-A comprehensive R interface to the Biological Magnetic Resonance Data Bank (BMRB) \url{https://bmrb.io}, mirroring all functionality of the PyBMRB Python package (v3.0). Provides four modules: (1) ChemicalShift for fetching per-entry NMR chemical shift data from the BMRB REST API or local NMR-STAR files; (2) ChemicalShiftStatistics for database-wide statistical queries; (3) Spectra for simulating 1H-15N HSQC, 1H-13C HSQC, 1H-1H TOCSY, and generic 2D NMR spectra as interactive plots; and (4) Histogram for chemical shift distribution visualizations with optional filtering by pH, temperature, and ambiguity code. All interactive plots are rendered via 'plotly'. Uses the BMRB REST API v2 \url{https://api.bmrb.io/v2/}.
+A comprehensive R interface to the Biological Magnetic Resonance Data Bank ('BMRB') \url{https://bmrb.io}, mirroring all functionality of the 'PyBMRB' 'Python' package (v3.0). Provides four modules: (1) 'ChemicalShift' for fetching per-entry chemical shift data from the 'BMRB' 'REST' 'API' or local 'NMR-STAR' files; (2) 'ChemicalShiftStatistics' for database-wide statistical queries; (3) Spectra for simulating '1H-15N' 'HSQC', '1H-13C' 'HSQC', '1H-1H' 'TOCSY', and generic 2D 'NMR' spectra as interactive plots; and (4) Histogram for chemical shift distribution visualizations with optional filtering by pH, temperature, and ambiguity code. All interactive plots are rendered via 'plotly'. Uses the 'BMRB' REST API v2 \url{https://api.bmrb.io/v2/}.
 }
 \seealso{
 Useful links:

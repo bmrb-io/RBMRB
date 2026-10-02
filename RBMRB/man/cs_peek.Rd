@@ -11,8 +11,12 @@ cs_peek(cs_data, n_res = 5L)
 
 \item{n_res}{Number of residues to show per chain.}
 }
+\value{
+\code{cs_data}, invisibly.
+}
 \description{
-Peek at a nested CS structure
+Reports the first few residues of each chain with \code{message()}, so the
+output can be silenced with \code{suppressMessages()}.
 }
 \examples{
 \dontrun{ cs <- cs_from_bmrb(15060); cs_peek(cs) }

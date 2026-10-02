@@ -25,3 +25,12 @@ The update addresses the following critical issues and adds all PyBMRB 3.0 featu
 ### Downstream dependencies
 
 RBMRB has no known reverse dependencies on CRAN.
+
+## Additional Notes
+* Non-obvious acronyms used in this package and documentation:
+  * **BMRB**: Biological Magnetic Resonance data Bank
+  * **NMR**: Nuclear Magnetic Resonance
+  * **HSQC**: Hetero-nuclear Single Quantum Coherence
+  * **TOCSY**: Total Corellation Spectroscopy
+  * **REST**: Representational State Transfer 
+  * **API**: Application Programming Interface

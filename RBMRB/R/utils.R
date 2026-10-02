@@ -16,10 +16,12 @@ standard_nucleic_acids <- function() .STANDARD_NAS
 
 #' Summarise a nested chemical shift list
 #'
-#' Prints a tidy summary of datasets, chains, and atom coverage.
+#' Builds a tidy summary of datasets, chains, and atom coverage. The summary
+#' is returned rather than printed, so it prints automatically at the console
+#' and can also be assigned and reused.
 #'
 #' @param cs_data Nested list from [cs_from_bmrb()] or [cs_from_file()].
-#' @return Invisibly, a data.frame summary.
+#' @return A data.frame with one row per dataset and chain.
 #' @export
 #' @examples
 #' \dontrun{ cs <- cs_from_bmrb(15060); cs_summary(cs) }
@@ -42,9 +44,7 @@ cs_summary <- function(cs_data) {
         stringsAsFactors = FALSE)))
     }
   }
-  df <- do.call(rbind, Filter(Negate(is.null), rows))
-  print(df)
-  invisible(df)
+  do.call(rbind, Filter(Negate(is.null), rows))
 }
 
 #' Convert a nested CS list to a tidy data.frame
@@ -109,21 +109,25 @@ cs_stats <- function(x) {
 
 #' Peek at a nested CS structure
 #'
+#' Reports the first few residues of each chain with \code{message()}, so the
+#' output can be silenced with \code{suppressMessages()}.
+#'
 #' @param cs_data  Output of [cs_from_bmrb()] or [cs_from_file()].
 #' @param n_res    Number of residues to show per chain.
+#' @return \code{cs_data}, invisibly.
 #' @export
 #' @examples
 #' \dontrun{ cs <- cs_from_bmrb(15060); cs_peek(cs) }
 cs_peek <- function(cs_data, n_res = 5L) {
   for (ds in names(cs_data)) {
-    cat(sprintf("\nDataset: %s\n", ds))
+    message(sprintf("\nDataset: %s", ds))
     for (ch in setdiff(names(cs_data[[ds]]), "seq_ids")) {
       cd   <- cs_data[[ds]][[ch]]
       sids <- utils::head(cd$seq_ids, n_res)
-      cat(sprintf("  Chain %s  (first %d residues)\n", ch, length(sids)))
+      message(sprintf("  Chain %s  (first %d residues)", ch, length(sids)))
       for (sid in sids) {
         atoms <- cd[[as.character(sid)]]
-        cat(sprintf("    Seq %d: %s\n", sid,
+        message(sprintf("    Seq %d: %s", sid,
           paste(names(atoms), round(unlist(atoms), 2L),
                 sep="=", collapse="  ")))
       }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/api_utils.R
 \name{RBMRB_version}
 \alias{RBMRB_version}
-\title{Print the installed RBMRB version}
+\title{Get the installed RBMRB version}
 \usage{
 RBMRB_version()
 }
 \value{
-The version string, invisibly.
+A character string with the package version.
 }
 \description{
-Prints the package version and lists all exported functions.
+Returns the version of the installed RBMRB package as a string.
 }
 \examples{
 RBMRB_version()
